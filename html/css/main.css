@@ -1,3 +1,91 @@
 body {
-	background-color: teal;
+	background-color: cadetblue;
+	font-family: Arial, helvetica, sans-serif;
+	margin: auto;
+	text-align: center;
 }
+
+img {
+	width: 1500px;
+	height: 300px;
+	display: block;
+	margin: auto;
+	padding: 10px;
+}
+
+h1 {
+	text-align: center;
+	font-size: 40px;
+	color: rosybrown;
+	font-style: italic;
+	text-shadow: 1px 1px rosybrown;
+
+}
+
+div {
+	border: 2px solid black;
+	background: beige;
+	margin-left: 100px;
+	margin-right: 100px;
+	padding: 1px;
+	display: block;
+	box-shadow: 1px 1px white;
+	color:aquamarine;
+}
+
+h2 {
+	text-align: center;
+	font-style: bold;
+	font-size: 28px;
+	color: rosybrown;
+	padding-left: 10px;
+	text-shadow: 1px 1px black;
+
+}
+
+p {
+	text-align: center;
+	padding-top: 10px;
+	padding-left: 10px;
+	font-size: 20px;
+	font-style: bold;
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+
+ul {
+	font-style: italic;
+	font-size: 20px;
+	text-align: center;
+	margin-left: 100px;
+}
+
+.btn, .nav-item {
+	font-size: large;
+	outline-color: transparent;
+}
+
+.btn:link, .nav-item:link {
+	color: #6900ff;
+}
+
+.btn:visited, .nav-item:visited {
+	color: #a5c300;
+}
+
+.btn:focus, .nav-item:focus{
+	text-decoration: none;
+	background: #bae498;
+}
+
+.btn:hover, .nav-item:hover {
+	text-decoration: none;
+	background: #cdfeaa;
+}
+
+.btn:active, .nav-item:active {
+	background: #6900ff;
+	color: #cdfeaa;
+}
+
