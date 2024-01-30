@@ -1,3 +1,62 @@
 body {
-	background-color: teal;
+	background-color: royalblue;
+	font-family: Arial, helvetica, sans-serif;
+	color: white;
+	margin: auto;
+	text-align: center;
+}
+
+img {
+	width: 1500px;
+	height: 300px;
+	display: block;
+	margin: auto;
+	padding: 10px;
+}
+
+h1 {
+	text-align: center;
+	font-size: 40px;
+	color: white;
+	font-style: italic;
+	text-shadow: 2px 2px red;
+
+}
+
+div {
+	border: 2px solid black;
+	background: royalblue;
+	margin-left: 100px;
+	margin-right: 100px;
+	padding: 1px;
+	display: block;
+	box-shadow: 1px 1px white;
+}
+
+h2 {
+	text-align: center;
+	font-style: bold;
+	font-size: 28px;
+	color: white;
+	padding-left: 10px;
+	text-shadow: 2px 2px black;
+
+}
+
+p {
+	text-align: left;
+	padding-top: 10px;
+	padding-left: 10px;
+	font-size: 20px;
+	font-style: bold;
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+
+ul {
+	font-style: italic;
+	font-size: 20px;
+	text-align: left;
+	margin-left: 100px;
 }
