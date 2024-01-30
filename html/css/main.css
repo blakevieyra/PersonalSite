@@ -60,3 +60,32 @@ ul {
 	text-align: center;
 	margin-left: 100px;
 }
+
+.btn, .nav-item {
+	font-size: large;
+	outline-color: transparent;
+}
+
+.btn:link, .nav-item:link {
+	color: #6900ff;
+}
+
+.btn:visited, .nav-item:visited {
+	color: #a5c300;
+}
+
+.btn:focus, .nav-item:focus{
+	text-decoration: none;
+	background: #bae498;
+}
+
+.btn:hover, .nav-item:hover {
+	text-decoration: none;
+	background: #cdfeaa;
+}
+
+.btn:active, .nav-item:active {
+	background: #6900ff;
+	color: #cdfeaa;
+}
+
