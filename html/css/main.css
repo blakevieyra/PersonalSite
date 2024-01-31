@@ -2,15 +2,13 @@ body {
 	background-color: cadetblue;
 	font-family: Arial, helvetica, sans-serif;
 	margin: auto;
-	text-align: center;
 }
 
 img {
-	width: 1500px;
-	height: 300px;
-	display: block;
 	margin: auto;
-	padding: 10px;
+	width: 2000px;
+	height: 400px;
+	display: block;
 }
 
 h1 {
@@ -18,17 +16,14 @@ h1 {
 	font-size: 40px;
 	color: rosybrown;
 	font-style: italic;
-	text-shadow: 1px 1px rosybrown;
+	text-shadow: 1px 1px black;
 
 }
 
 div {
 	border: 2px solid black;
 	background: beige;
-	margin-left: 100px;
-	margin-right: 100px;
 	padding: 1px;
-	display: block;
 	box-shadow: 1px 1px white;
 	color:aquamarine;
 }
@@ -62,6 +57,9 @@ ul {
 }
 
 .btn, .nav-item {
+	display: block;
+	margin: auto;
+	text-align: center;
 	font-size: large;
 	outline-color: transparent;
 }
@@ -89,3 +87,19 @@ ul {
 	color: #cdfeaa;
 }
 
+.text {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 300px;
+		height: 1600px;
+		text-align: left;
+		border: 2px solid black;
+		margin: auto;
+		color: black;
+		font-family: Georgia;
+		font-size: 20px;
+		opacity: 0.5;
+		line-height: 24px;
+		padding: 20px;
+}
