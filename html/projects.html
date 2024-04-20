@@ -1,124 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<title>Project</title>
-	<nav class="navbar navbar-expand-md">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="home.html">Blake's Personal Site</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<!--This is where nav items are inserted  -->
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="home.html">Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp;</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="index.html">Resume &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp;</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="projects.html">Coding Projects &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="music.html">Music &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp;</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="photography.html">Photography &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>
-					</li>		
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <title>Blake's Personal Site - Projects</title>
 </head>
 
 <body>
-	<h1>My Coding Projects</h1>
-	<br>
-			<img src="images\image.png">
+    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">Blake's Personal Site</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Resume</a></li>
+                    <li class="nav-item"><a class="nav-link" href="projects.html">Coding Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
+                    <li class="nav-item"><a class="nav-link" href="photography.html">Photography</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-	<p>Github</p>
-	<a class="btn" href="https://github.com/blakevieyra">My Github</a><br><br>
+    <main class="container mt-4">
+        <h1 class="mb-4">My Coding Projects</h1>
 
-		<img src="images\wowimage.png">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- WoW Content Creator Project -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/wowimage.png" class="card-img-top" alt="WoW Content Creator">
+                    <div class="card-body">
+                        <h5 class="card-title">WoW Content Creator</h5>
+                        <p class="card-text">This full-stack app allows users to create and interact with content for World of Warcraft.</p>
+                        <a href="http://18.189.252.60:8080/WoWContentCreator" class="btn btn-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Music Artists Project -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/musicimage.png" class="card-img-top" alt="Music Artists Project">
+                    <div class="card-body">
+                        <h5 class="card-title">RESTArtistsTracker</h5>
+                        <p class="card-text">Search and manage a large collection of artists and songs with full CRUD operations.</p>
+                        <a href="http://18.224.81.89:8080/RESTArtistsTracker" class="btn btn-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Recipe Recommender Project -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/recipeimage.png" class="card-img-top" alt="Recipe Recommender">
+                    <div class="card-body">
+                        <h5 class="card-title">Recipe Recommender</h5>
+                        <p class="card-text">Find recipes based on ingredients you have, enjoy a personalized cooking experience.</p>
+                        <a href="http://3.22.134.152:8080/BootRecipeRecommender" class="btn btn-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- JPACrudProject -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/image.png" class="card-img-top" alt="Patient Logger">
+                    <div class="card-body">
+                        <h5 class="card-title">JPACrudProject</h5>
+                        <p class="card-text">Manage patient records with ease using this CRUD web application.</p>
+                        <a href="http://18.189.252.60:8080/BootMVCPatients" class="btn btn-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Todo List Project -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/image.png" class="card-img-top" alt="Todo List Tracker">
+                    <div class="card-body">
+                        <h5 class="card-title">TodoREST</h5>
+                        <p class="card-text">Organize your tasks with this dynamic todo list featuring user authentication.</p>
+                        <a href="http://18.224.81.89:8080/TodoREST" class="btn btn-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Film Catalog Project -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/image.png" class="card-img-top" alt="Film Catalog">
+                    <div class="card-body">
+                        <h5 class="card-title">Film Catalog</h5>
+                        <p class="card-text">Explore and manage a catalog of films and actors in this comprehensive database.</p>
+                        <a href="http://18.189.252.60:8080/VideoStoreREST" class="btn btn-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- S-A-M-S Website -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/image.png" class="card-img-top" alt="S-A-M-S Website">
+                    <div class="card-body">
+                        <h5 class="card-title">Scottish American Military Society</h5>
+                        <p class="card-text">My work as a webmaster for the S-A-M-S, a non-profit military society.</p>
+                        <a href="https://www.s-a-m-s.org/" class="btn btn-primary">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of project cards -->
+        
+        <footer class="text-center mt-4 mb-4">
+            <p>Feedback is welcome at <a href="mailto:blake.vieyra@gmail.com">blake.vieyra@gmail.com</a>.</p>
+            <a class="btn btn-secondary" href="home.html">Go to Home Page</a>
+        </footer>
+    </main>
 
-	<p>The WoWContentCreator project is a full-stack web application that allows a user to create novel in-game content
-		ideas
-		for the popular MMORPG World of Warcraft, created by Blizzard Entertainment. The user can create new content ideas
-		for
-		the game, make comments on content created by other users, upvote or downvote content of other users, and view the
-		latest content posted by the community. The users can view and update their own content as well and see how it being
-		received by other users. Written in Java, Typescript, HTML, CSS</p>
-	<a class="btn" href="http://18.189.252.60:8080/WoWContentCreator">WoW Content Creator Project</a><br><br>
-	
-		<img src="images\musicimage.png">
-
-	<p>The RESTArtistsTracker project is a full-stack web application that allows the user to search for over 3800 musical
-		artists and over 6000 songs from a loaded database. The user can apply CRUD operations to the artists in the
-		database,
-		as well as the songs. The user can keyword search for an artist or a song and find songs they like. They can also
-		discover new songs from well-known artists or discover new artists and their songs, just like they were at a
-		favorite
-		record store with many albums of many different artists. Written in Python, Java, JavaScript, Typescript, HTML, CSS
-	</p>
-	<a class="btn" href="http://18.224.81.89:8080/RESTArtistsTracker">Music Artists Project</a><br><br>
-		<img src="images\recipeimage.png">
-
-	<p>Our app provides users with access to over 12,500 diverse recipes. With our innovative recommendation system, users
-		can
-		discover new recipes based on the ingredients they have on hand, streamlining meal planning.
-	
-		Ingredient-Based Recommendations: Users can input the ingredients they have on hand, and our web application
-		recommends
-		recipes tailored to their available ingredients.
-	
-		User Interaction: Users can comment on recipes, share their experiences, and favorite recipes for easy access later.
-		Persistent Data: The ingredients input by users are securely stored and persist across sessions. Users can pick up
-		right
-		where they left off, even after logging out and logging back in.
-		Expansive Recipe Database: With over 12,500 recipes to explore, there's something for every taste and dietary
-		preference.
-		Recipe Creation: Users have the ability to create and share their own recipes with the community. Whether it's a
-		family
-		favorite or a culinary experiment, users can contribute their unique creations to our ever-growing database.
-	
-		Written in Python, Java, HTML, CSS</p>
-	<a class="btn" href="http://3.22.134.152:8080/BootRecipeRecommender">Recipe Recommender Project</a><br><br>
-		<p>The JPACrudProject allows a user to create, update or delete patients in a patients database.
-			The user is first directed to the homepage that displays the patients in the database.
-			The user can either add a new patient, enter the id of a patient, or select the hyperlink on the patients name.
-			Once selected, the user can update or delete the patient selected. Written in Java, HTML and CSS</p>
-	<a class="btn" href="http://18.189.252.60:8080/BootMVCPatients">Patient Logger Project</a><br><br>
-<p>The TodoREST project is a simple todo list tracker created using Angular, Spring Boot, and features spring security
-	authentication and dyanamic user interaction. Written in JavaScript, TypeScript, Java, HTML, and CSS</p>
-<a class="btn" href="http://18.224.81.89:8080/TodoREST">Todo List Project</a><br><br>
-		<p>The Film Catalog is a full stack application that allows a user to search films and their actors, as well as add, update, or delete films as desired.
-			Written in JavaScript, Java, HTML, and CSS</p>
-	<a class="btn" href="http://18.189.252.60:8080/VideoStoreREST">Film Catalog Project</a><br><br>
-
-
-		<p>I was the former webmaster Jan 2022 - Jan 2024 for the non-profit Scottish American Military Society.</p>
-
-	<a class="btn" href="https://www.s-a-m-s.org/">S-A-M-S Website</a><br><br>
-
-	<p>Please send me feeback of what you think of the projects: blake.vieyra@gmail.com.</p>
-	<a class="btn" href="home.html">Go to Home Page</a>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
