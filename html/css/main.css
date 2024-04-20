@@ -1,21 +1,22 @@
 body {
-    background-color: cadetblue;
+    background-color: #f4f4f4; /* Light gray background for a neutral look */
     font-family: 'Arial', 'Helvetica', sans-serif;
+    transition: background-color 0.5s ease; /* Smooth transition for background color changes */
 }
 
 h1 {
     text-align: center;
     font-size: 40px;
-    color: #bc8f8f; /* rosybrown */
-    font-style: italic;
-    text-shadow: 1px 1px black;
+    color: #333; /* Dark gray for a professional appearance */
+    font-weight: normal;
+    text-shadow: none; /* Remove text shadow for a cleaner look */
 }
 
 h2, h5 {
     text-align: center;
-    font-weight: bold; /* Use font-weight for bold style */
-    color: #bc8f8f; /* rosybrown */
-    text-shadow: 1px 1px black;
+    font-weight: bold;
+    color: #555; /* Medium gray for headings */
+    text-shadow: none;
 }
 
 h2 {
@@ -27,82 +28,65 @@ h5 {
 }
 
 p, ul {
-    text-align: center;
-    font-size: 20px;
-    color: black; /* For better readability */
+    text-align: left; /* Align text to the left for standard reading flow */
+    font-size: 18px; /* Slightly smaller font size for body text */
+    color: #666; /* Dark gray for readability */
+    transition: color 0.3s ease; /* Smooth transition for text color changes */
 }
 
 p {
-    margin: 0 100px; /* Compact version of setting left and right margins */
-    font-weight: bold; /* Use font-weight for bold style */
+    margin: 0 100px;
 }
 
 ul {
-    list-style-type: none; /* Remove bullet points */
-    padding: 0; /* Remove default padding */
-    font-style: italic;
+    list-style-type: none;
+    padding: 0;
+    font-style: normal; /* Remove italic style for a more formal look */
 }
 
 .btn, .nav-link {
     display: block;
-    width: fit-content; /* Make button width as per content */
-    margin: 10px auto; /* Center the buttons with margin */
+    width: fit-content;
+    margin: 10px auto;
     font-size: large;
-}
-
-.btn:link, .nav-link {
-    color: #6900ff;
-}
-
-.btn:visited, .nav-link:visited {
-    color: #a5c300;
-}
-
-.btn:focus, .nav-link:focus {
-    background: #bae498;
+    background: #e0e0e0; /* Light gray background for buttons */
+    color: #333; /* Dark text color */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions for hover effects */
 }
 
 .btn:hover, .nav-link:hover {
-    background: #cdfeaa;
+    background: #ccc; /* Darker gray on hover */
     text-decoration: none;
-    color: #333; /* Dark text color on hover */
+    color: #222; /* Darker text color on hover */
 }
 
-.btn:active, .nav-link:active {
-    background: #6900ff;
-    color: #cdfeaa;
-}
-
-/* Adjust divs that are not part of Bootstrap's grid or component system */
 div:not(.container):not(.row):not(.navbar-nav):not(.collapse) {
-    border: 2px solid black;
-    background: beige;
+    border: 2px solid #ddd; /* Lighter border color */
+    background: #ffffff; /* White background for better readability */
     padding: 20px;
-    box-shadow: 1px 1px white;
-    color: aquamarine; /* Changed to a darker color for readability */
-    margin: 20px 0; /* Add some top and bottom margin */
+    box-shadow: 2px 2px 4px #ccc; /* Subtle shadow for depth */
+    color: #333; /* Neutral dark color for text */
+    margin: 20px 0;
 }
 
-/* Specific class for text block */
 .text-block {
-    display: block; /* Changed from flex to block for better text flow */
+    display: block;
     margin: auto;
-    color: black;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white for readability */
+    color: #333;
+    background: rgba(255, 255, 255, 0.9); /* Less transparency for better readability */
     padding: 20px;
-    border-radius: 10px; /* Rounded corners for elegance */
+    border-radius: 10px;
 }
 
-/* Style images to be responsive and centered */
 img {
     display: block;
     margin: auto;
-    max-width: 100%; /* Responsive image width */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%;
+    height: auto;
 }
 
-/* Footer specific styles */
 footer {
-    background: #2c3e50; /* Dark footer background */
-    color: white; /* White text for footer */
+    background: #2c3e50; /* Dark footer background retained for contrast */
+    color: white; /* White text for footer retained for readability */
+    transition: background-color 0.3s ease; /* Smooth transition for footer background color */
 }
