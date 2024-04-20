@@ -6,12 +6,12 @@ body {
 
 h1, h2, h5 {
     text-align: center;
-    color: #704214; /* Warm brown color for a friendly, welcoming vibe */
+    color: #3d3d3d; /* Deep charcoal color for a bold and confident appearance */
 }
 
 h1 {
     font-size: 36px;
-    font-weight: normal;
+    font-weight: bold; /* Increased font weight for emphasis */
 }
 
 h2 {
@@ -27,38 +27,39 @@ h5 {
 p, ul {
     text-align: left;
     font-size: 18px;
-    color: #5a432e; /* Soft brown for comfortable reading */
+    color: #3d3d3d; /* Deep charcoal color for comfortable reading */
     line-height: 1.6; /* Increase line spacing for better readability */
 }
 
 ul {
-    list-style-type: circle; /* Small stylistic change to make lists more engaging */
-    margin-left: 20px; /* Proper indentation for lists */
+    list-style-type: disc; /* Changed list style to disc for a more professional look */
+    margin-left: 20px;
 }
 
 .btn, .nav-link {
-    background: #f0e6d6; /* Soft beige background for buttons */
-    color: #704214; /* Matching the heading color for consistency */
+    background: #decab9; /* Soft beige background for buttons */
+    color: #3d3d3d; /* Deep charcoal color for better visibility */
     padding: 10px 20px;
     border-radius: 5px; /* Rounded corners for a softer look */
-    box-shadow: 2px 2px 4px #ccc; /* Subtle shadow for depth */
+    box-shadow: 2px 2px 4px #7a7a7a; /* Subtle shadow for depth */
 }
 
 .btn:hover, .nav-link:hover {
-    background: #decab9; /* Slightly darker beige on hover */
-    color: #523721; /* Darker brown on hover for better visibility */
+    background: #b3a28f; /* Slightly darker beige on hover */
+    color: #ffffff; /* White color on hover for emphasis */
 }
 
 div {
-    border: 1px solid #decab9; /* Lighter border color to keep things soft */
-    background: #fff; /* White background retained for content areas */
+    border: 1px solid #b3a28f; /* Lighter border color to keep things soft */
+    background: #ffffff; /* White background retained for content areas */
     padding: 20px;
-    box-shadow: 2px 2px 5px #ccc; /* Updated shadow for consistency */
+    box-shadow: 2px 2px 5px #7a7a7a; /* Updated shadow for consistency */
     margin: 20px 10px; /* Adjusted margin for better layout spacing */
 }
 
 footer {
-    background: #523721; /* Consistent dark brown footer background */
+    background: #3d3d3d; /* Deep charcoal footer background for a bold appearance */
+    color: #ffffff; /* White text color for contrast */
     padding: 20px 10px; /* Padding for better structure */
     text-align: center; /* Centered text for a neat footer presentation */
 }
