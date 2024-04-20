@@ -16,7 +16,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.html">Resume</a></li>
-                    <li class="nav-item"><a class="nav-link" href="projects.html">Coding Projects</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="projects.html">Coding Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
                     <li class="nav-item"><a class="nav-link" href="photography.html">Photography</a></li>
                 </ul>
@@ -25,89 +25,78 @@
     </nav>
 
     <main class="container mt-4">
-        <h1 class="mb-4">My Coding Projects</h1>
-
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <!-- WoW Content Creator Project -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/wowimage.png" class="card-img-top" alt="WoW Content Creator">
-                    <div class="card-body">
-                        <h5 class="card-title">WoW Content Creator</h5>
-                        <p class="card-text">This full-stack app allows users to create and interact with content for World of Warcraft.</p>
+        <h1 class="mb-4 text-center">My Coding Projects</h1>
+        
+        <!-- Carousel for projects -->
+        <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="images/wowimage.png" class="d-block w-100" alt="WoW Content Creator">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>WoW Content Creator</h5>
+                        <p>This full-stack app allows users to create and interact with content for World of Warcraft.</p>
                         <a href="http://18.189.252.60:8080/WoWContentCreator" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            </div>
-            <!-- Music Artists Project -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/musicimage.png" class="card-img-top" alt="Music Artists Project">
-                    <div class="card-body">
-                        <h5 class="card-title">RESTArtistsTracker</h5>
-                        <p class="card-text">Search and manage a large collection of artists and songs with full CRUD operations.</p>
+                <div class="carousel-item">
+                    <img src="images/musicimage.png" class="d-block w-100" alt="Music Artists Project">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>RESTArtistsTracker</h5>
+                        <p>Search and manage a large collection of artists and songs with full CRUD operations.</p>
                         <a href="http://18.224.81.89:8080/RESTArtistsTracker" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            </div>
-            <!-- Recipe Recommender Project -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/recipeimage.png" class="card-img-top" alt="Recipe Recommender">
-                    <div class="card-body">
-                        <h5 class="card-title">Recipe Recommender</h5>
-                        <p class="card-text">Find recipes based on ingredients you have, enjoy a personalized cooking experience.</p>
+                <div class="carousel-item">
+                    <img src="images/recipeimage.png" class="d-block w-100" alt="Recipe Recommender">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Recipe Recommender</h5>
+                        <p>Find recipes based on ingredients you have, enjoy a personalized cooking experience.</p>
                         <a href="http://3.22.134.152:8080/BootRecipeRecommender" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            </div>
-            <!-- JPACrudProject -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/image.png" class="card-img-top" alt="Patient Logger">
-                    <div class="card-body">
-                        <h5 class="card-title">JPACrudProject</h5>
-                        <p class="card-text">Manage patient records with ease using this CRUD web application.</p>
+                <div class="carousel-item">
+                    <img src="images/patientlogger.png" class="d-block w-100" alt="Patient Logger">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>JPACrudProject</h5>
+                        <p>Manage patient records with ease using this CRUD web application.</p>
                         <a href="http://18.189.252.60:8080/BootMVCPatients" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            </div>
-            <!-- Todo List Project -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/image.png" class="card-img-top" alt="Todo List Tracker">
-                    <div class="card-body">
-                        <h5 class="card-title">TodoREST</h5>
-                        <p class="card-text">Organize your tasks with this dynamic todo list featuring user authentication.</p>
+                <div class="carousel-item">
+                    <img src="images/todolist.png" class="d-block w-100" alt="Todo List Tracker">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>TodoREST</h5>
+                        <p>Organize your tasks with this dynamic todo list featuring user authentication.</p>
                         <a href="http://18.224.81.89:8080/TodoREST" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            </div>
-            <!-- Film Catalog Project -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/image.png" class="card-img-top" alt="Film Catalog">
-                    <div class="card-body">
-                        <h5 class="card-title">Film Catalog</h5>
-                        <p class="card-text">Explore and manage a catalog of films and actors in this comprehensive database.</p>
+                <div class="carousel-item">
+                    <img src="images/filmcatalog.png" class="d-block w-100" alt="Film Catalog">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Film Catalog</h5>
+                        <p>Explore and manage a catalog of films and actors in this comprehensive database.</p>
                         <a href="http://18.189.252.60:8080/VideoStoreREST" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            </div>
-            <!-- S-A-M-S Website -->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="images/image.png" class="card-img-top" alt="S-A-M-S Website">
-                    <div class="card-body">
-                        <h5 class="card-title">Scottish American Military Society</h5>
-                        <p class="card-text">My work as a webmaster for the S-A-M-S, a non-profit military society.</p>
+                <div class="carousel-item">
+                    <img src="images/samswebsite.png" class="d-block w-100" alt="S-A-M-S Website">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Scottish American Military Society</h5>
+                        <p>My work as a webmaster for the S-A-M-S, a non-profit military society.</p>
                         <a href="https://www.s-a-m-s.org/" class="btn btn-primary">Visit Website</a>
                     </div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span the "visually-hidden">Next</span>
+            </button>
         </div>
-        <!-- End of project cards -->
-        
+
         <footer class="text-center mt-4 mb-4">
             <p>Feedback is welcome at <a href="mailto:blake.vieyra@gmail.com">blake.vieyra@gmail.com</a>.</p>
             <a class="btn btn-secondary" href="home.html">Go to Home Page</a>
