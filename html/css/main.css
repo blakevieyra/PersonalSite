@@ -1,92 +1,64 @@
 body {
-    background-color: #f4f4f4; /* Light gray background for a neutral look */
-    font-family: 'Arial', 'Helvetica', sans-serif;
+    background-color: #f9f3ec; /* Warm off-white background for a cozy feel */
+    font-family: 'Georgia', 'Times New Roman', serif; /* Serif font for a friendly, approachable look */
     transition: background-color 0.5s ease; /* Smooth transition for background color changes */
 }
 
-h1 {
+h1, h2, h5 {
     text-align: center;
-    font-size: 40px;
-    color: #333; /* Dark gray for a professional appearance */
-    font-weight: normal;
-    text-shadow: none; /* Remove text shadow for a cleaner look */
+    color: #704214; /* Warm brown color for a friendly, welcoming vibe */
 }
 
-h2, h5 {
-    text-align: center;
-    font-weight: bold;
-    color: #555; /* Medium gray for headings */
-    text-shadow: none;
+h1 {
+    font-size: 36px;
+    font-weight: normal;
 }
 
 h2 {
     font-size: 28px;
+    font-weight: bold;
 }
 
 h5 {
     font-size: 20px;
+    font-weight: bold;
 }
 
 p, ul {
-    text-align: left; /* Align text to the left for standard reading flow */
-    font-size: 18px; /* Slightly smaller font size for body text */
-    color: #666; /* Dark gray for readability */
-    transition: color 0.3s ease; /* Smooth transition for text color changes */
-}
-
-p {
-    margin: 0 100px;
+    text-align: left;
+    font-size: 18px;
+    color: #5a432e; /* Soft brown for comfortable reading */
+    line-height: 1.6; /* Increase line spacing for better readability */
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
-    font-style: normal; /* Remove italic style for a more formal look */
+    list-style-type: circle; /* Small stylistic change to make lists more engaging */
+    margin-left: 20px; /* Proper indentation for lists */
 }
 
 .btn, .nav-link {
-    display: block;
-    width: fit-content;
-    margin: 10px auto;
-    font-size: large;
-    background: #e0e0e0; /* Light gray background for buttons */
-    color: #333; /* Dark text color */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions for hover effects */
+    background: #f0e6d6; /* Soft beige background for buttons */
+    color: #704214; /* Matching the heading color for consistency */
+    padding: 10px 20px;
+    border-radius: 5px; /* Rounded corners for a softer look */
+    box-shadow: 2px 2px 4px #ccc; /* Subtle shadow for depth */
 }
 
 .btn:hover, .nav-link:hover {
-    background: #ccc; /* Darker gray on hover */
-    text-decoration: none;
-    color: #222; /* Darker text color on hover */
+    background: #decab9; /* Slightly darker beige on hover */
+    color: #523721; /* Darker brown on hover for better visibility */
 }
 
-div:not(.container):not(.row):not(.navbar-nav):not(.collapse) {
-    border: 2px solid #ddd; /* Lighter border color */
-    background: #ffffff; /* White background for better readability */
+div {
+    border: 1px solid #decab9; /* Lighter border color to keep things soft */
+    background: #fff; /* White background retained for content areas */
     padding: 20px;
-    box-shadow: 2px 2px 4px #ccc; /* Subtle shadow for depth */
-    color: #333; /* Neutral dark color for text */
-    margin: 20px 0;
-}
-
-.text-block {
-    display: block;
-    margin: auto;
-    color: #333;
-    background: rgba(255, 255, 255, 0.9); /* Less transparency for better readability */
-    padding: 20px;
-    border-radius: 10px;
-}
-
-img {
-    display: block;
-    margin: auto;
-    max-width: 100%;
-    height: auto;
+    box-shadow: 2px 2px 5px #ccc; /* Updated shadow for consistency */
+    margin: 20px 10px; /* Adjusted margin for better layout spacing */
 }
 
 footer {
-    background: #2c3e50; /* Dark footer background retained for contrast */
-    color: white; /* White text for footer retained for readability */
-    transition: background-color 0.3s ease; /* Smooth transition for footer background color */
+    background: #523721; /* Consistent dark brown footer background */
+    padding: 20px 10px; /* Padding for better structure */
+    text-align: center; /* Centered text for a neat footer presentation */
 }
