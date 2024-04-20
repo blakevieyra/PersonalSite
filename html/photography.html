@@ -28,10 +28,29 @@
             </div>
         </div>
     </nav>
+	   
 
 <body>
 	<h2>Photography</h2>
 	<br><br>
+	<section class="mb-5" id="contactForm">
+    <h2>Contact Me</h2>
+    <form action="https://formspree.io/f/mwkgabzw" method="POST">
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Name</label>
+            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
+        </div>
+        <div class="mb-3">
+            <label for="emailInput" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+            <label for="messageTextarea" class="form-label">Message</label>
+            <textarea class="form-control" id="messageTextarea" name="message" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</section>
 	<a class="btn" href="home.html">Go to Home Page</a>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
