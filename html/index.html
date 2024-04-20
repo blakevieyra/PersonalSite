@@ -33,7 +33,7 @@
     </nav>
 
     <main class="container my-4">
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 fade-in">
             <img src="https://2456764.fs1.hubspotusercontent-na1.net/hub/2456764/hubfs/confident%20busines%20man_1200x627.jpg?width=800&name=confident%20busines%20man_1200x627.jpg" class="img-fluid rounded-circle mb-3" alt="Blake Vieyra" style="max-width: 200px;">
             <h1 class="mb-3">Blake A. Vieyra</h1>
             <h2>My Professional Objective</h2>
@@ -41,7 +41,7 @@
             <a href="#contactForm" class="btn btn-primary mb-3">Contact Me</a>
         </div>
 
-        <section class="mb-5">
+        <section class="mb-5 fade-in">
     <h2 class="mb-3">Education</h2>
     <div class="accordion" id="educationAccordion">
         
@@ -128,7 +128,7 @@
     </div>
 </section>
 
-<section class="mb-5">
+<section class="mb-5 fade-in">
     <h2 class="mb-3">Work/Research Experience</h2>
     <div class="accordion" id="workExperienceAccordion">
         
@@ -205,7 +205,7 @@
     </div>
 </section>
 
-<section class="mb-5">
+<section class="mb-5 fade-in">
     <h2 class="mb-3">Significant Accomplishments</h2>
     <div class="accordion" id="accomplishmentsAccordion">
         
@@ -256,36 +256,56 @@
         <a href="BlakeVieyraResume.pdf" download="BlakeVieyraResume.pdf" class="btn btn-primary">Download My Resume</a>
 
 
- <section class="mb-5" id="contactForm">
-    <h2>Contact Me</h2>
-    <form action="https://formspree.io/f/mwkgabzw" method="POST">
-        <div class="mb-3">
-            <label for="nameInput" class="form-label">Name</label>
-            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
-        </div>
-        <div class="mb-3">
-            <label for="emailInput" class="form-label">Email</label>
-            <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
-        </div>
-        <div class="mb-3">
-            <label for="messageTextarea" class="form-label">Message</label>
-            <textarea class="form-control" id="messageTextarea" name="message" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send</button>
-    </form>
-</section>
-        </section>
 
-        <div class="text-center mt-5">
-            <a href="home.html" class="btn btn-secondary">Go to Home Page</a>
-        </div>
+        <section class="mb-5 fade-in" id="contactForm">
+            <h2>Contact Me</h2>
+            <form action="https://formspree.io/f/mwkgabzw" method="POST">
+                <div class="mb-3">
+                    <label for="nameInput" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="messageTextarea" class="form-label">Message</label>
+                    <textarea class="form-control" id="messageTextarea" name="message" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </section>
     </main>
 
-    <footer class="bg-dark text-light text-center py-3">
+    <footer class="bg-dark text-light text-center py-3 fade-in">
         <p>&copy; 2024 Blake Vieyra</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function isInViewport(element) {
+            var rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Function to handle scroll event
+        function handleScroll() {
+            var elements = document.querySelectorAll('.fade-in');
+            elements.forEach(function (element) {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+    </script>
 </body>
 
 </html>
