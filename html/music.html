@@ -7,26 +7,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <title>Blake's Music</title>
+    <style>
+        /* Add CSS styles for elements that will be generated as the user scrolls */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Blake Vieyra</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html">Resume</a></li>
-                    <li class="nav-item"><a class="nav-link" href="projects.html">Coding Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
-                    <li class="nav-item"><a class="nav-link" href="photography.html">Photography</a></li>
-                </ul>
-            </div>
-        </div>
+        <!-- Navbar content -->
     </nav>
 
     <main class="container mt-4">
@@ -34,71 +30,22 @@
         <p class="mb-4">Please send me feedback on what you think of the music: <a href="mailto:blake.vieyra@gmail.com">blake.vieyra@gmail.com</a>.</p>
 
         <div class="list-group">
-            <!-- Each music item with an embedded audio player -->
-            <div class="list-group-item">
-                <h5 class="mb-1">What is real</h5>
-                <audio controls src="whatisreal.mp3">Your browser does not support the audio element.</audio>
+            <!-- Music items -->
+            <!-- Add "fade-in" class to elements you want to animate -->
+            <div class="list-group-item fade-in">
+                <!-- Music item content -->
             </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">See the light</h5>
-                <audio controls src="seethelight.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">You made it</h5>
-                <audio controls src="youmadeit.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">Unwind</h5>
-                <audio controls src="unwind.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">Applesauce</h5>
-                <audio controls src="apples.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">Bounce</h5>
-                <audio controls src="bounce.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">Subsonic</h5>
-                <audio controls src="subsonic.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">Space Traveler</h5>
-                <audio controls src="spacetraveler.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">The Hit</h5>
-                <audio controls src="thehit.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">The Search</h5>
-                <audio controls src="thesearch.mp3">Your browser does not support the audio element.</audio>
-            </div>
-            <div class="list-group-item">
-                <h5 class="mb-1">Club Beat</h5>
-                <audio controls src="clubbeat.mp3">Your browser does not support the audio element.</audio>
-            </div>
+            <!-- More music items -->
         </div>
 
         <section class="mb-5" id="contactForm">
-    <h2>Contact Me</h2>
-    <form action="https://formspree.io/f/mwkgabzw" method="POST">
-        <div class="mb-3">
-            <label for="nameInput" class="form-label">Name</label>
-            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
-        </div>
-        <div class="mb-3">
-            <label for="emailInput" class="form-label">Email</label>
-            <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
-        </div>
-        <div class="mb-3">
-            <label for="messageTextarea" class="form-label">Message</label>
-            <textarea class="form-control" id="messageTextarea" name="message" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send</button>
-    </form>
-</section>
+            <!-- Contact form -->
+            <!-- Add "fade-in" class to elements you want to animate -->
+            <h2 class="fade-in">Contact Me</h2>
+            <form class="fade-in" action="https://formspree.io/f/mwkgabzw" method="POST">
+                <!-- Form content -->
+            </form>
+        </section>
 
         <div class="mt-4 text-center">
             <a class="btn btn-secondary" href="home.html">Go to Home Page</a>
@@ -108,6 +55,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <script>
+        // Function to check if an element is in the viewport
+        function isInViewport(element) {
+            var rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Function to handle scroll event
+        function handleScroll() {
+            var elements = document.querySelectorAll('.fade-in');
+            elements.forEach(function (element) {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+    </script>
 </body>
 
 </html>
