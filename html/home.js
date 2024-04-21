@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('playerForm');
     if (form) {
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
             const playerNameInput = document.getElementById('playerName');
             const playerName = playerNameInput.value.trim();
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const players = loadPlayers() || [];
+            const players = loadPlayersFromDB() || [];
             const currentPlayer = registerOrUpdatePlayer(players, playerName);
             initGames(currentPlayer);
             populateLeaderboard();
@@ -50,20 +50,105 @@ window.addEventListener('scroll', handleScroll);
 handleScroll();
 
 function clearLeaderboard() {
-    localStorage.removeItem('players');
+    // Clear players data from the database
+    clearPlayersFromDB();
     const tbody = document.querySelector('#globalLeaderboard tbody');
     tbody.innerHTML = '';
     populateLeaderboard(); // Re-populate to show empty state or updated data
 }
+
 function registerOrUpdatePlayer(players, playerName) {
     let currentPlayer = players.find(p => p.name === playerName);
     if (!currentPlayer) {
         currentPlayer = { name: playerName, wins: 0, losses: 0, ties: 0 };
         players.push(currentPlayer);
-        savePlayers(players);
+        savePlayersToDB(players);
     }
     return currentPlayer;
 }
+
+function savePlayersToDB(players) {
+    const playersJSON = JSON.stringify(players);
+    const insertQuery = `INSERT INTO players (data) VALUES (?)`;
+    const updateQuery = `UPDATE players SET data = ? WHERE id = 1`; // Assuming there's only one row for players data
+
+    db.run(updateQuery, [playersJSON], function (err) {
+        if (err) {
+            // Handle error
+            console.error('Error saving player data to the database:', err);
+        } else {
+            console.log('Player data saved to the database successfully.');
+        }
+    });
+}
+
+function loadPlayersFromDB() {
+    const query = `SELECT data FROM players WHERE id = 1`; // Assuming there's only one row for players data
+
+    db.get(query, [], function (err, row) {
+        if (err) {
+            // Handle error
+            console.error('Error loading player data from the database:', err);
+        } else {
+            if (row) {
+                const playersJSON = row.data;
+                const players = JSON.parse(playersJSON);
+                console.log('Player data loaded from the database successfully.');
+                return players;
+            } else {
+                console.log('No player data found in the database.');
+                return []; // Return empty array if no data found
+            }
+        }
+    });
+}
+
+function clearPlayersFromDB() {
+    const deleteQuery = `DELETE FROM players WHERE id = 1`; // Assuming there's only one row for players data
+
+    db.run(deleteQuery, [], function (err) {
+        if (err) {
+            // Handle error
+            console.error('Error clearing player data from the database:', err);
+        } else {
+            console.log('Player data cleared from the database.');
+        }
+    });
+}
+function loadPlayersFromDB() {
+    const query = `SELECT data FROM players WHERE id = 1`; // Assuming there's only one row for players data
+
+    db.get(query, [], function (err, row) {
+        if (err) {
+            // Handle error
+            console.error('Error loading player data from the database:', err);
+        } else {
+            if (row) {
+                const playersJSON = row.data;
+                const players = JSON.parse(playersJSON);
+                console.log('Player data loaded from the database successfully.');
+                return players;
+            } else {
+                console.log('No player data found in the database.');
+                return []; // Return empty array if no data found
+            }
+        }
+    });
+}
+function updateScoreInDB(name, wins, losses, ties) {
+    const updateQuery = `UPDATE players SET wins = ?, losses = ?, ties = ? WHERE name = ?`;
+
+    db.run(updateQuery, [wins, losses, ties, name], function (err) {
+        if (err) {
+            // Handle error
+            console.error('Error updating score in the database:', err);
+        } else {
+            console.log('Score updated in the database successfully.');
+        }
+    });
+}
+
+
 
 function initGames(currentPlayer) {
     try {
