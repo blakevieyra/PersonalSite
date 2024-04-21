@@ -326,16 +326,22 @@ document.addEventListener('DOMContentLoaded', function() {
     savePlayers(players);
     populateLeaderboard();
 }
-    function registerPlayer(name) {
+  function registerPlayer(name) {
     fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name })
-    }).then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
+    }).then(response => {
+        if (response.ok) return response.json();
+        throw new Error('Failed to register');
+    })
+    .then(data => {
+        console.log('Registration successful:', data);
+        updateGlobalLeaderboard(data); // Assuming you want to refresh or display immediately
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 function updateScore(name, wins, losses, ties) {
@@ -345,9 +351,15 @@ function updateScore(name, wins, losses, ties) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name, wins, losses, ties })
-    }).then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
+    }).then(response => {
+        if (response.ok) return response.json();
+        throw new Error('Failed to update score');
+    })
+    .then(data => {
+        console.log('Score update successful:', data);
+        updateGlobalLeaderboard(data); // Refresh leaderboard with new data
+    })
+    .catch(error => console.error('Error:', error));
 }
 });
 class RockPaperScissors {
