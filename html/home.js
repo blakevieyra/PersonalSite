@@ -323,13 +323,15 @@ class Hangman {
         this.attachEventListeners();
     }
 
-    attachEventListeners() {
-        this.guessButton.addEventListener('click', () => {
-            const letter = this.letterInput.value.toLowerCase();
-            this.letterInput.value = ''; // Clear input after guess
-            this.guessLetter(letter);
-        });
-    }
+ attachEventListeners() {
+    this.guessButton.removeEventListener('click', this.handleGuessButtonClick);
+    this.handleGuessButtonClick = () => {
+        const letter = this.letterInput.value.toLowerCase();
+        this.letterInput.value = ''; // Clear input after guess
+        this.guessLetter(letter);
+    };
+    this.guessButton.addEventListener('click', this.handleGuessButtonClick);
+}
 
     resetGame() {
         this.guessesLeft = 6;
@@ -347,46 +349,44 @@ class Hangman {
         this.displayWord();
     }
 
-    guessLetter(letter) {
-        if (letter.length === 1 && /[a-z]/i.test(letter) && !this.lettersGuessed.includes(letter)) {
-            this.lettersGuessed.push(letter);
-            if (this.selectedWord.word.includes(letter)) {
-                this.correctGuesses.push(letter);
-                this.updateWordDisplay();
-            } else {
-                this.guessesLeft--;
-            }
-            this.checkGameEnd();
-        } else {
-            alert("Please enter a valid letter that you haven't guessed yet.");
+   guessLetter(letter) {
+    if (!/[a-z]/i.test(letter)) {
+        alert("Please enter a valid letter.");
+        return;
+    }
+    if (this.lettersGuessed.includes(letter)) {
+        alert("You have already guessed that letter.");
+        return;
+    }
+    this.lettersGuessed.push(letter);
+    if (this.selectedWord.word.includes(letter)) {
+        this.correctGuesses.push(letter);
+        this.updateWordDisplay();
+    } else {
+        this.guessesLeft--;
+    }
+    this.checkGameEnd();
+}
+
+  computerGuess() {
+    const intervalId = setInterval(() => {
+        if (this.computerGuessesLeft <= 0 || this.guessesLeft <= 0) {
+            clearInterval(intervalId);
+            return;
         }
-    }
-
-    computerGuess() {
-        const generateRandomLetter = () => {
-            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-            return alphabet[Math.floor(Math.random() * alphabet.length)];
-        };
-
-        const intervalId = setInterval(() => {
-            if (this.computerGuessesLeft > 0) {
-                const letter = generateRandomLetter();
-                if (!this.lettersGuessed.includes(letter)) {
-                    this.lettersGuessed.push(letter);
-                    this.computerLettersGuessed.push(letter);
-                    this.computerGuessesLeft--;
-                    if (!this.computerWord.includes(letter)) {
-                        clearInterval(intervalId); // Stop guessing if computer runs out of guesses
-                        this.handleGameEnd('Computer');
-                    }
-                    this.updateComputerDisplay();
-                }
-            } else {
-                clearInterval(intervalId);
+        const letter = this.generateRandomLetter();
+        if (!this.lettersGuessed.includes(letter)) {
+            this.lettersGuessed.push(letter);
+            this.computerLettersGuessed.push(letter);
+            this.computerGuessesLeft--;
+            if (!this.computerWord.includes(letter)) {
+                clearInterval(intervalId); // Stop guessing if computer runs out of guesses
+                this.handleGameEnd('Computer');
             }
-        }, 4000);
-    }
-
+            this.updateComputerDisplay();
+        }
+    }, 4000);
+}
     handleGameEnd(winner) {
         if (winner === 'Computer') {
             alert('Computer has guessed the word!');
@@ -460,6 +460,16 @@ class Hangman {
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
 class TicTacToe {
     constructor() {
         this.cells = document.querySelectorAll("#ticTacToeBoard button");
