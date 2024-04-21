@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <title>Blake Vieyra - Home</title>
+    <title>Blake Vieyra - Rock Paper Scissors Game</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transition-delay: 0.3s;
+            animation-fill-mode: forwards;
+        }
+        .visible {
+            opacity: 1;
+        }
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1rem; /* Smaller font size for the brand */
             font-weight: bold;
         }
-
-        .navbar-nav {
-            margin-left: auto;
+        .navbar-nav .nav-link {
+            font-size: 0.85rem; /* Smaller font size for navigation links */
+            padding-right: 0.5rem; /* Reduced padding for a more compact look */
+            padding-left: 0.5rem;
         }
-
-        #scoreboard {
-            margin-top: 1rem;
+        .navbar {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem; /* Reduced vertical padding for a slimmer navbar */
+        }
+        .container-fluid {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem; /* Reduced container padding */
         }
     </style>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
@@ -37,14 +51,14 @@
                     <li class="nav-item"><a class="nav-link" href="index.html">Resume</a></li>
                     <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="music.html">Music</a></li>
-                    <li class="nav-item"><a class="nav-link" href="photography.html">Photography</a></li>
+                    <li the="nav-item"><a class="nav-link" href="photography.html">Photography</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <main class="container my-4">
-        <section class="text-center my-5">
+        <section class="text-center my-5 fade-in visible">
             <h1>About Me</h1>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
@@ -56,7 +70,7 @@
                 </div>
             </div>
         </section>
-        <section class="text-center my-5">
+        <section class="text-center my-5 fade-in visible">
             <h2>Rock, Paper, Scissors Game</h2>
             <div>
                 <button class="btn btn-primary" onclick="playerChoice('rock')">Rock</button>
@@ -69,40 +83,25 @@
                 <p>Wins: <span id="wins">0</span></p>
                 <p>Losses: <span id="losses">0</span></p>
                 <p>Ties: <span id="ties">0</span></p>
+                <p>Mean Wins: <span id="meanWins">0</span></p>
+                <p>Standard Deviation of Wins: <span id="stdDevWins">0</span></p>
+                <p>Covariance: <span id="covariance">0</span></p>
             </div>
-        </section>
-        <section class="mb-5" id="contactForm">
-            <h2>Contact Me</h2>
-            <form action="https://formspree.io/f/mwkgabzw" method="POST">
-                <div class="mb-3">
-                    <label for="nameInput" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="emailInput" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="messageTextarea" class="form-label">Message</label>
-                    <textarea class="form-control" id="messageTextarea" name="message" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
         </section>
     </main>
 
-    <footer class="bg-dark text-light text-center py-3">
+    <footer class="bg-dark text-light text-center py-3 fade-in visible">
         <p>&copy; 2024 Blake Vieyra. All Rights Reserved.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
     <script>
         let wins = 0;
         let losses = 0;
         let ties = 0;
+        let results = [];
 
         function playerChoice(choice) {
             const choices = ['rock', 'paper', 'scissors'];
@@ -110,14 +109,16 @@
             const result = determineWinner(choice, computerChoice);
             updateScore(result);
             displayResult(result, choice, computerChoice);
+            results.push(result === 'win' ? 1 : 0); // Track wins as 1, losses and ties as 0
+            updateStatistics();
         }
 
         function determineWinner(player, computer) {
             if (player === computer) {
                 return 'tie';
             } else if ((player === 'rock' && computer === 'scissors') ||
-                (player === 'paper' && computer === 'rock') ||
-                (player === 'scissors' && computer === 'paper')) {
+                       (player === 'paper' && computer === 'rock') ||
+                       (player === 'scissors' && computer === 'paper')) {
                 return 'win';
             } else {
                 return 'lose';
@@ -145,7 +146,28 @@
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
+
+        function updateStatistics() {
+            const meanWins = calculateMean(results);
+            const stdDevWins = calculateStandardDeviation(results, meanWins);
+
+            document.getElementById('meanWins').textContent = meanWins.toFixed(2);
+            document.getElementById('stdDevWins').textContent = stdDevWins.toFixed(2);
+            document.getElementById('covariance').textContent = covariance.toFixed(2);
+        }
+
+        function calculateMean(data) {
+            return data.reduce((acc, val) => acc + val, 0) / data.length;
+        }
+
+        function calculateStandardDeviation(data, mean) {
+            const squareDiffs = data.map(value => {
+                const diff = value - mean;
+                return diff * diff;
+            });
+            const avgSquareDiff = squareDiffs.reduce((sum, value) => sum + value, 0) / squareDiffs.length;
+            return Math.sqrt(avgSquareDiff);
+        }
     </script>
 </body>
-
 </html>
