@@ -166,6 +166,7 @@ class RockPaperScissors {
         this.losses = 0;
         this.ties = 0;
         this.chart = null;
+        this.chartId = 'rpsChart';
     }
 
     init() {
@@ -203,13 +204,13 @@ class RockPaperScissors {
     }
 
    updateStats(result) {
-    if (result === 'win') {
-        this.player.wins++;
-    } else if (result === 'lose') {
-        this.player.losses++;
-    } else {
-        this.player.ties++;
-    }
+   if (result === 'win') {
+    this.player.wins++;
+} else if (result === 'lose') {
+    this.player.losses++;
+} else {
+    this.player.ties++;
+}
     this.updateScoreboard();
     this.updateChart();
     this.updateGlobalLeaderboard();
@@ -249,7 +250,7 @@ class RockPaperScissors {
     }
 
     setupChart() {
-        const ctx = document.getElementById('rpsChart').getContext('2d');
+const ctx = document.getElementById(this.chartId).getContext('2d');
         this.chart = new Chart(ctx, {
             type: 'bar',
             data: {
