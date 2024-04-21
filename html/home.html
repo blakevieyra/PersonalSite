@@ -102,8 +102,9 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script><script>
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<script>
     let rpsWins = 0;
     let rpsLosses = 0;
     let rpsTies = 0;
@@ -131,27 +132,28 @@
             return 'lose';
         }
     }
-            function calculateStats() {
-    const totalGames = rpsWins + rpsLosses + rpsTies;
-    const mean = totalGames > 0 ? (rpsWins + rpsLosses + rpsTies) / totalGames : 0;
 
-    const squaredDifferences = Math.pow(rpsWins - mean, 2) + Math.pow(rpsLosses - mean, 2) + Math.pow(rpsTies - mean, 2);
-    const variance = squaredDifferences / totalGames;
-    const standardDeviation = Math.sqrt(variance);
+    function calculateStats() {
+        const totalGames = rpsWins + rpsLosses + rpsTies;
+        const mean = totalGames > 0 ? (rpsWins + rpsLosses + rpsTies) / totalGames : 0;
 
-    return { mean, standardDeviation };
-}
+        const squaredDifferences = Math.pow(rpsWins - mean, 2) + Math.pow(rpsLosses - mean, 2) + Math.pow(rpsTies - mean, 2);
+        const variance = squaredDifferences / totalGames;
+        const standardDeviation = Math.sqrt(variance);
 
-// Update Rock Paper Scissors scoreboard with mean and standard deviation
-function updateRPSScoreboard() {
-    const stats = calculateStats();
+        return { mean, standardDeviation };
+    }
 
-    document.getElementById('rpsWins').textContent = rpsWins;
-    document.getElementById('rpsLosses').textContent = rpsLosses;
-    document.getElementById('rpsTies').textContent = rpsTies;
-    document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
-    document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
-}
+    // Update Rock Paper Scissors scoreboard with mean and standard deviation
+    function updateRPSScoreboard() {
+        const stats = calculateStats();
+
+        document.getElementById('rpsWins').textContent = rpsWins;
+        document.getElementById('rpsLosses').textContent = rpsLosses;
+        document.getElementById('rpsTies').textContent = rpsTies;
+        document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
+        document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
+    }
 
     function updateRPSStats(result) {
         if (result === 'win') {
@@ -168,21 +170,21 @@ function updateRPSScoreboard() {
     }
 
     function displayRPSResult(result, playerChoice, computerChoice) {
-    const userChoiceImg = document.getElementById('userChoiceImg');
-    const computerChoiceImg = document.getElementById('computerChoiceImg');
+        const userChoiceImg = document.getElementById('userChoiceImg');
+        const computerChoiceImg = document.getElementById('computerChoiceImg');
 
-    // Set the source of the images based on the choices
-    userChoiceImg.src = `images/${playerChoice}.png`; // Assuming images are named 'rock.png', 'paper.png', 'scissors.png'
-    computerChoiceImg.src = `images/${computerChoice}.png`;
+        // Set the source of the images based on the choices
+        userChoiceImg.src = `images/${playerChoice}.png`; // Assuming images are named 'rock.png', 'paper.png', 'scissors.png'
+        computerChoiceImg.src = `images/${computerChoice}.png`;
 
-    // Show the images
-    userChoiceImg.style.display = 'block';
-    computerChoiceImg.style.display = 'block';
+        // Show the images
+        userChoiceImg.style.display = 'block';
+        computerChoiceImg.style.display = 'block';
 
-    // Display the result
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `${capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
-}
+        // Display the result
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `${capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+    }
 
     // Function for generating Hangman game
     const words = [
@@ -209,8 +211,8 @@ function updateRPSScoreboard() {
         }, 2000);
     }
 
-    function guessLetter(letter) {
-         const letter = document.getElementById('letterInput').value.toLowerCase();
+    function guessLetter() {
+        const letter = document.getElementById('letterInput').value.toLowerCase();
         if (!lettersGuessed.includes(letter)) {
             lettersGuessed.push(letter);
             if (selectedWord.word.includes(letter)) {
