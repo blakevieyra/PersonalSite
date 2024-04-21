@@ -1,53 +1,74 @@
 const express = require('express');
 const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 8080;
 
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Middleware to parse JSON bodies
+// Configure CORS correctly
+app.use(cors({
+    origin: 'http://18.189.252.60:8080'  // Assuming your client is served from this URL
+}));
 
-// In-memory "database" for simplicity
-let players = [];
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-// Route to register a new player
+// Serve static files - Assuming the static files are located in a folder named 'html' within the same directory as your server script
+app.use('/html', express.static('html'));
+
+// Open a database connection
+let db = new sqlite3.Database('./players.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+        console.error('Error opening database ' + err.message);
+    } else {
+        db.run('CREATE TABLE IF NOT EXISTS players(' +
+            'id INTEGER PRIMARY KEY AUTOINCREMENT,' +
+            'name TEXT NOT NULL UNIQUE,' +
+            'wins INTEGER DEFAULT 0,' +
+            'losses INTEGER DEFAULT 0,' +
+            'ties INTEGER DEFAULT 0)', (err) => {
+                if (err) {
+                    console.error('Error creating table ' + err.message);
+                }
+            });
+    }
+});
+
+// Routes
 app.post('/register', (req, res) => {
     const { name } = req.body;
-    if (!name) return res.status(400).send('Name is required');
-    
-    let player = players.find(p => p.name === name);
-    if (!player) {
-        player = { name, wins: 0, losses: 0, ties: 0 };
-        players.push(player);
+    if (!name) {
+        return res.status(400).send('Name is required');
     }
-    res.status(201).send(player);
+
+    db.run('INSERT INTO players (name) VALUES (?)', [name], function (err) {
+        if (err) {
+            res.status(400).send(`Error registering player: ${err.message}`);
+        } else {
+            res.status(201).send({ id: this.lastID, name, wins: 0, losses: 0, ties: 0 });
+        }
+    });
 });
 
-// Route to get the leaderboard
 app.get('/leaderboard', (req, res) => {
-    players.sort((a, b) => b.wins - a.wins); // Sort by wins
-    res.status(200).send(players);
+    db.all('SELECT * FROM players ORDER BY wins DESC', [], (err, rows) => {
+        if (err) {
+            res.status(400).send(`Error fetching players: ${err.message}`);
+        } else {
+            res.status(200).send(rows);
+        }
+    });
 });
 
-// Route to update player stats
 app.put('/update', (req, res) => {
-    const { name, wins, losses, ties } = req.body;
-    const player = players.find(p => p.name === name);
-    
-    if (player) {
-        player.wins = wins;
-        player.losses = losses;
-        player.ties = ties;
-        res.status(200).send(player);
-    } else {
-        res.status(404).send('Player not found');
-    }
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack); // Log error stack for debugging
-    res.status(500).send('Something broke!'); // Send generic error message to client
+    const { id, wins, losses, ties } = req.body;
+    db.run('UPDATE players SET wins = ?, losses = ?, ties = ? WHERE id = ?', [wins, losses, ties, id], function (err) {
+        if (err) {
+            res.status(400).send(`Error updating player: ${err.message}`);
+        } else {
+            res.status(200).send({ id, wins, losses, ties });
+        }
+    });
 });
 
 // Start the server
