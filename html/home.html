@@ -8,106 +8,115 @@
     <title>Blake Vieyra - Rock Paper Scissors Game</title>
     <style>
     html { 
-        scroll-behavior: smooth; 
-    }
-    
-    .fade-in { 
-        opacity: 0; 
-        transition: opacity 0.5s ease; 
-        transition-delay: 0.3s; 
-        animation-fill-mode: forwards; 
-    }
-    
-    .visible { 
-        opacity: 1; 
-    }
-    
-    .navbar-brand, 
-    .navbar-nav .nav-link { 
-        font-size: 1rem; 
-        font-weight: bold; 
-        padding: 0.5rem; 
-    }
-    
-    .navbar { 
-        padding: 0.25rem; 
-    }
-    
-    .container-fluid { 
-        padding: 0.5rem; 
-    }
-    
-    #ticTacToeBoard .row {
-        margin-bottom: 0.5rem; /* Adjust margin between rows */
-        border-bottom: 1px solid #000; /* Add border between rows */
-    }
-    
-    #ticTacToeBoard .col {
-        padding: 0; /* Remove padding from columns */
-    }
-    
-    #ticTacToeBoard .btn {
-        width: 100px; /* Adjust button width */
-        height: 100px; /* Adjust button height */
-        font-size: 1.5rem; /* Adjust font size */
-    }
-    
-    .winning-cell {
-        color: red; /* Change text color for winning cells */
-    }
-    
-    .win {
-        background-color: green;
-        color: white;
-        animation: pulse 1s infinite;
-    }
-    
-    .lose {
-        background-color: red;
-        color: white;
-        animation: pulse 1s infinite;
-    }
-    
-    .tie {
-        background-color: yellow;
-        color: black;
-        animation: pulse 1s infinite;
-    }
-    
-    @keyframes pulse {
-        0% { 
-            transform: scale(1); 
-        }
-        50% { 
-            transform: scale(1.1); 
-        }
-        100% { 
-            transform: scale(1); 
-        }
-    }
-    
-    .btn:hover {
-        transform: scale(1.05); /* Slightly enlarge buttons on hover */
-        transition: transform 0.3s;
-    }
-    
-    .game-container {
-        display: flex;
-        align-items: center;
-    }
-    
-    #gameControls {
-        margin-right: 20px; /* Adjust margin between game controls and scoreboard */
-    }
-    
-    .scoreboard-container {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    #ticTacToeChartContainer {
-        margin-top: 20px; /* Adjust margin between chart and scoreboard */
-    }
+    scroll-behavior: smooth; 
+}
+
+/* Animation for fade-in effect */
+.fade-in { 
+    opacity: 0; 
+    transition: opacity 0.5s ease; 
+    transition-delay: 0.3s; 
+    animation-fill-mode: forwards; 
+}
+
+.visible { 
+    opacity: 1; 
+}
+
+/* Navbar styles */
+.navbar-brand, 
+.navbar-nav .nav-link { 
+    font-size: 1rem; 
+    font-weight: bold; 
+    padding: 0.5rem; 
+}
+
+.navbar { 
+    padding: 0.5rem 1rem; /* Adjusted padding for top and bottom */
+}
+
+/* Container styles */
+.container-fluid { 
+    padding: 0.5rem; 
+}
+
+/* Tic Tac Toe board styles */
+#ticTacToeBoard .row {
+    margin-bottom: 0.5rem; /* Adjust margin between rows */
+    border-bottom: 1px solid #000; /* Add border between rows */
+}
+
+#ticTacToeBoard .col {
+    padding: 0; /* Remove padding from columns */
+}
+
+#ticTacToeBoard .btn {
+    width: 100px; /* Adjust button width */
+    height: 100px; /* Adjust button height */
+    font-size: 1.5rem; /* Adjust font size */
+}
+
+/* Styling for game results */
+.winning-cell {
+    color: red; /* Change text color for winning cells */
+}
+
+.win, .lose, .tie {
+    background-color: green; /* Default background color */
+    color: white; /* Default text color */
+    animation: pulse 1s infinite; /* Animation effect */
+}
+
+.win { background-color: green; }
+.lose { background-color: red; }
+.tie { background-color: yellow; }
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Button hover effect */
+.btn:hover {
+    transform: scale(1.05); /* Slightly enlarge buttons on hover */
+    transition: transform 0.3s;
+}
+
+/* Game container styles */
+.game-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for game controls */
+#gameControls {
+    margin-right: 20px; /* Adjust margin between game controls and scoreboard */
+    text-align: center; /* Centering the content */
+}
+
+/* Scoreboard container styles */
+.scoreboard-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Margin between chart and scoreboard */
+#ticTacToeChartContainer {
+    margin-top: 20px;
+    text-align: center; /* Centering the content */
+}
+
+/* Margin between rows in the Tic Tac Toe board */
+#ticTacToeBoard .row {
+    margin-bottom: 0.5rem;
+}
+
+/* Styling for the footer */
+footer {
+    margin-top: 20px; /* Adding margin to the top */
+    padding: 10px 0; /* Adding padding to top and bottom */
+}
 </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -256,12 +265,21 @@
     </div>
 </section>
 <section class="text-center my-5 fade-in visible">
+    <h2>Tic Tac Toe Game</h2>
     <div class="game-container">
         <div id="gameControls">
             <!-- Tic Tac Toe board buttons -->
             <div>
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 1" data-index="0"></button>
                 <!-- Add buttons for cells 2-9 -->
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 2" data-index="1"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 3" data-index="2"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 4" data-index="3"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 5" data-index="4"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 6" data-index="5"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 7" data-index="6"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 8" data-index="7"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 9" data-index="8"></button>
             </div>
         </div>
         <div class="scoreboard-container">
