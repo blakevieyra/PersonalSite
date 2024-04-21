@@ -131,19 +131,26 @@ function loadPlayers() {
     if (savedData) {
         return JSON.parse(savedData);
     } else {
-        // Optionally fetch from server if local data is not available
-        fetch('http://localhost:3000/leaderboard')
-            .then(response => response.json())
+        // Fetch from server if local data is not available
+        return fetch('http://localhost:3000/leaderboard')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();  // Return the parsed JSON response
+                } else {
+                    throw new Error('Failed to fetch players');
+                }
+            })
             .then(data => {
                 savePlayers(data);  // Save fetched data locally
-                return data;
+                return data;  // Return the fetched data to the calling function
             })
             .catch(error => {
                 console.error('Failed to fetch players:', error);
-                return [];
+                return [];  // Return an empty array if fetching fails
             });
     }
 }
+
 function updateScore(name, wins, losses, ties) {
     fetch('http://localhost:3000/update', {
         method: 'PUT',
