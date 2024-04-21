@@ -36,41 +36,34 @@
     </nav>
 
     <main class="container my-4">
-        <section class="text-center my-5 fade-in visible">
-            <h1>About Me</h1>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <p>I create full-stack web applications using the latest technologies to date. I also create electronic music in Pro Tools and am looking for talented artists to collaborate with.</p>
-                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                        <a href="https://www.facebook.com/blake.vieyra" class="btn btn-primary me-sm-2">Facebook</a>
-                        <a href="https://www.linkedin.com/in/blake-vieyra/" class="btn btn-secondary">LinkedIn</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-       <section class="text-center my-5 fade-in visible">
-    <h2>Rock, Paper, Scissors Game</h2>
+       <h2>Rock, Paper, Scissors Game</h2>
+<div>
+    <button class="btn btn-primary" onclick="playerChoice('rock')">Rock</button>
+    <button class="btn btn-primary" onclick="playerChoice('paper')">Paper</button>
+    <button class="btn btn-primary" onclick="playerChoice('scissors')">Scissors</button>
+</div>
+<div id="choices" class="mt-3">
     <div>
-        <button class="btn btn-primary" onclick="playerChoice('rock')">Rock</button>
-        <button class="btn btn-primary" onclick="playerChoice('paper')">Paper</button>
-        <button class="btn btn-primary" onclick="playerChoice('scissors')">Scissors</button>
+        <img id="userChoiceImg" src="" alt="Your Choice" style="height: 150px; display: none;">
+        <span>User Choice</span>
     </div>
-    <div id="choices" class="mt-3">
-        <img id="userChoiceImg" src="" alt="Your Choice" style="height: 100px; display: none;"> <!-- User choice image -->
-        <img id="computerChoiceImg" src="" alt="Computer's Choice" style="height: 100px; display: none;"> <!-- Computer choice image -->
+    <div>
+        <img id="computerChoiceImg" src="" alt="Computer's Choice" style="height: 150px; display: none;">
+        <span>Computer's Choice</span>
     </div>
-    <div id="result" class="mt-3"></div>
-    <div id="rpsScoreboard" class="mt-3">
-       <h4>Scoreboard</h4>
-<p>Wins: <span id="rpsWins">0</span></p>
-<p>Losses: <span id="rpsLosses">0</span></p>
-<p>Ties: <span id="rpsTies">0</span></p>
-<p>Mean: <span id="rpsMean">0</span></p>
-<p>Standard Deviation: <span id="rpsSD">0</span></p>
-        <div class="mt-3">
-            <canvas id="rpsChart"></canvas>
-        </div>
+</div>
+<div id="result" class="mt-3"></div>
+<div id="rpsScoreboard" class="mt-3">
+    <h4>Scoreboard</h4>
+    <p>Wins: <span id="rpsWins">0</span></p>
+    <p>Losses: <span id="rpsLosses">0</span></p>
+    <p>Ties: <span id="rpsTies">0</span></p>
+    <p>Mean: <span id="rpsMean">0</span></p>
+    <p>Standard Deviation: <span id="rpsSD">0</span></p>
+    <div class="mt-3">
+        <canvas id="rpsChart"></canvas>
     </div>
+</div>
 </section>
        <section class="text-center my-5 fade-in visible">
          <div class="container">
@@ -105,7 +98,7 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 <script>
-   let rpsWins = 0;
+  let rpsWins = 0;
 let rpsLosses = 0;
 let rpsTies = 0;
 
@@ -124,6 +117,7 @@ function playerChoice(choice) {
     displayRPSResult(result, choice, computerChoice);
 }
 
+// Determine the winner of Rock, Paper, Scissors game
 function determineWinner(player, computer) {
     if (player === computer) {
         return 'tie';
@@ -136,6 +130,7 @@ function determineWinner(player, computer) {
     }
 }
 
+// Calculate mean and standard deviation for Rock, Paper, Scissors game statistics
 function calculateStats() {
     const totalGames = rpsWins + rpsLosses + rpsTies;
     const mean = totalGames > 0 ? (rpsWins + rpsLosses + rpsTies) / totalGames : 0;
@@ -158,6 +153,7 @@ function updateRPSScoreboard() {
     document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
 }
 
+// Update Rock Paper Scissors game statistics
 function updateRPSStats(result) {
     if (result === 'win') {
         rpsWins++;
@@ -170,6 +166,7 @@ function updateRPSStats(result) {
     updateRPSChart();
 }
 
+// Display the result of Rock Paper Scissors game
 function displayRPSResult(result, playerChoice, computerChoice) {
     const userChoiceImg = document.getElementById('userChoiceImg');
     const computerChoiceImg = document.getElementById('computerChoiceImg');
@@ -179,8 +176,8 @@ function displayRPSResult(result, playerChoice, computerChoice) {
     computerChoiceImg.src = `images/${computerChoice}.png`;
 
     // Show the images
-    userChoiceImg.style.display = 'block';
-    computerChoiceImg.style.display = 'block';
+    userChoiceImg.style.display = 'inline-block';
+    computerChoiceImg.style.display = 'inline-block';
 
     // Display the result
     const resultDiv = document.getElementById('result');
@@ -199,6 +196,7 @@ let guessesLeft = 6;
 let lettersGuessed = [];
 let correctGuesses = [];
 
+// Set up Hangman game
 function setupHangmanGame() {
     selectedWord = words[Math.floor(Math.random() * words.length)];
     let displayWord = selectedWord.word.split("").map(letter => correctGuesses.includes(letter) ? letter : "_").join(" ");
@@ -212,6 +210,7 @@ function setupHangmanGame() {
     }, 2000);
 }
 
+// Guess a letter in Hangman game
 function guessLetter() {
     const letter = document.getElementById('letterInput').value.toLowerCase();
     if (!lettersGuessed.includes(letter)) {
@@ -231,11 +230,13 @@ function guessLetter() {
     }
 }
 
+// Update Hangman scoreboard
 function updateHangmanScoreboard() {
     document.getElementById("hangmanWins").textContent = hangmanWins;
     document.getElementById("hangmanLosses").textContent = hangmanLosses;
 }
 
+// Start a new Hangman game
 function startNewHangmanGame() {
     guessesLeft = 6;
     lettersGuessed = [];
@@ -244,10 +245,12 @@ function startNewHangmanGame() {
     updateHangmanScoreboard();
 }
 
+// Capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+// Update Rock Paper Scissors chart
 function updateRPSChart() {
     // Destroy the existing chart instance if it exists
     if (rpsChartInstance) {
@@ -285,6 +288,7 @@ function updateRPSChart() {
     });
 }
 
+// Update Hangman chart
 function updateHangmanChart() {
     // Destroy the existing chart instance if it exists
     if (hangmanChartInstance) {
@@ -320,6 +324,7 @@ function updateHangmanChart() {
     });
 }
 
+// Check if an element is in the viewport
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -345,17 +350,12 @@ window.addEventListener('scroll', handleScroll);
 // Initial check on page load
 handleScroll();
 
+// Set up the Hangman game when the window loads
 window.onload = () => {
-    startNewHangmanGame(); // Set up the Hangman game when the window loads
-    document.querySelectorAll('.btn-primary').forEach(button => {
-        button.addEventListener('click', event => {
-            const choice = event.target.textContent.toLowerCase();
-            playerChoice(choice);
-        });
-    });
+    startNewHangmanGame();
     updateRPSChart();
     updateHangmanChart();
-};
+}
 </script>
 
 </body>
