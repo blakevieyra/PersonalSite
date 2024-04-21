@@ -1,65 +1,68 @@
 body {
     background-color: #f9f3ec; /* Warm off-white background for a cozy feel */
-    font-family: 'Georgia', 'Times New Roman', serif; /* Serif font for a friendly, approachable look */
+    font-family: 'Georgia', serif; /* Serif font for a friendly, approachable look */
+    color: #333; /* Universal text color for improved readability */
+    line-height: 1.8; /* Optimal line height for readability */
     transition: background-color 0.5s ease; /* Smooth transition for background color changes */
 }
 
 h1, h2, h5 {
     text-align: center;
-    color: #3d3d3d; /* Deep charcoal color for a bold and confident appearance */
+    color: #2a2a2a; /* A slightly lighter shade of charcoal for text */
 }
 
 h1 {
-    font-size: 36px;
-    font-weight: bold; /* Increased font weight for emphasis */
+    font-size: 2.25rem; /* Responsive font size using rem units */
+    margin-bottom: 0.5em; /* Space below h1 for visual separation */
 }
 
 h2 {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 1.75rem;
+    margin-bottom: 0.75em; /* Space below h2 */
 }
 
 h5 {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0.5em; /* Space below h5 */
 }
 
 p, ul {
     text-align: left;
-    font-size: 18px;
-    color: #3d3d3d; /* Deep charcoal color for comfortable reading */
-    line-height: 1.6; /* Increase line spacing for better readability */
+    font-size: 1rem; /* Standard font size for paragraphs and list items */
 }
 
 ul {
-    list-style-type: disc; /* Changed list style to disc for a more professional look */
-    margin-left: 20px;
+    list-style-type: disc; /* Classic disc style for lists */
+    padding-left: 1.5rem; /* Proper indentation for lists */
 }
 
 .btn, .nav-link {
-    background: #decab9; /* Soft beige background for buttons */
-    color: #3d3d3d; /* Deep charcoal color for better visibility */
-    padding: 10px 20px;
-    border-radius: 5px; /* Rounded corners for a softer look */
-    box-shadow: 2px 2px 4px #7a7a7a; /* Subtle shadow for depth */
+    background-color: #decab9; /* Soft beige background for buttons and links */
+    color: #2a2a2a; /* Consistent text color for better accessibility */
+    padding: 0.5em 1em; /* Padding in em for scalability */
+    border: none; /* No border for a cleaner button appearance */
+    border-radius: 0.25rem; /* Subtle rounding of corners */
+    text-decoration: none; /* Removes underline from links */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .btn:hover, .nav-link:hover {
-    background: #b3a28f; /* Slightly darker beige on hover */
-    color: #ffffff; /* White color on hover for emphasis */
+    background-color: #b3a28f; /* Slightly darker beige on hover */
+    color: #fff; /* White color on hover for emphasis */
 }
 
 div {
-    border: 1px solid #b3a28f; /* Lighter border color to keep things soft */
-    background: #ffffff; /* White background retained for content areas */
+    border: 1px solid #b3a28f; /* Soft border color */
+    background-color: #fff; /* Consistent background declaration */
     padding: 20px;
-    box-shadow: 2px 2px 5px #7a7a7a; /* Updated shadow for consistency */
-    margin: 20px 10px; /* Adjusted margin for better layout spacing */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle box-shadow for depth */
+    margin: 20px 0; /* Vertical margin for separation */
 }
 
 footer {
-    background: #3d3d3d; /* Deep charcoal footer background for a bold appearance */
-    color: #ffffff; /* White text color for contrast */
-    padding: 20px 10px; /* Padding for better structure */
-    text-align: center; /* Centered text for a neat footer presentation */
+    background-color: #2a2a2a; /* Dark charcoal for footer */
+    color: #fff; /* White text for contrast */
+    padding: 20px 0; /* Symmetrical padding */
+    text-align: center;
+    font-size: 0.875rem; /* Smaller font size for footer text */
 }
