@@ -231,7 +231,6 @@ a:focus, button:focus {
                     <img id="computerChoiceImg" src="" alt="Computer's Choice" style="height: 150px; display: none;">
                     <p>Computer's Choice</p>
                 </div>
-                <div id="errorDisplay"></div>
             </div>
             <div id="result" class="mt-3"></div>
         </div>
@@ -245,6 +244,10 @@ a:focus, button:focus {
                     
 
             <canvas id="rpsChart" class="chart" aria-label="Game Results Chart"></canvas>
+                        <div id="result" class="mt-3"></div>
+                            <div id="errorDisplay"></div>
+
+
 
         </div>
     </div>
@@ -264,7 +267,7 @@ a:focus, button:focus {
 <button id="setDifficultyButton" class="btn btn-secondary">Set Difficulty</button>
 </div>
             <div>
-                <p id="wordDisplay">_ _ _ _ _</p>
+                <div id="wordDisplay">_ _ _ _ _</div>
                 <div class="input-group mb-3">
                     <input type="text" id="letterInput" maxlength="1" class="form-control" autocomplete="off" aria-label="Enter a letter">
                     <button class="btn btn-primary" id="guessButton" aria-label="Guess a letter">Guess</button>
@@ -275,11 +278,7 @@ a:focus, button:focus {
                     <p>Hint: <span id="hintText"></span></p>
                 </div>
             </div>
-            <div id="computerStats" class="scoreboard">
-                <h4>Computer Stats</h4>
-                <p>Computer guesses left: <span id="computerGuessesLeft">6</span></p>
-                <p>Computer letters guessed: <span id="computerLettersGuessed"></span></p>
-            </div>
+            
         </div>
         <div id="hangmanScoreboard" class="scoreboard">
             <h4>Scoreboard</h4>
@@ -287,16 +286,21 @@ a:focus, button:focus {
             <p>Losses: <span id="hangmanLosses">0</span></p>
           
                 <canvas id="hangmanChart" class="chart" aria-label="Game Results Chart"></canvas>
+            <div id="computerStats" class="scoreboard">
+                <h4>Computer Stats</h4>
+                <p>Computer guesses left: <span id="computerGuessesLeft">6</span></p>
+                <p>Computer letters guessed: <span id="computerLettersGuessed"></span></p>
+            </div>
          
         </div>
     </div>
 </section>
 <section class="text-center my-5 fade-in visible">
     <h2>Tic Tac Toe Game</h2>
-    <div id="ticTacToeBoard" class="game-container d-flex justify-content-center align-items-start">
+    <div class="game-container d-flex justify-content-center align-items-start">
         <!-- Game Controls for Tic Tac Toe -->
         <div id="gameControls" class="me-4">
-            <div class="btn-group-vertical">
+            <div id="ticTacToeBoard" class="btn-group-vertical">
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 1" data-index="0"></button>
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 2" data-index="1"></button>
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 3" data-index="2"></button>
