@@ -44,7 +44,7 @@ function registerOrUpdatePlayer(players, playerName) {
 function initGames(currentPlayer) {
     // Assuming each game class can accept the currentPlayer object
 const rockPaperScissors = new RockPaperScissors(currentPlayer, updateGlobalLeaderboard);
-    rockPaperScissors.init();
+
 
     const hangman = new Hangman(currentPlayer);
     hangman.init();
@@ -143,8 +143,9 @@ function updateGlobalLeaderboard(data) {
 }
 
 class RockPaperScissors {
-    constructor(player) {
+    constructor(player, updateGlobalLeaderboard) {
          this.player = player;
+        this.updateGlobalLeaderboard = updateGlobalLeaderboard;
         this.buttons = document.querySelectorAll("#rpsButtons button");
           this.wins = 0;
         this.losses = 0;
