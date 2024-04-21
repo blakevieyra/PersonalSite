@@ -476,10 +476,10 @@ changeDifficulty() {
 
 init(difficulty) {
     // Ensure there's always a fallback for difficulty
+    this.attachEventListeners();
     this.setDifficulty(difficulty || this.difficulty); 
     this.resetGame();
     this.setupChart();
-    this.attachEventListeners();
 }
      guessLetter(letter) {
     if (!/[a-z]/i.test(letter)) {
