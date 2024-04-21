@@ -174,7 +174,11 @@
             <p>Ties: <span id="rpsTies">0</span></p>
             <p>Mean Performance: <span id="rpsMean">0</span></p>
             <p>Standard Deviation: <span id="rpsSD">0</span></p>
-            <canvas id="rpsChart" class="chart"></canvas>
+                        <div class="chart-container">
+
+            <canvas id="rpsChart" class="chart" aria-label="Game Results Chart"></canvas>
+                                    </div>
+
         </div>
     </div>
 </section>
@@ -190,7 +194,7 @@
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
     </select>
-    <button onclick="game.init(document.getElementById('difficulty').value)" class="btn btn-secondary">Set Difficulty</button>
+<button id="setDifficultyButton" class="btn btn-secondary">Set Difficulty</button>
 </div>
             <div>
                 <p id="wordDisplay">_ _ _ _ _</p>
@@ -215,7 +219,7 @@
             <p>Wins: <span id="hangmanWins">0</span></p>
             <p>Losses: <span id="hangmanLosses">0</span></p>
             <div class="chart-container">
-                <canvas id="hangmanChart" class="chart"></canvas>
+                <canvas id="hangmanChart" class="chart" aria-label="Game Results Chart"></canvas>
             </div>
         </div>
     </div>
@@ -262,7 +266,9 @@
         <p>Player Wins: <span id="playerWins">0</span></p>
         <p>Computer Wins: <span id="computerWins">0</span></p>
         <p>Ties: <span id="ties">0</span></p>
+         <div class="chart-container">
         <canvas id="ticTacToeChart" class="chart" aria-label="Game Results Chart"></canvas>
+               </div>
     </div>
 </section>
 
