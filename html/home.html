@@ -81,19 +81,49 @@
     </nav>
 
     <main class="container my-4">
-        <section class="text-center my-5">
+
+
+
+        
+        <section class="text-center my-5 fade-in visible">
             <h1>About Me</h1>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <p>I create full-stack web applications using the latest technologies to date. I also create electronic music in Pro Tools and am looking for talented artists to collaborate with.</p>
+                    <p>I create full-stack web applications using the latest technologies to date. I also create electronic music in Pro Tools and am looking for talented artists to collaborate with. Please enjoy the games below and keep an eye on the leaderboards!</p>
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                         <a href="https://www.facebook.com/blake.vieyra" class="btn btn-primary me-sm-2">Facebook</a>
                         <a href="https://www.linkedin.com/in/blake-vieyra/" class="btn btn-secondary">LinkedIn</a>
                     </div>
                 </div>
             </div>
-        </section>
-    <main class="container my-4">
+
+                    
+<section class="text-center my-5 fade-in visible">
+    <h1>Register for the Game</h1>
+    <form id="playerForm">
+        <label for="playerName">Enter your name:</label>
+        <input type="text" id="playerName" placeholder="Your name" required maxlength="20">
+        <button type="submit" class="btn btn-primary">Start Games</button>
+    </form>
+
+    <h2>Game Leaderboard</h2>
+    <table id="leaderboard" class="table">
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Ties</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Player scores will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+</section>
+
+            
+       <section class="text-center my-5 fade-in visible">
        <h2>Rock, Paper, Scissors Game</h2>
 <div id="rpsButtons">
     <button class="btn btn-primary" data-choice="rock">Rock</button>
@@ -203,18 +233,98 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-    const rockPaperScissors = new RockPaperScissors();
-    rockPaperScissors.init();
+document.addEventListener('DOMContentLoaded', function() {
+    let players = loadPlayers();
 
-    const hangman = new Hangman();
-    hangman.init();
+    const form = document.getElementById('playerForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const playerName = document.getElementById('playerName').value.trim();
+        if (playerName) {
+            const currentPlayer = registerOrUpdatePlayer(players, playerName);
+            initGames(currentPlayer);
+            populateLeaderboard(players);
+            form.reset(); // Reset form after submission
+        } else {
+            alert("Please enter a valid name.");
+        }
+    });
 
-    const ticTacToe = new TicTacToe();
-    ticTacToe.init();
+    document.getElementById('clearLeaderboard').addEventListener('click', () => {
+        clearLeaderboard();
+    });
+
+    function clearLeaderboard() {
+        localStorage.removeItem('players');
+        populateLeaderboard(); // Re-populate to show empty state
+    }
+
+
+    function registerOrUpdatePlayer(players, playerName) {
+        let currentPlayer = players.find(p => p.name === playerName);
+        if (!currentPlayer) {
+            currentPlayer = { name: playerName, wins: 0, losses: 0, ties: 0 };
+            players.push(currentPlayer);
+            savePlayers(players);
+        }
+        return currentPlayer;
+    }
+
+    function initGames(currentPlayer) {
+        // Assuming each game class can accept the currentPlayer object
+        const rockPaperScissors = new RockPaperScissors(currentPlayer);
+        rockPaperScissors.init();
+
+        const hangman = new Hangman(currentPlayer);
+        hangman.init();
+
+        const ticTacToe = new TicTacToe(currentPlayer);
+        ticTacToe.init();
+    }
+
+    function populateLeaderboard() {
+        const players = loadPlayers(); 
+        const tbody = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+        tbody.innerHTML = ""; 
+
+        players.sort((a, b) => b.wins - a.wins); 
+
+        players.forEach(player => {
+            const row = tbody.insertRow();
+            row.insertCell(0).textContent = player.name;
+            row.insertCell(1).textContent = player.wins;
+            row.insertCell(2).textContent = player.losses;
+            row.insertCell(3).textContent = player.ties;
+        });
+    }
+
+    function savePlayers(players) {
+        localStorage.setItem('players', JSON.stringify(players));
+    }
+
+    function loadPlayers() {
+        return JSON.parse(localStorage.getItem('players') || '[]');
+    }
+
+    function updateGlobalLeaderboard(player) {
+        const players = loadPlayers(); 
+        let existingPlayer = players.find(p => p.name === player.name);
+
+        if (existingPlayer) {
+            existingPlayer.wins = player.wins;
+            existingPlayer.losses = player.losses;
+            existingPlayer.ties = player.ties;
+        } else {
+            players.push(player);
+        }
+
+        savePlayers(players);
+        populateLeaderboard();
+    }
 });
 class RockPaperScissors {
     constructor() {
+         this.player = player;
         this.buttons = document.querySelectorAll("#rpsButtons button");
           this.wins = 0;
         this.losses = 0;
@@ -256,17 +366,18 @@ class RockPaperScissors {
         }
     }
 
-    updateStats(result) {
-        if (result === 'win') {
-            this.wins++;
-        } else if (result === 'lose') {
-            this.losses++;
-        } else {
-            this.ties++;
-        }
-        this.updateScoreboard();
-        this.updateChart();
+   updateStats(result) {
+    if (result === 'win') {
+        this.player.wins++;
+    } else if (result === 'lose') {
+        this.player.losses++;
+    } else {
+        this.player.ties++;
     }
+    this.updateScoreboard();
+    this.updateChart();
+    this.updateGlobalLeaderboard();
+}
 
     updateScoreboard() {
         const stats = this.calculateStats();
@@ -632,6 +743,7 @@ class TicTacToe {
         }
     }
 }
+
 </script>
 
 </body>
