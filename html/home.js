@@ -263,7 +263,7 @@ class RockPaperScissors {
         };
     }
 
-  function displayResult(result, playerChoice, computerChoice) {
+ displayResult(result, playerChoice, computerChoice) {
     const userChoiceImg = document.getElementById('userChoiceImg');
     const computerChoiceImg = document.getElementById('computerChoiceImg');
     if (!userChoiceImg || !computerChoiceImg) {
