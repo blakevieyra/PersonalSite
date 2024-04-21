@@ -317,35 +317,46 @@ class Hangman {
         this.lettersGuessed = [];
         this.correctGuesses = [];
         this.words = {
-    easy: [
-        { word: "cat", hint: "A small domesticated carnivorous mammal with soft fur" },
-        { word: "dog", hint: "A domesticated carnivorous mammal with four legs and a tail" },
-        { word: "house", hint: "A building for human habitation" },
-        { word: "ball", hint: "A round object that can be thrown, kicked, or hit" },
-        { word: "book", hint: "A written or printed work consisting of pages glued or sewn together along one side and bound in covers" },
-        { word: "sun", hint: "The star around which the earth orbits" },
-        // Add more easy words here
-    ],
-    medium: [
-        { word: "computer", hint: "An electronic device for processing data" },
-        { word: "table", hint: "A piece of furniture with a flat top and one or more legs" },
-        { word: "guitar", hint: "A stringed musical instrument played by plucking or strumming" },
-        { word: "painting", hint: "A picture or design made using paint" },
-        { word: "piano", hint: "A large keyboard musical instrument" },
-        { word: "garden", hint: "A piece of ground, often near a house, used for growing flowers, fruit, or vegetables" },
-        // Add more medium words here
-    ],
-    hard: [
-        { word: "perplexity", hint: "State of being bewildered or puzzled" },
-        { word: "paradox", hint: "A seemingly contradictory statement that may nonetheless be true" },
-        { word: "labyrinthine", hint: "Complicated and confusing, like a labyrinth" },
-        { word: "serendipity", hint: "The occurrence and development of events by chance in a happy or beneficial way" },
-        { word: "quixotic", hint: "Exceedingly idealistic; unrealistic and impractical" },
-        { word: "antediluvian", hint: "Of or belonging to the time before the biblical Flood" },
-        // Add more hard words here
-    ]
-};
-};
+            easy: [
+                { word: "cat", hint: "A small domesticated carnivorous mammal with soft fur" },
+                { word: "dog", hint: "A domesticated carnivorous mammal with four legs and a tail" },
+                { word: "house", hint: "A building for human habitation" },
+                { word: "ball", hint: "A round object that can be thrown, kicked, or hit" },
+                { word: "book", hint: "A written or printed work consisting of pages glued or sewn together along one side and bound in covers" },
+                { word: "sun", hint: "The star around which the earth orbits" },
+                { word: "tree", hint: "A woody perennial plant, typically having a single stem or trunk growing to a considerable height and bearing lateral branches at some distance from the ground." },
+                { word: "cup", hint: "A small bowl-shaped container for drinking from, typically having a handle" },
+                { word: "cake", hint: "An item of soft, sweet food made from a mixture of flour, fat, eggs, sugar, and other ingredients, baked and sometimes iced or decorated" },
+                { word: "bird", hint: "A warm-blooded egg-laying vertebrate distinguished by the possession of feathers, wings, and a beak" }
+                // Add more easy words here
+            ],
+            medium: [
+                { word: "computer", hint: "An electronic device for processing data" },
+                { word: "table", hint: "A piece of furniture with a flat top and one or more legs" },
+                { word: "guitar", hint: "A stringed musical instrument played by plucking or strumming" },
+                { word: "painting", hint: "A picture or design made using paint" },
+                { word: "piano", hint: "A large keyboard musical instrument" },
+                { word: "garden", hint: "A piece of ground, often near a house, used for growing flowers, fruit, or vegetables" },
+                { word: "mountain", hint: "A large natural elevation of the earth's surface rising abruptly from the surrounding level; a large steep hill" },
+                { word: "river", hint: "A large natural stream of water flowing in a channel to the sea, a lake, or another such stream" },
+                { word: "camera", hint: "An optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both" },
+                { word: "movie", hint: "A story or event recorded by a camera as a set of moving images and shown in a theater or on television; a motion picture" }
+                // Add more medium words here
+            ],
+            hard: [
+                { word: "perplexity", hint: "State of being bewildered or puzzled" },
+                { word: "paradox", hint: "A seemingly contradictory statement that may nonetheless be true" },
+                { word: "labyrinthine", hint: "Complicated and confusing, like a labyrinth" },
+                { word: "serendipity", hint: "The occurrence and development of events by chance in a happy or beneficial way" },
+                { word: "quixotic", hint: "Exceedingly idealistic; unrealistic and impractical" },
+                { word: "antediluvian", hint: "Of or belonging to the time before the biblical Flood" },
+                { word: "ephemeral", hint: "Lasting for a very short time" },
+                { word: "capricious", hint: "Given to sudden and unaccountable changes of mood or behavior" },
+                { word: "ubiquitous", hint: "Present, appearing, or found everywhere" },
+                { word: "indefatigable", hint: "Persisting tirelessly" }
+                // Add more hard words here
+            ]
+        };
         this.selectedWord = null;
         this.chartId = 'hangmanChart';
         this.chart = null;
