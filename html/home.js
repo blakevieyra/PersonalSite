@@ -1,3 +1,8 @@
+import Hangman from './Hangman.js';
+import RockPaperScissors from './RockPaperScissors.js';
+import TicTacToe from './TicTacToe.js';
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Register form submission handling
     const registerForm = document.getElementById('registerForm');
@@ -165,11 +170,6 @@ function updateScoreInDB(name, wins, losses, ties) {
         }
     });
 }
-const Hangman = require('./Hangman');
-const RockPaperScissors = require('./RockPaperScissors');
-const TicTacToe = require('./TicTacToe');
-
-// Your existing code...
 
 function initGames(currentPlayer) {
     try {

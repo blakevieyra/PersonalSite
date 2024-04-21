@@ -1,4 +1,4 @@
-class TicTacToe {
+export default class TicTacToe {
     constructor() {
         this.cells = document.querySelectorAll("#ticTacToeBoard button");
         this.playerWins = 0;

@@ -1,5 +1,5 @@
 
-class RockPaperScissors {
+export default class RockPaperScissors {
     constructor(player, updateGlobalLeaderboard) {
         this.player = player;
         this.updateGlobalLeaderboard = updateGlobalLeaderboard;
