@@ -639,6 +639,9 @@ resetGame() {
             this.computerMove(); // If the computer should start, trigger its move
         }, 1000);
     }
+    
+    // Add the event listener back after resetting the game
+    this.setupBoard();
 }
     playerMove(index) {
         if (!this.gameOver && this.gameBoard[index] === '') {
