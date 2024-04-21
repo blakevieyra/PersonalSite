@@ -156,10 +156,9 @@ function updateGlobalLeaderboard(data) {
     // Efficiently update the DOM
     updateLeaderboardDOM(leaderboard, data);
 }
-
 function updateLeaderboardDOM(leaderboard, data) {
-    // Assuming the leaderboard structure is known and consistent
-    const existingRows = leaderboard.querySelectorAll('tr').slice(1); // skip header row
+    // Convert NodeList to an Array to use the slice method
+    const existingRows = Array.from(leaderboard.querySelectorAll('tr')).slice(1); // Skip header row
     data.forEach((player, index) => {
         if (existingRows[index] && isValidPlayerData(player)) {
             updateLeaderboardRow(existingRows[index], player);
@@ -264,15 +263,19 @@ class RockPaperScissors {
         };
     }
 
-    displayResult(result, playerChoice, computerChoice) {
-        const userChoiceImg = document.getElementById('userChoiceImg');
-        const computerChoiceImg = document.getElementById('computerChoiceImg');
-        userChoiceImg.src = `images/${playerChoice}.png`;
-        computerChoiceImg.src = `images/${computerChoice}.png`;
-        userChoiceImg.style.display = 'inline-block';
-        computerChoiceImg.style.display = 'inline-block';
-        document.getElementById('result').innerHTML = `${this.capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+  function displayResult(result, playerChoice, computerChoice) {
+    const userChoiceImg = document.getElementById('userChoiceImg');
+    const computerChoiceImg = document.getElementById('computerChoiceImg');
+    if (!userChoiceImg || !computerChoiceImg) {
+        console.error("Critical elements are missing for displaying results.");
+        return;
     }
+    userChoiceImg.src = `images/${playerChoice}.png`;
+    computerChoiceImg.src = `images/${computerChoice}.png`;
+    userChoiceImg.style.display = 'inline-block';
+    computerChoiceImg.style.display = 'inline-block';
+    document.getElementById('result').innerHTML = `${this.capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+}
 
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -622,18 +625,18 @@ class TicTacToe {
 }
 
 resetGame() {
-    this.currentPlayer = 'X';
-    this.gameBoard = Array(9).fill('');
-    this.cells.forEach(cell => cell.textContent = '');
-    this.gameOver = false;
-    setTimeout(() => {
-        document.getElementById('ticTacToeResult').textContent = '';
-        if (this.currentPlayer === 'O') {
-            this.computerMove();
-        }
-    }, 2000);
+    console.log('Resetting game...');
+    this.currentPlayer = 'X'; // Reset the current player to X
+    this.gameBoard = Array(9).fill(''); // Clear the game board
+    this.cells.forEach(cell => cell.textContent = ''); // Clear the text content of each cell
+    this.gameOver = false; // Set game over to false to allow new game to start
+    document.getElementById('ticTacToeResult').textContent = ''; // Clear the result text immediately
+    if (this.currentPlayer === 'O') {
+        setTimeout(() => {
+            this.computerMove(); // If the computer should start, trigger its move
+        }, 1000);
+    }
 }
-
     playerMove(index) {
         if (!this.gameOver && this.gameBoard[index] === '') {
             this.gameBoard[index] = this.currentPlayer;
@@ -754,12 +757,24 @@ resetGame() {
         }
     }
 setupBoard() {
-    const board = document.getElementById('ticTacToeBoard'); // Assuming your buttons are within this container
-    board.addEventListener('click', (event) => {
+    const board = document.getElementById('ticTacToeBoard');
+    // Remove any existing event listeners to avoid duplicates
+    board.removeEventListener('click', this.handleBoardClick);
+
+    // Bind the current class context to the event handler
+    this.handleBoardClick = this.handleBoardClick.bind(this);
+
+    // Add the event listener
+    board.addEventListener('click', this.handleBoardClick);
+}
+
+handleBoardClick(event) {
+    // Check if the clicked element is a button (use a more specific selector if necessary)
+    if (event.target.tagName === 'btn') {
         const index = Array.from(this.cells).indexOf(event.target);
         if (index !== -1) {
             this.playerMove(index);
         }
-    });
+    }
 }
 }
