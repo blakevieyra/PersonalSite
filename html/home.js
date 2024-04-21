@@ -43,7 +43,7 @@ function registerOrUpdatePlayer(players, playerName) {
 
 function initGames(currentPlayer) {
     // Assuming each game class can accept the currentPlayer object
-    const rockPaperScissors = new RockPaperScissors(currentPlayer);
+const rockPaperScissors = new RockPaperScissors(currentPlayer, updateGlobalLeaderboard);
     rockPaperScissors.init();
 
     const hangman = new Hangman(currentPlayer);
@@ -98,6 +98,48 @@ function updateScore(name, wins, losses, ties) {
         updateGlobalLeaderboard(data); // Refresh leaderboard with new data
     })
     .catch(error => console.error('Error:', error));
+}
+
+function updateGlobalLeaderboard(data) {
+    // Assuming data is an array of player objects with updated scores
+    const leaderboard = document.getElementById('globalLeaderboard');
+    
+    // Clear existing leaderboard
+    leaderboard.innerHTML = '';
+
+    // Create table header
+    const headerRow = document.createElement('tr');
+    const headerName = document.createElement('th');
+    headerName.textContent = 'Player';
+    const headerWins = document.createElement('th');
+    headerWins.textContent = 'Wins';
+    const headerLosses = document.createElement('th');
+    headerLosses.textContent = 'Losses';
+    const headerTies = document.createElement('th');
+    headerTies.textContent = 'Ties';
+    headerRow.appendChild(headerName);
+    headerRow.appendChild(headerWins);
+    headerRow.appendChild(headerLosses);
+    headerRow.appendChild(headerTies);
+    leaderboard.appendChild(headerRow);
+
+    // Add players to leaderboard
+    data.forEach(player => {
+        const row = document.createElement('tr');
+        const playerName = document.createElement('td');
+        playerName.textContent = player.name;
+        const playerWins = document.createElement('td');
+        playerWins.textContent = player.wins;
+        const playerLosses = document.createElement('td');
+        playerLosses.textContent = player.losses;
+        const playerTies = document.createElement('td');
+        playerTies.textContent = player.ties;
+        row.appendChild(playerName);
+        row.appendChild(playerWins);
+        row.appendChild(playerLosses);
+        row.appendChild(playerTies);
+        leaderboard.appendChild(row);
+    });
 }
 
 class RockPaperScissors {
