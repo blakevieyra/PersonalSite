@@ -50,12 +50,6 @@
     padding: 0; /* Remove padding from columns */
 }
 
-#ticTacToeBoard .btn {
-    width: 100px; /* Adjust button width */
-    height: 100px; /* Adjust button height */
-    font-size: 1.5rem; /* Adjust font size */
-}
-
 /* Styling for game results */
 .winning-cell {
     color: red; /* Change text color for winning cells */
@@ -67,10 +61,19 @@
     animation: pulse 1s infinite; /* Animation effect */
 }
 
-.win { background-color: green; }
-.lose { background-color: red; }
-.tie { background-color: yellow; }
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745; /* More soothing green */
+    --error-color: #dc3545; /* Consistent with Bootstrap's danger color */
+    --warning-color: #ffc107; /* Consistent with Bootstrap's warning color */
+    --light-background: #f8f9fa; /* Light background for better contrast */
+    --dark-text: #343a40; /* Dark text for readability */
+}
 
+.win { background-color: var(--success-color); }
+.lose { background-color: var(--error-color); }
+.tie { background-color: var(--warning-color); }
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -78,9 +81,11 @@
 }
 
 /* Button hover effect */
-.btn:hover {
-    transform: scale(1.05); /* Slightly enlarge buttons on hover */
-    transition: transform 0.3s;
+.btn:hover, .btn:focus {
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 10px var(--primary-color); /* Add a subtle shadow for focus and hover */
 }
 
 /* Game container styles */
@@ -112,10 +117,60 @@
     margin-bottom: 0.5rem;
 }
 
-/* Styling for the footer */
+#ticTacToeBoard .btn {
+    width: calc(33.333% - 10px); /* Dynamic width calculation */
+    height: 100px; /* Fixed height for uniformity */
+    margin: 5px; /* Ensure spacing around buttons */
+    font-size: 2rem; /* Larger font size for better visibility */
+    font-weight: bold; /* Make symbols bold */
+}
+
+/* Footer enhancements for better legibility and spacing */
 footer {
-    margin-top: 20px; /* Adding margin to the top */
-    padding: 10px 0; /* Adding padding to top and bottom */
+    background-color: var(--secondary-color); /* Use of CSS variable for color */
+    color: var(--light-background); /* Improved contrast */
+    margin-top: 40px; /* Increased spacing from content */
+    padding: 20px 0; /* More padding for a taller footer */
+    font-size: 1.2rem; /* Larger font size for readability */
+}
+
+/* Ensure all interactive elements are accessible */
+a:focus, button:focus {
+    outline: 2px solid var(--primary-color); /* More noticeable focus outline */
+}
+        .game-container {
+    display: flex;
+    justify-content: center;
+    align-items: start; /* Align items at the start of the flex container */
+}
+
+.scoreboard-container {
+    flex: 1; /* Takes up 1 portion of the available space */
+    margin-right: 20px; /* Add space between the scoreboard and the game board */
+}
+
+#gameControls {
+    flex: 1; /* Takes up 1 portion of the available space */
+}
+
+.btn-group-vertical {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates a grid layout with 3 columns */
+    gap: 10px; /* Adds space between buttons */
+}
+
+/* Add responsive adjustments if necessary */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #gameControls, .scoreboard-container {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }
 </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -266,12 +321,23 @@ footer {
 </section>
 <section class="text-center my-5 fade-in visible">
     <h2>Tic Tac Toe Game</h2>
-    <div class="game-container">
-        <div id="gameControls">
-            <!-- Tic Tac Toe board buttons -->
-            <div>
+    <div class="game-container d-flex justify-content-center align-items-start">
+        <!-- Scoreboard and Chart Container -->
+        <div class="scoreboard-container">
+            <h4>Scoreboard</h4>
+            <p>Player Wins: <span id="playerWins">0</span></p>
+            <p>Computer Wins: <span id="computerWins">0</span></p>
+            <p>Ties: <span id="ties">0</span></p>
+            <!-- Tic Tac Toe Chart -->
+            <div id="ticTacToeChartContainer">
+                <canvas id="ticTacToeChart" class="chart" aria-label="Game Results Chart"></canvas>
+                <p id="ticTacToeResult" class="mt-3 result-text" aria-live="polite"></p>
+            </div>
+        </div>
+        <!-- Game Controls for Tic Tac Toe -->
+        <div id="gameControls" class="ms-4">
+            <div class="btn-group-vertical">
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 1" data-index="0"></button>
-                <!-- Add buttons for cells 2-9 -->
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 2" data-index="1"></button>
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 3" data-index="2"></button>
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 4" data-index="3"></button>
@@ -282,23 +348,8 @@ footer {
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 9" data-index="8"></button>
             </div>
         </div>
-        <div class="scoreboard-container">
-            <!-- Tic Tac Toe scoreboard -->
-            <div id="ticTacToeScoreboard" class="scoreboard" aria-live="polite">
-                <h4>Scoreboard</h4>
-                <p>Player Wins: <span id="playerWins">0</span></p>
-                <p>Computer Wins: <span id="computerWins">0</span></p>
-                <p>Ties: <span id="ties">0</span></p>
-            </div>
-            <!-- Tic Tac Toe chart -->
-            <div id="ticTacToeChartContainer">
-                <canvas id="ticTacToeChart" class="chart" aria-label="Game Results Chart"></canvas>
-                <p id="ticTacToeResult" class="mt-3 result-text" aria-live="polite"></p>
-            </div>
-        </div>
     </div>
 </section>
-      
     
  
 </main>
