@@ -68,10 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('players', JSON.stringify(players));
     }
 
-    function loadPlayers() {
-        return JSON.parse(localStorage.getItem('players') || '[]');
-    }
-
     function updateGlobalLeaderboard(player) {
     const players = loadPlayers();
     let existingPlayer = players.find(p => p.name === player.name);
@@ -99,17 +95,46 @@ document.addEventListener('DOMContentLoaded', function() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name })
-    }).then(response => {
-        if (response.ok) return response.json();
-        throw new Error('Failed to register');
     })
-    .then(data => {
-        console.log('Registration successful:', data);
-        updateGlobalLeaderboard(data); // Assuming you want to refresh or display immediately
+    .then(response => response.json())
+    .then(player => {
+        // Check if the player was successfully registered or already exists
+        if (player && player.name) {
+            console.log('Registration successful:', player);
+            const players = loadPlayers();
+            const currentPlayer = registerOrUpdatePlayer(players, player.name);
+            savePlayers(players);
+            initGames(currentPlayer);
+            populateLeaderboard(players);
+        } else {
+            throw new Error('Failed to register');
+        }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Registration failed, please try again.');
+    });
 }
 
+// Enhanced load from local storage or fetch from server
+function loadPlayers() {
+    const savedData = localStorage.getItem('players');
+    if (savedData) {
+        return JSON.parse(savedData);
+    } else {
+        // Optionally fetch from server if local data is not available
+        fetch('http://localhost:3000/leaderboard')
+            .then(response => response.json())
+            .then(data => {
+                savePlayers(data);  // Save fetched data locally
+                return data;
+            })
+            .catch(error => {
+                console.error('Failed to fetch players:', error);
+                return [];
+            });
+    }
+}
 function updateScore(name, wins, losses, ties) {
     fetch('http://localhost:3000/update', {
         method: 'PUT',
