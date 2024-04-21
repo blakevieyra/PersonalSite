@@ -176,7 +176,7 @@
         </div>
     </div>
 </section>
-       <section class="text-center my-5 fade-in visible">
+     <section class="text-center my-5 fade-in visible">
     <h2>Hangman Game</h2>
     <div id="gameContainer" class="game-container"> <!-- Flex container -->
         <div id="gameControls">
@@ -193,13 +193,18 @@
                 </div>
             </div>
         </div>
+        <div id="computerStats" class="scoreboard"> <!-- Additional section for computer stats -->
+            <h4>Computer Stats</h4>
+            <p>Computer guesses left: <span id="computerGuessesLeft">6</span></p>
+            <p>Computer letters guessed: <span id="computerLettersGuessed"></span></p>
+        </div>
         <div id="hangmanScoreboard" class="scoreboard">
             <h4>Scoreboard</h4>
             <p>Wins: <span id="hangmanWins">0</span></p>
             <p>Losses: <span id="hangmanLosses">0</span></p>
-        <div class="chart-container">
-            <canvas id="hangmanChart" class="chart"></canvas>
-        </div>
+            <div class="chart-container">
+                <canvas id="hangmanChart" class="chart"></canvas>
+            </div>
         </div>
     </div>
 </section>
