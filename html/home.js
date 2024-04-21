@@ -163,12 +163,15 @@ function updateLeaderboardDOM(leaderboard, data) {
     // Convert NodeList to an Array to use the slice method
     const existingRows = Array.from(leaderboard.querySelectorAll('tr')).slice(1); // Skip header row
 
-    // Check if data is actually an array and has elements
-    if (Array.isArray(data) && data.length > 0) {
+    // Check if data is an array
+    if (Array.isArray(data)) {
+        // If data is an array, treat it as multiple players
         data.forEach((player, index) => {
             if (existingRows[index] && isValidPlayerData(player)) {
+                // Update existing row if it exists and player data is valid
                 updateLeaderboardRow(existingRows[index], player);
             } else {
+                // Create a new row for the player and append it to the leaderboard
                 const row = createLeaderboardRow(player);
                 leaderboard.appendChild(row);
             }
@@ -176,6 +179,19 @@ function updateLeaderboardDOM(leaderboard, data) {
 
         // Remove any extra rows
         while (leaderboard.children.length > data.length + 1) { // +1 for the header
+            leaderboard.removeChild(leaderboard.lastChild);
+        }
+    } else if (isValidPlayerData(data)) {
+        // If data is a single player object and it is valid, update the first row
+        if (existingRows[0]) {
+            updateLeaderboardRow(existingRows[0], data);
+        } else {
+            const row = createLeaderboardRow(data);
+            leaderboard.appendChild(row);
+        }
+
+        // Remove any extra rows
+        while (leaderboard.children.length > 2) { // Remove all rows except the header
             leaderboard.removeChild(leaderboard.lastChild);
         }
     } else {
