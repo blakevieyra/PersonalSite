@@ -168,7 +168,7 @@ function updateScore(name, wins, losses, ties) {
     })
     .catch(error => console.error('Error:', error));
 }
-});
+
 class RockPaperScissors {
     constructor() {
          this.player = player;
