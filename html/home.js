@@ -475,8 +475,9 @@ changeDifficulty() {
     this.displayWord();
 }
 
-init(difficulty = this.difficulty) {
-    this.setDifficulty(difficulty); // Set difficulty based on argument or default to class property
+init(difficulty) {
+    // Ensure there's always a fallback for difficulty
+    this.setDifficulty(difficulty || this.difficulty); 
     this.resetGame();
     this.setupChart();
     this.attachEventListeners();
