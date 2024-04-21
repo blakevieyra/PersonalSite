@@ -66,15 +66,23 @@
         </audio>
     </div>
            <div class="list-group-item fade-in">
-        <h5 class="mb-1">See the Light2</h5>
+        <h5 class="mb-1">See the light</h5>
         <!-- Audio player for song 2 -->
         <audio controls class="mt-2">
             <source src="seethelight.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
+       <div class="list-group-item fade-in">
+        <h5 class="mb-1">You Made It</h5>
+        <!-- Audio player for song 1 -->
+        <audio controls class="mt-2">
+            <source src="youmadeit.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
     <div class="list-group-item fade-in">
-        <h5 class="mb-1">Club Beat 1</h5>
+        <h5 class="mb-1">Club Beat</h5>
         <!-- Audio player for song 1 -->
         <audio controls class="mt-2">
             <source src="clubbeat.mp3" type="audio/mpeg">
@@ -82,16 +90,28 @@
         </audio>
     </div>
 
+        
+
  
     <!-- More music items -->
 </div>
 
-        <section class="mb-5" id="contactForm">
-            <!-- Contact form -->
-            <!-- Add "fade-in" class to elements you want to animate -->
-            <h2 class="fade-in">Contact Me</h2>
-            <form class="fade-in" action="https://formspree.io/f/mwkgabzw" method="POST">
-                <!-- Form content -->
+        <section class="mb-5 fade-in" id="contactForm">
+            <h2>Contact Me</h2>
+            <form action="https://formspree.io/f/mwkgabzw" method="POST">
+                <div class="mb-3">
+                    <label for="nameInput" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="messageTextarea" class="form-label">Message</label>
+                    <textarea class="form-control" id="messageTextarea" name="message" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
             </form>
         </section>
 
