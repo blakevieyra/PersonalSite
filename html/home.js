@@ -400,6 +400,15 @@ class Hangman {
         }
     }
 
+    getDifficultySettings(level) {
+    const settings = {
+        easy: { guessesLeft: 10, words: this.words.easy },
+        medium: { guessesLeft: 7, words: this.words.medium },
+        hard: { guessesLeft: 5, words: this.words.hard },
+    };
+    return settings[level] || settings.medium; // default to medium if undefined
+}
+
     generateRandomLetter() {
         // Generate a random letter from available letters not yet guessed to improve efficiency
         const unguessedLetters = this.availableLetters.filter(l => !this.lettersGuessed.includes(l));
@@ -414,21 +423,33 @@ class Hangman {
         return this.selectedWord.word.split('').every(letter => this.lettersGuessed.includes(letter));
     }
 
+detachEventListeners() {
+    this.guessButton.removeEventListener('click', this.handleGuessClick);
+    const setDifficultyBtn = document.getElementById('setDifficultyButton');
+    setDifficultyBtn.removeEventListener('click', this.handleDifficultyChange);
+}
 
-    attachEventListeners() {
-        this.guessButton.addEventListener('click', () => {
-            const letter = this.letterInput.value.toLowerCase();
-            this.letterInput.value = ''; // Clear input after guess
-            this.guessLetter(letter);
-            this.computerGuess(); // Trigger computer's turn after user's guess
-        });
+attachEventListeners() {
+    this.detachEventListeners(); // Clean up first
+    this.handleGuessClick = this.handleGuess.bind(this);
+    this.guessButton.addEventListener('click', this.handleGuessClick);
 
-        document.getElementById('setDifficultyButton').addEventListener('click', () => {
-            const difficulty = document.getElementById('difficulty').value;
-            this.init(difficulty);
-        });
-    }
+    const setDifficultyBtn = document.getElementById('setDifficultyButton');
+    this.handleDifficultyChange = this.changeDifficulty.bind(this);
+    setDifficultyBtn.addEventListener('click', this.handleDifficultyChange);
+}
 
+handleGuess() {
+    const letter = this.letterInput.value.toLowerCase();
+    this.letterInput.value = ''; // Clear input after guess
+    this.guessLetter(letter);
+    this.computerGuess(); // Trigger computer's turn after user's guess
+}
+
+changeDifficulty() {
+    const difficulty = document.getElementById('difficulty').value;
+    this.init(difficulty);
+}
     resetGame() {
         this.guessesLeft = 6;
         this.lettersGuessed = [];
@@ -445,29 +466,31 @@ class Hangman {
 }
 
 init(difficulty = 'easy') {
-    this.setDifficulty(difficulty);
+    const settings = this.getDifficultySettings(difficulty);
+    this.wordsList = settings.words;
+    this.guessesLeft = settings.guessesLeft;
     this.resetGame();
     this.setupChart();
     this.attachEventListeners();
 }
      guessLetter(letter) {
-        if (!/[a-z]/i.test(letter)) {
-            alert("Please enter a valid letter.");
-            return;
-        }
-        if (this.lettersGuessed.includes(letter)) {
-            alert("You have already guessed that letter.");
-            return;
-        }
-        this.lettersGuessed.push(letter);
-        if (this.selectedWord.word.includes(letter)) {
-            this.correctGuesses.push(letter);
-        } else {
-            this.guessesLeft--;
-        }
-        this.updateWordDisplay();
-        this.checkGameEnd();
+    if (!/[a-z]/i.test(letter)) {
+        alert("Please enter a valid letter.");
+        return;
     }
+    if (this.lettersGuessed.includes(letter)) {
+        alert("You have already guessed that letter.");
+        return;
+    }
+    this.lettersGuessed.push(letter);
+    if (this.selectedWord.word.includes(letter)) {
+        this.correctGuesses.push(letter);
+    } else {
+        this.guessesLeft--;
+    }
+    this.updateWordDisplay();
+    this.checkGameEnd();
+}
 
     computerGuess() {
         if (this.guessesLeft > 0 && !this.checkIfAllLettersGuessed()) {
@@ -505,16 +528,18 @@ init(difficulty = 'easy') {
         }
     }
 
-    checkGameEnd() {
-        if (this.guessesLeft <= 0) {
-            this.losses++;
-            this.resetGame();
-        } else if (this.selectedWord.word.split('').every(letter => this.correctGuesses.includes(letter))) {
-            this.wins++;
-            this.resetGame();
-        }
-        this.updateScoreboard();
+ checkGameEnd() {
+    if (this.guessesLeft <= 0) {
+        alert('Game Over! You lost. The word was ' + this.selectedWord.word);
+        this.losses++;
+        this.resetGame();
+    } else if (this.checkIfAllLettersGuessed()) {
+        alert('Congratulations! You guessed the word: ' + this.selectedWord.word);
+        this.wins++;
+        this.resetGame();
     }
+    this.updateScoreboard();
+}
 
     displayWord() {
         let display = this.selectedWord.word.split('').map(letter => this.correctGuesses.includes(letter) ? letter : "_").join(' ');
