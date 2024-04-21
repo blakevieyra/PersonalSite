@@ -126,7 +126,6 @@ function updateScore(name, wins, losses, ties) {
     })
     .catch(error => console.error('Error:', error));
 }
-
 function updateGlobalLeaderboard(data) {
     const leaderboard = document.getElementById('globalLeaderboard');
     if (!leaderboard) {
@@ -170,6 +169,7 @@ function updateGlobalLeaderboard(data) {
         leaderboard.appendChild(row);
     });
 }
+
 class RockPaperScissors {
     constructor(player, updateGlobalLeaderboard) {
          this.player = player;
