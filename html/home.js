@@ -362,10 +362,11 @@ attachEventListeners() {
         this.guessLetter(letter);
     });
 
-    document.getElementById('difficulty').addEventListener('change', (e) => {
-        this.setDifficulty(e.target.value);
-        this.resetGame();
-    });
+  document.getElementById('setDifficultyButton').addEventListener('click', function() {
+    var difficulty = document.getElementById('difficulty').value;
+    game.init(difficulty);
+});
+
 }
 
 
@@ -662,5 +663,6 @@ setupBoard() {
         cell.addEventListener('click', () => this.playerMove(index));
         cell.textContent = ''; // Clear the cell at the start
     });
+}
 }
 
