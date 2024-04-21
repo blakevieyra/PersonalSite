@@ -761,6 +761,7 @@ resetGame() {
     }
 setupBoard() {
     const board = document.getElementById('ticTacToeBoard');
+
     // Remove any existing event listeners to avoid duplicates
     board.removeEventListener('click', this.handleBoardClick);
 
@@ -770,7 +771,6 @@ setupBoard() {
     // Add the event listener
     board.addEventListener('click', this.handleBoardClick);
 }
-
 handleBoardClick(event) {
     // Ensure the clicked element is a button
     if (event.target.tagName === 'BUTTON') {
