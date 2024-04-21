@@ -157,20 +157,35 @@ function updateGlobalLeaderboard(data) {
     updateLeaderboardDOM(leaderboard, data);
 }
 function updateLeaderboardDOM(leaderboard, data) {
+    // Log data to debug its structure
+    console.log("Data received:", data);
+
     // Convert NodeList to an Array to use the slice method
     const existingRows = Array.from(leaderboard.querySelectorAll('tr')).slice(1); // Skip header row
-    data.forEach((player, index) => {
-        if (existingRows[index] && isValidPlayerData(player)) {
-            updateLeaderboardRow(existingRows[index], player);
-        } else {
-            const row = createLeaderboardRow(player);
-            leaderboard.appendChild(row);
+
+    // Check if data is actually an array and has elements
+    if (Array.isArray(data) && data.length > 0) {
+        data.forEach((player, index) => {
+            if (existingRows[index] && isValidPlayerData(player)) {
+                updateLeaderboardRow(existingRows[index], player);
+            } else {
+                const row = createLeaderboardRow(player);
+                leaderboard.appendChild(row);
+            }
+        });
+
+        // Remove any extra rows
+        while (leaderboard.children.length > data.length + 1) { // +1 for the header
+            leaderboard.removeChild(leaderboard.lastChild);
         }
-    });
-    // Remove any extra rows
-    while (leaderboard.children.length > data.length + 1) { // +1 for the header
-        leaderboard.removeChild(leaderboard.lastChild);
+    } else {
+        console.error("Invalid data for leaderboard:", data);
     }
+}
+
+function isValidPlayerData(player) {
+    // Example validation, adjust according to your data structure
+    return player && typeof player === 'object' && 'name' in player && 'wins' in player && 'losses' in player && 'ties' in player;
 }
 
 function updateLeaderboardRow(row, player) {
@@ -373,8 +388,8 @@ class Hangman {
     this.unusedLetters = [...this.availableLetters]; // Copy for manipulation
         this.computerGuessesLeft = 6; // Initialize computer guesses left
         this.computerLettersGuessed = []; // Initialize computer letters guessed
-        this.setDifficulty('easy'); // Set default difficulty to easy
-        this.init();
+        this.difficulty = 'easy'; // Add this line
+        this.init(this.difficulty); // Use this.difficulty
     }
 
    selectRandomWord(difficulty) {
@@ -387,25 +402,15 @@ class Hangman {
     }
 }
 
-    setDifficulty(level) {
-        switch (level) {
-            case 'easy':
-                this.wordsList = this.words.easy;
-                this.guessesLeft = 10;
-                break;
-            case 'medium':
-                this.wordsList = this.words.medium;
-                this.guessesLeft = 7;
-                break;
-            case 'hard':
-                this.wordsList = this.words.hard;
-                this.guessesLeft = 5;
-                break;
-            default:
-                this.wordsList = this.words.medium; // Default to medium difficulty
-                this.guessesLeft = 7;
-                break;
-        }
+     setDifficulty(level) {
+        const settings = {
+            easy: { guessesLeft: 10, words: this.words.easy },
+            medium: { guessesLeft: 7, words: this.words.medium },
+            hard: { guessesLeft: 5, words: this.words.hard },
+        };
+        const setting = settings[level] || settings.easy; // Fallback to easy if level is undefined
+        this.wordsList = setting.words;
+        this.guessesLeft = setting.guessesLeft;
     }
 
     getDifficultySettings(level) {
@@ -470,10 +475,8 @@ changeDifficulty() {
     this.displayWord();
 }
 
-init(difficulty = 'easy') {
-    const settings = this.getDifficultySettings(difficulty);
-    this.wordsList = settings.words;
-    this.guessesLeft = settings.guessesLeft;
+init(difficulty = this.difficulty) {
+    this.setDifficulty(difficulty); // Set difficulty based on argument or default to class property
     this.resetGame();
     this.setupChart();
     this.attachEventListeners();
