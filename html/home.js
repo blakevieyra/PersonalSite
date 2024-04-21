@@ -51,11 +51,10 @@ handleScroll();
 
 function clearLeaderboard() {
     localStorage.removeItem('players');
-    const tbody = document.querySelector('#leaderboard tbody');
+    const tbody = document.querySelector('#globalLeaderboard tbody');
     tbody.innerHTML = '';
     populateLeaderboard(); // Re-populate to show empty state or updated data
 }
-
 function registerOrUpdatePlayer(players, playerName) {
     let currentPlayer = players.find(p => p.name === playerName);
     if (!currentPlayer) {
@@ -316,16 +315,6 @@ const ctx = document.getElementById(this.chartId).getContext('2d');
     }
 }
 
-
-
-
-
-
-
-
-
-
-
 class Hangman {
     constructor() {
         this.wins = 0;
@@ -460,11 +449,10 @@ class Hangman {
     }
 
     setupGame() {
-        this.selectedWord = this.selectRandomWord(this.wordsList);
-        this.displayWord();
-    }
-
-    guessLetter(letter) {
+    this.selectedWord = this.selectRandomWord(this.difficulty); // Adjusted here
+    this.displayWord();
+}
+     guessLetter(letter) {
         if (!/[a-z]/i.test(letter)) {
             alert("Please enter a valid letter.");
             return;
