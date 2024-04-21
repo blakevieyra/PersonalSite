@@ -105,245 +105,257 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 <script>
-    let rpsWins = 0;
-    let rpsLosses = 0;
-    let rpsTies = 0;
+   let rpsWins = 0;
+let rpsLosses = 0;
+let rpsTies = 0;
 
-    let hangmanWins = 0;
-    let hangmanLosses = 0;
+let hangmanWins = 0;
+let hangmanLosses = 0;
 
-    // Function for Rock, Paper, Scissors game
-    function playerChoice(choice) {
-        const choices = ['rock', 'paper', 'scissors'];
-        const computerChoice = choices[Math.floor(Math.random() * choices.length)];
-        const result = determineWinner(choice, computerChoice);
-        updateRPSStats(result);
-        displayRPSResult(result, choice, computerChoice);
+let rpsChartInstance; // Variable to hold Chart.js instance for RPS chart
+let hangmanChartInstance; // Variable to hold Chart.js instance for Hangman chart
+
+// Function for Rock, Paper, Scissors game
+function playerChoice(choice) {
+    const choices = ['rock', 'paper', 'scissors'];
+    const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+    const result = determineWinner(choice, computerChoice);
+    updateRPSStats(result);
+    displayRPSResult(result, choice, computerChoice);
+}
+
+function determineWinner(player, computer) {
+    if (player === computer) {
+        return 'tie';
+    } else if ((player === 'rock' && computer === 'scissors') ||
+               (player === 'paper' && computer === 'rock') ||
+               (player === 'scissors' && computer === 'paper')) {
+        return 'win';
+    } else {
+        return 'lose';
     }
+}
 
-    function determineWinner(player, computer) {
-        if (player === computer) {
-            return 'tie';
-        } else if ((player === 'rock' && computer === 'scissors') ||
-                   (player === 'paper' && computer === 'rock') ||
-                   (player === 'scissors' && computer === 'paper')) {
-            return 'win';
+function calculateStats() {
+    const totalGames = rpsWins + rpsLosses + rpsTies;
+    const mean = totalGames > 0 ? (rpsWins + rpsLosses + rpsTies) / totalGames : 0;
+
+    const squaredDifferences = Math.pow(rpsWins - mean, 2) + Math.pow(rpsLosses - mean, 2) + Math.pow(rpsTies - mean, 2);
+    const variance = squaredDifferences / totalGames;
+    const standardDeviation = Math.sqrt(variance);
+
+    return { mean, standardDeviation };
+}
+
+// Update Rock Paper Scissors scoreboard with mean and standard deviation
+function updateRPSScoreboard() {
+    const stats = calculateStats();
+
+    document.getElementById('rpsWins').textContent = rpsWins;
+    document.getElementById('rpsLosses').textContent = rpsLosses;
+    document.getElementById('rpsTies').textContent = rpsTies;
+    document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
+    document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
+}
+
+function updateRPSStats(result) {
+    if (result === 'win') {
+        rpsWins++;
+    } else if (result === 'lose') {
+        rpsLosses++;
+    } else {
+        rpsTies++;
+    }
+    updateRPSScoreboard();
+    updateRPSChart();
+}
+
+function displayRPSResult(result, playerChoice, computerChoice) {
+    const userChoiceImg = document.getElementById('userChoiceImg');
+    const computerChoiceImg = document.getElementById('computerChoiceImg');
+
+    // Set the source of the images based on the choices
+    userChoiceImg.src = `images/${playerChoice}.png`; // Assuming images are named 'rock.png', 'paper.png', 'scissors.png'
+    computerChoiceImg.src = `images/${computerChoice}.png`;
+
+    // Show the images
+    userChoiceImg.style.display = 'block';
+    computerChoiceImg.style.display = 'block';
+
+    // Display the result
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `${capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+}
+
+// Function for generating Hangman game
+const words = [
+    { word: "elephant", hint: "A large mammal with a long trunk" },
+    { word: "computer", hint: "A device for processing data" },
+    { word: "airplane", hint: "Flies in the sky" },
+    { word: "javascript", hint: "Programming language" }
+];
+let selectedWord = {};
+let guessesLeft = 6;
+let lettersGuessed = [];
+let correctGuesses = [];
+
+function setupHangmanGame() {
+    selectedWord = words[Math.floor(Math.random() * words.length)];
+    let displayWord = selectedWord.word.split("").map(letter => correctGuesses.includes(letter) ? letter : "_").join(" ");
+    document.getElementById("wordDisplay").textContent = displayWord;
+    document.getElementById("guessesLeft").textContent = guessesLeft;
+    document.getElementById("lettersGuessed").textContent = lettersGuessed.join(", ");
+    document.getElementById("hintText").textContent = selectedWord.hint;
+
+    setTimeout(() => {
+        document.getElementById("hint").classList.add("visible");
+    }, 2000);
+}
+
+function guessLetter() {
+    const letter = document.getElementById('letterInput').value.toLowerCase();
+    if (!lettersGuessed.includes(letter)) {
+        lettersGuessed.push(letter);
+        if (selectedWord.word.includes(letter)) {
+            correctGuesses.push(letter);
         } else {
-            return 'lose';
+            guessesLeft--;
         }
-    }
-
-    function calculateStats() {
-        const totalGames = rpsWins + rpsLosses + rpsTies;
-        const mean = totalGames > 0 ? (rpsWins + rpsLosses + rpsTies) / totalGames : 0;
-
-        const squaredDifferences = Math.pow(rpsWins - mean, 2) + Math.pow(rpsLosses - mean, 2) + Math.pow(rpsTies - mean, 2);
-        const variance = squaredDifferences / totalGames;
-        const standardDeviation = Math.sqrt(variance);
-
-        return { mean, standardDeviation };
-    }
-
-    // Update Rock Paper Scissors scoreboard with mean and standard deviation
-    function updateRPSScoreboard() {
-        const stats = calculateStats();
-
-        document.getElementById('rpsWins').textContent = rpsWins;
-        document.getElementById('rpsLosses').textContent = rpsLosses;
-        document.getElementById('rpsTies').textContent = rpsTies;
-        document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
-        document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
-    }
-
-    function updateRPSStats(result) {
-        if (result === 'win') {
-            rpsWins++;
-        } else if (result === 'lose') {
-            rpsLosses++;
-        } else {
-            rpsTies++;
-        }
-        document.getElementById('rpsWins').textContent = rpsWins;
-        document.getElementById('rpsLosses').textContent = rpsLosses;
-        document.getElementById('rpsTies').textContent = rpsTies;
-        updateRPSChart();
-    }
-
-    function displayRPSResult(result, playerChoice, computerChoice) {
-        const userChoiceImg = document.getElementById('userChoiceImg');
-        const computerChoiceImg = document.getElementById('computerChoiceImg');
-
-        // Set the source of the images based on the choices
-        userChoiceImg.src = `images/${playerChoice}.png`; // Assuming images are named 'rock.png', 'paper.png', 'scissors.png'
-        computerChoiceImg.src = `images/${computerChoice}.png`;
-
-        // Show the images
-        userChoiceImg.style.display = 'block';
-        computerChoiceImg.style.display = 'block';
-
-        // Display the result
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `${capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
-    }
-
-    // Function for generating Hangman game
-    const words = [
-        { word: "elephant", hint: "A large mammal with a long trunk" },
-        { word: "computer", hint: "A device for processing data" },
-        { word: "airplane", hint: "Flies in the sky" },
-        { word: "javascript", hint: "Programming language" }
-    ];
-    let selectedWord = {};
-    let guessesLeft = 6;
-    let lettersGuessed = [];
-    let correctGuesses = [];
-
-    function setupHangmanGame() {
-        selectedWord = words[Math.floor(Math.random() * words.length)];
-        let displayWord = selectedWord.word.split("").map(letter => correctGuesses.includes(letter) ? letter : "_").join(" ");
-        document.getElementById("wordDisplay").textContent = displayWord;
-        document.getElementById("guessesLeft").textContent = guessesLeft;
-        document.getElementById("lettersGuessed").textContent = lettersGuessed.join(", ");
-        document.getElementById("hintText").textContent = selectedWord.hint;
-
-        setTimeout(() => {
-            document.getElementById("hint").classList.add("visible");
-        }, 2000);
-    }
-
-    function guessLetter() {
-        const letter = document.getElementById('letterInput').value.toLowerCase();
-        if (!lettersGuessed.includes(letter)) {
-            lettersGuessed.push(letter);
-            if (selectedWord.word.includes(letter)) {
-                correctGuesses.push(letter);
-            } else {
-                guessesLeft--;
-            }
-            setupHangmanGame();
-
-            if (guessesLeft <= 0) {
-                hangmanLosses++;
-                updateHangmanScoreboard();
-                startNewHangmanGame();
-            }
-        }
-    }
-
-    function updateHangmanScoreboard() {
-        document.getElementById("hangmanWins").textContent = hangmanWins;
-        document.getElementById("hangmanLosses").textContent = hangmanLosses;
-        updateHangmanChart();
-    }
-
-    function startNewHangmanGame() {
-        guessesLeft = 6;
-        lettersGuessed = [];
-        correctGuesses = [];
         setupHangmanGame();
-        updateHangmanScoreboard();
+
+        if (guessesLeft <= 0) {
+            hangmanLosses++;
+            updateHangmanScoreboard();
+            startNewHangmanGame();
+        }
+    }
+}
+
+function updateHangmanScoreboard() {
+    document.getElementById("hangmanWins").textContent = hangmanWins;
+    document.getElementById("hangmanLosses").textContent = hangmanLosses;
+}
+
+function startNewHangmanGame() {
+    guessesLeft = 6;
+    lettersGuessed = [];
+    correctGuesses = [];
+    setupHangmanGame();
+    updateHangmanScoreboard();
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function updateRPSChart() {
+    // Destroy the existing chart instance if it exists
+    if (rpsChartInstance) {
+        rpsChartInstance.destroy();
     }
 
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    function updateRPSChart() {
-        const ctx = document.getElementById('rpsChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Wins', 'Losses', 'Ties'],
-                datasets: [{
-                    label: 'Rock, Paper, Scissors Statistics',
-                    data: [rpsWins, rpsLosses, rpsTies],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    const ctx = document.getElementById('rpsChart').getContext('2d');
+    rpsChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Wins', 'Losses', 'Ties'],
+            datasets: [{
+                label: 'Rock, Paper, Scissors Statistics',
+                data: [rpsWins, rpsLosses, rpsTies],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
+}
+
+function updateHangmanChart() {
+    // Destroy the existing chart instance if it exists
+    if (hangmanChartInstance) {
+        hangmanChartInstance.destroy();
     }
 
-    function updateHangmanChart() {
-        const ctx = document.getElementById('hangmanChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Wins', 'Losses'],
-                datasets: [{
-                    label: 'Hangman Statistics',
-                    data: [hangmanWins, hangmanLosses],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    const ctx = document.getElementById('hangmanChart').getContext('2d');
+    hangmanChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Wins', 'Losses'],
+            datasets: [{
+                label: 'Hangman Statistics',
+                data: [hangmanWins, hangmanLosses],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    }
-     function isInViewport(element) {
-            const rect = element.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
         }
+    });
+}
 
-        // Function to handle scrolling event
-        function handleScroll() {
-            const fadeIns = document.querySelectorAll('.fade-in');
-            fadeIns.forEach(element => {
-                if (isInViewport(element)) {
-                    element.classList.add('visible');
-                }
-            });
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// Function to handle scrolling event
+function handleScroll() {
+    const fadeIns = document.querySelectorAll('.fade-in');
+    fadeIns.forEach(element => {
+        if (isInViewport(element)) {
+            element.classList.add('visible');
         }
-     window.addEventListener('scroll', handleScroll);
+    });
+}
 
-        // Initial check on page load
-        handleScroll();
+window.addEventListener('scroll', handleScroll);
 
-    window.onload = () => {
-        setupHangmanGame();
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', event => {
-                const choice = event.target.textContent.toLowerCase();
-                playerChoice(choice);
-            });
+// Initial check on page load
+handleScroll();
+
+window.onload = () => {
+    startNewHangmanGame(); // Set up the Hangman game when the window loads
+    document.querySelectorAll('.btn-primary').forEach(button => {
+        button.addEventListener('click', event => {
+            const choice = event.target.textContent.toLowerCase();
+            playerChoice(choice);
         });
-        updateRPSChart();
-        updateHangmanChart();
-    };
+    });
+    updateRPSChart();
+    updateHangmanChart();
+};
 </script>
 
 </body>
