@@ -179,15 +179,15 @@
     </div>
 </section>
 
-     <section class="text-center my-5 fade-in visible">
+  <section class="text-center my-5 fade-in visible">
     <h2>Hangman Game</h2>
-    <div id="hangmanGameContainer" class="game-container"> <!-- Flex container -->
+    <div id="hangmanGameContainer" class="game-container">
         <div id="gameControls">
             <div>
                 <p id="wordDisplay">_ _ _ _ _</p>
                 <div class="input-group mb-3">
-                    <input type="text" id="letterInput" maxlength="1" class="form-control">
-                    <button class="btn btn-primary" id="guessButton">Guess</button>
+                    <input type="text" id="letterInput" maxlength="1" class="form-control" autocomplete="off" aria-label="Enter a letter">
+                    <button class="btn btn-primary" id="guessButton" aria-label="Guess a letter">Guess</button>
                 </div>
                 <p>Guesses left: <span id="guessesLeft">6</span></p>
                 <p>Letters guessed: <span id="lettersGuessed"></span></p>
@@ -195,11 +195,11 @@
                     <p>Hint: <span id="hintText"></span></p>
                 </div>
             </div>
-              <div id="computerStats" class="scoreboard"> <!-- Additional section for computer stats -->
-            <h4>Computer Stats</h4>
-            <p>Computer guesses left: <span id="computerGuessesLeft">6</span></p>
-            <p>Computer letters guessed: <span id="computerLettersGuessed"></span></p>
-        </div>
+            <div id="computerStats" class="scoreboard">
+                <h4>Computer Stats</h4>
+                <p>Computer guesses left: <span id="computerGuessesLeft">6</span></p>
+                <p>Computer letters guessed: <span id="computerLettersGuessed"></span></p>
+            </div>
         </div>
         <div id="hangmanScoreboard" class="scoreboard">
             <h4>Scoreboard</h4>
