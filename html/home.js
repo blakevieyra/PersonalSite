@@ -316,10 +316,36 @@ class Hangman {
         this.guessesLeft = 6;
         this.lettersGuessed = [];
         this.correctGuesses = [];
-        this.words = [
-            { word: "elephant", hint: "A large mammal with a long trunk" },
-            // other words
-        ];
+        this.words = {
+    easy: [
+        { word: "cat", hint: "A small domesticated carnivorous mammal with soft fur" },
+        { word: "dog", hint: "A domesticated carnivorous mammal with four legs and a tail" },
+        { word: "house", hint: "A building for human habitation" },
+        { word: "ball", hint: "A round object that can be thrown, kicked, or hit" },
+        { word: "book", hint: "A written or printed work consisting of pages glued or sewn together along one side and bound in covers" },
+        { word: "sun", hint: "The star around which the earth orbits" },
+        // Add more easy words here
+    ],
+    medium: [
+        { word: "computer", hint: "An electronic device for processing data" },
+        { word: "table", hint: "A piece of furniture with a flat top and one or more legs" },
+        { word: "guitar", hint: "A stringed musical instrument played by plucking or strumming" },
+        { word: "painting", hint: "A picture or design made using paint" },
+        { word: "piano", hint: "A large keyboard musical instrument" },
+        { word: "garden", hint: "A piece of ground, often near a house, used for growing flowers, fruit, or vegetables" },
+        // Add more medium words here
+    ],
+    hard: [
+        { word: "perplexity", hint: "State of being bewildered or puzzled" },
+        { word: "paradox", hint: "A seemingly contradictory statement that may nonetheless be true" },
+        { word: "labyrinthine", hint: "Complicated and confusing, like a labyrinth" },
+        { word: "serendipity", hint: "The occurrence and development of events by chance in a happy or beneficial way" },
+        { word: "quixotic", hint: "Exceedingly idealistic; unrealistic and impractical" },
+        { word: "antediluvian", hint: "Of or belonging to the time before the biblical Flood" },
+        // Add more hard words here
+    ]
+};
+};
         this.selectedWord = null;
         this.chartId = 'hangmanChart';
         this.chart = null;
@@ -327,6 +353,8 @@ class Hangman {
         this.guessButton = document.getElementById('guessButton');
         this.previousWords = []; // Initialize here correctly
         this.availableLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        this.computerGuessesLeft = 6; // Initialize computer guesses left
+        this.computerLettersGuessed = []; // Initialize computer letters guessed
         this.init();
     }
 
@@ -334,21 +362,26 @@ class Hangman {
         return this.words[Math.floor(Math.random() * this.words.length)];
     }
 
-    setDifficulty(level) {
-        switch (level) {
-            case 'easy':
-                this.guessesLeft = 10;
-                break;
-            case 'medium':
-                this.guessesLeft = 7;
-                break;
-            case 'hard':
-                this.guessesLeft = 5;
-                break;
-            default:
-                this.guessesLeft = 6; // Default
-        }
+   setDifficulty(level) {
+    switch (level) {
+        case 'easy':
+            this.wordsList = this.words.easy;
+            this.guessesLeft = 10;
+            break;
+        case 'medium':
+            this.wordsList = this.words.medium;
+            this.guessesLeft = 7;
+            break;
+        case 'hard':
+            this.wordsList = this.words.hard;
+            this.guessesLeft = 5;
+            break;
+        default:
+            this.wordsList = this.words.medium; // Default to medium difficulty
+            this.guessesLeft = 7;
+            break;
     }
+}
 
     generateRandomLetter() {
         // Generate a random letter from available letters not yet guessed to improve efficiency
@@ -359,8 +392,7 @@ class Hangman {
         }
         return null; // Return null if no letters are left to guess
     }
-
-    checkIfAllLettersGuessed() {
+     checkIfAllLettersGuessed() {
         return this.selectedWord.word.split('').every(letter => this.lettersGuessed.includes(letter));
     }
 
@@ -371,7 +403,7 @@ class Hangman {
         this.attachEventListeners();
     }
 
-    attachEventListeners() {
+   attachEventListeners() {
         this.guessButton.addEventListener('click', () => {
             const letter = this.letterInput.value.toLowerCase();
             this.letterInput.value = ''; // Clear input after guess
@@ -389,6 +421,8 @@ class Hangman {
         this.guessesLeft = 6;
         this.lettersGuessed = [];
         this.correctGuesses = [];
+        this.computerGuessesLeft = 6; // Reset computer guesses left
+        this.computerLettersGuessed = []; // Reset computer letters guessed
         this.setupGame();
         this.updateScoreboard();
     }
@@ -424,31 +458,31 @@ class Hangman {
         this.checkGameEnd();
     }
 
-   computerGuess() {
-    if (this.guessesLeft > 0 && !this.checkIfAllLettersGuessed()) {
-        const intervalId = setInterval(() => {
-            if (this.computerGuessesLeft > 0 && this.availableLetters.length > 0) {
-                const letter = this.generateRandomLetter();
-                if (letter && !this.lettersGuessed.includes(letter)) {
-                    this.lettersGuessed.push(letter);
-                    this.computerLettersGuessed.push(letter);
-                    this.computerGuessesLeft--;
-                    this.updateComputerDisplay();
-                    if (!this.selectedWord.word.includes(letter)) {
-                        // Check if any letters are left to guess before deciding to end the game
-                        if (this.computerGuessesLeft === 0 || this.checkIfAllLettersGuessed()) {
-                            clearInterval(intervalId);
-                            this.handleGameEnd('Computer');
+    computerGuess() {
+        if (this.guessesLeft > 0 && !this.checkIfAllLettersGuessed()) {
+            const intervalId = setInterval(() => {
+                if (this.computerGuessesLeft > 0 && this.availableLetters.length > 0) {
+                    const letter = this.generateRandomLetter();
+                    if (letter && !this.lettersGuessed.includes(letter)) {
+                        this.lettersGuessed.push(letter);
+                        this.computerLettersGuessed.push(letter);
+                        this.computerGuessesLeft--;
+                        this.updateComputerDisplay();
+                        if (!this.selectedWord.word.includes(letter)) {
+                            // Check if any letters are left to guess before deciding to end the game
+                            if (this.computerGuessesLeft === 0 || this.checkIfAllLettersGuessed()) {
+                                clearInterval(intervalId);
+                                this.handleGameEnd('Computer');
+                            }
                         }
                     }
+                } else {
+                    clearInterval(intervalId);
+                    this.handleGameEnd('Computer');
                 }
-            } else {
-                clearInterval(intervalId);
-                this.handleGameEnd('Computer');
-            }
-        }, 5000); // Adjust the interval time as needed
+            }, 5000); // Adjust the interval time as needed
+        }
     }
-}
 
     handleGameEnd(winner) {
         if (winner === 'Computer') {
@@ -541,17 +575,17 @@ class TicTacToe {
         this.gameBoard = Array(9).fill('');
         this.chart = null;
         this.chartId = 'ticTacToeChart';
+        this.gameOver = false;
     }
 
     init() {
         this.setupBoard();
         this.setupChart();
-        this.updateScoreboard(); // Ensure the scoreboard is initialized correctly
+        this.updateScoreboard();
     }
 
-   
-   playerMove(index) {
-        if (this.gameBoard[index] === '') {
+    playerMove(index) {
+        if (!this.gameOver && this.gameBoard[index] === '') {
             this.gameBoard[index] = this.currentPlayer;
             this.cells[index].textContent = this.currentPlayer;
 
@@ -559,55 +593,55 @@ class TicTacToe {
                 const resultText = `${this.currentPlayer} wins!`;
                 document.getElementById('ticTacToeResult').textContent = resultText;
                 document.getElementById('ticTacToeResult').className = 'win';
+                if (this.currentPlayer === 'X') {
+                    this.playerWins++;
+                } else {
+                    this.computerWins++;
+                }
                 this.updateScoreboard();
-                this.resetGame();
+                this.gameOver = true;
             } else if (!this.gameBoard.includes('')) {
                 document.getElementById('ticTacToeResult').textContent = "It's a tie!";
                 document.getElementById('ticTacToeResult').className = 'tie';
                 this.ties++;
                 this.updateScoreboard();
-                this.resetGame();
+                this.gameOver = true;
             } else {
-                this.switchPlayer();
+                this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+                if (this.currentPlayer === 'O') {
+                    setTimeout(() => {
+                        this.computerMove();
+                    }, 1000);
+                }
             }
         }
     }
 
-    switchPlayer() {
-        this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
-    }
-
-   computerMove() {
-    let availableMoves = this.gameBoard.reduce((acc, cell, index) => {
-        if (cell === '') acc.push(index);
-        return acc;
-    }, []);
-    if (availableMoves.length > 0) {
-        let randomIndex = Math.floor(Math.random() * availableMoves.length);
-        let computerIndex = availableMoves[randomIndex];
-        this.gameBoard[computerIndex] = this.currentPlayer;
-        this.cells[computerIndex].textContent = this.currentPlayer;
-        if (this.checkWinner(this.currentPlayer)) {
-            this.computerWins++;
-            document.getElementById('ticTacToeResult').textContent = `${this.currentPlayer} wins!`;
-            this.resetGame();
-        } else if (!this.gameBoard.includes('')) {
-            this.ties++;
-            document.getElementById('ticTacToeResult').textContent = "It's a tie!";
-            this.resetGame();
-        } else {
-            this.switchPlayer();
+    computerMove() {
+        if (!this.gameOver) {
+            let availableMoves = this.gameBoard.reduce((acc, cell, index) => {
+                if (cell === '') acc.push(index);
+                return acc;
+            }, []);
+            if (availableMoves.length > 0) {
+                let randomIndex = Math.floor(Math.random() * availableMoves.length);
+                let computerIndex = availableMoves[randomIndex];
+                this.gameBoard[computerIndex] = this.currentPlayer;
+                this.cells[computerIndex].textContent = this.currentPlayer;
+                if (this.checkWinner(this.currentPlayer)) {
+                    this.computerWins++;
+                    document.getElementById('ticTacToeResult').textContent = `${this.currentPlayer} wins!`;
+                    this.gameOver = true;
+                } else if (!this.gameBoard.includes('')) {
+                    this.ties++;
+                    document.getElementById('ticTacToeResult').textContent = "It's a tie!";
+                    this.gameOver = true;
+                }
+                this.updateScoreboard();
+                this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+            }
         }
-        this.updateScoreboard();
     }
-}
-
-updateScoreboard() {
-    document.getElementById('playerWins').textContent = this.playerWins;
-    document.getElementById('computerWins').textContent = this.computerWins;
-    document.getElementById('ties').textContent = this.ties;
-    this.updateChart();
-}
 
     checkWinner(player) {
         const winningCombos = [
@@ -624,57 +658,67 @@ updateScoreboard() {
         document.querySelectorAll('#ticTacToeBoard td').forEach(cell => cell.textContent = '');
         setTimeout(() => {
             document.getElementById('ticTacToeResult').textContent = '';
+            this.gameOver = false;
+            if (this.currentPlayer === 'O') {
+                this.computerMove();
+            }
         }, 2000);
     }
 
-   setupChart() {
-    const ctx = document.getElementById(this.chartId).getContext('2d');
-    // Check if the chart instance already exists
-    if (this.chart) {
-        this.chart.destroy(); // Destroy the existing chart
-    }
-    this.chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Player Wins', 'Computer Wins', 'Ties'],
-            datasets: [{
-                label: 'Tic Tac Toe Statistics',
-                data: [this.playerWins, this.computerWins, this.ties],  // Updated to use correct variables
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    setupChart() {
+        const ctx = document.getElementById(this.chartId).getContext('2d');
+        if (this.chart) {
+            this.chart.destroy();
+        }
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Player Wins', 'Computer Wins', 'Ties'],
+                datasets: [{
+                    label: 'Tic Tac Toe Statistics',
+                    data: [this.playerWins, this.computerWins, this.ties],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
-}
-
-updateChart() {
-    if (this.chart) {
-        this.chart.data.datasets[0].data = [this.playerWins, this.computerWins, this.ties];
-        this.chart.update();
+        });
     }
-}
 
-setupBoard() {
-    this.cells.forEach((cell, index) => {
-        cell.addEventListener('click', () => this.playerMove(index));
-        cell.textContent = ''; // Clear the cell at the start
-    });
-}
+    updateScoreboard() {
+        document.getElementById('playerWins').textContent = this.playerWins;
+        document.getElementById('computerWins').textContent = this.computerWins;
+        document.getElementById('ties').textContent = this.ties;
+        this.updateChart();
+    }
+
+    updateChart() {
+        if (this.chart) {
+            this.chart.data.datasets[0].data = [this.playerWins, this.computerWins, this.ties];
+            this.chart.update();
+        }
+    }
+
+    setupBoard() {
+        this.cells.forEach((cell, index) => {
+            cell.addEventListener('click', () => this.playerMove(index));
+            cell.textContent = '';
+        });
+    }
 }
 
