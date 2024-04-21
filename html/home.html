@@ -220,53 +220,52 @@
         </div>
     </div>
 </section>
- <section class="text-center my-5 fade-in visible">
+<section class="text-center my-5 fade-in visible">
     <h1>Tic Tac Toe Game</h1>
     <div id="ticTacToeBoard" class="mt-3">
         <div class="row">
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 1" data-index="0">Cell 1</button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 1" data-index="0"></button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 2" data-index="1">Cell 2</button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 2" data-index="1"></button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 3" data-index="2">Cell 3</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 4" data-index="3">Cell 4</button>
-            </div>
-            <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 5" data-index="4">Cell 5</button>
-            </div>
-            <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 6" data-index="5">Cell 6</button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 3" data-index="2"></button>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 7" data-index="6">Cell 7</button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 4" data-index="3"></button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 8" data-index="7">Cell 8</button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 5" data-index="4"></button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 9" data-index="8">Cell 9</button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 6" data-index="5"></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 7" data-index="6"></button>
+            </div>
+            <div class="col">
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 8" data-index="7"></button>
+            </div>
+            <div class="col">
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 9" data-index="8"></button>
             </div>
         </div>
     </div>
-    <p id="ticTacToeResult" class="mt-3" aria-live="polite"></p>
-    <div id="ticTacToeScoreboard" aria-live="polite">
+    <p id="ticTacToeResult" class="mt-3 result-text" aria-live="polite"></p>
+    <div id="ticTacToeScoreboard" class="scoreboard" aria-live="polite">
         <p>Player Wins: <span id="playerWins">0</span></p>
         <p>Computer Wins: <span id="computerWins">0</span></p>
         <p>Ties: <span id="ties">0</span></p>
-    </div>
-    <div class="mt-3">
-        <canvas id="ticTacToeChart" aria-label="Tic Tac Toe Game Results Chart"></canvas>
+        <canvas id="ticTacToeChart" class="chart" aria-label="Game Results Chart"></canvas>
     </div>
 </section>
+
 </main>
     <footer class="bg-dark text-light text-center py-3 fade-in visible">
         <p>&copy; 2024 Blake Vieyra. All Rights Reserved.</p>
