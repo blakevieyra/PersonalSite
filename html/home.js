@@ -127,7 +127,7 @@ function updateScore(name, wins, losses, ties) {
     .catch(error => console.error('Error:', error));
 }
 
-updateGlobalLeaderboard(data) {
+function updateGlobalLeaderboard(data) {
     const leaderboard = document.getElementById('globalLeaderboard');
     if (!leaderboard) {
         console.error('Global leaderboard element not found');
