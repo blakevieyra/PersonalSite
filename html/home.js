@@ -532,6 +532,7 @@ class TicTacToe {
         this.currentPlayer = 'X';
         this.gameBoard = Array(9).fill('');
         this.chart = null;
+        this.chartId = 'ticTacToeChart';
     }
 
     init() {
@@ -540,11 +541,7 @@ class TicTacToe {
         this.updateScoreboard(); // Ensure the scoreboard is initialized correctly
     }
 
-    setupBoard() {
-          this.cells.forEach((cell) => {
-            cell.addEventListener('click', () => this.playerMove(cell.dataset.index));
-        });
-    }
+   
    playerMove(index) {
         if (this.gameBoard[index] === '') {
             this.gameBoard[index] = this.currentPlayer;
@@ -572,32 +569,37 @@ class TicTacToe {
         this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
     }
 
-    computerMove() {
-        let availableMoves = this.gameBoard.reduce((acc, cell, index) => {
-            if (cell === '') acc.push(index);
-            return acc;
-        }, []);
-        if (availableMoves.length > 0) {
-            let randomIndex = Math.floor(Math.random() * availableMoves.length);
-            let computerIndex = availableMoves[randomIndex];
-            this.gameBoard[computerIndex] = this.currentPlayer;
-            document.getElementById('ticTacToeBoard').getElementsByTagName('td')[computerIndex].textContent = this.currentPlayer;
-            if (this.checkWinner(this.currentPlayer)) {
-                document.getElementById('ticTacToeResult').textContent = `${this.currentPlayer} wins!`;
-                this.updateScoreboard();
-                this.resetGame();
-                return;
-            }
-            if (!this.gameBoard.includes('')) {
-                document.getElementById('ticTacToeResult').textContent = "It's a tie!";
-                this.ties++;
-                this.updateScoreboard();
-                this.resetGame();
-                return;
-            }
+   computerMove() {
+    let availableMoves = this.gameBoard.reduce((acc, cell, index) => {
+        if (cell === '') acc.push(index);
+        return acc;
+    }, []);
+    if (availableMoves.length > 0) {
+        let randomIndex = Math.floor(Math.random() * availableMoves.length);
+        let computerIndex = availableMoves[randomIndex];
+        this.gameBoard[computerIndex] = this.currentPlayer;
+        this.cells[computerIndex].textContent = this.currentPlayer;
+        if (this.checkWinner(this.currentPlayer)) {
+            this.computerWins++;
+            document.getElementById('ticTacToeResult').textContent = `${this.currentPlayer} wins!`;
+            this.resetGame();
+        } else if (!this.gameBoard.includes('')) {
+            this.ties++;
+            document.getElementById('ticTacToeResult').textContent = "It's a tie!";
+            this.resetGame();
+        } else {
             this.switchPlayer();
         }
+        this.updateScoreboard();
     }
+}
+
+updateScoreboard() {
+    document.getElementById('playerWins').textContent = this.playerWins;
+    document.getElementById('computerWins').textContent = this.computerWins;
+    document.getElementById('ties').textContent = this.ties;
+    this.updateChart();
+}
 
     checkWinner(player) {
         const winningCombos = [
@@ -606,12 +608,6 @@ class TicTacToe {
             [0, 4, 8], [2, 4, 6] // Diagonals
         ];
         return winningCombos.some(combo => combo.every(index => this.gameBoard[index] === player));
-    }
-
-    updateScoreboard() {
-        document.getElementById('playerWins').textContent = this.playerWins;
-        document.getElementById('computerWins').textContent = this.computerWins;
-        document.getElementById('ties').textContent = this.ties;
     }
 
     resetGame() {
@@ -623,7 +619,7 @@ class TicTacToe {
         }, 2000);
     }
 
-    setupChart() {
+   setupChart() {
     const ctx = document.getElementById(this.chartId).getContext('2d');
     // Check if the chart instance already exists
     if (this.chart) {
@@ -632,17 +628,19 @@ class TicTacToe {
     this.chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Wins', 'Losses'],
+            labels: ['Player Wins', 'Computer Wins', 'Ties'],
             datasets: [{
-                label: 'Hangman Statistics',
-                data: [this.wins, this.losses],
+                label: 'Tic Tac Toe Statistics',
+                data: [this.playerWins, this.computerWins, this.ties],  // Updated to use correct variables
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -656,13 +654,18 @@ class TicTacToe {
         }
     });
 }
-    updateChart() {
-        if (this.chart) {
-            this.chart.data.datasets.forEach((dataset) => {
-                dataset.data = [this.playerWins, this.computerWins, this.ties];
-            });
-            this.chart.update();
-        }
+
+updateChart() {
+    if (this.chart) {
+        this.chart.data.datasets[0].data = [this.playerWins, this.computerWins, this.ties];
+        this.chart.update();
     }
+}
+
+setupBoard() {
+    this.cells.forEach((cell, index) => {
+        cell.addEventListener('click', () => this.playerMove(index));
+        cell.textContent = ''; // Clear the cell at the start
+    });
 }
 
