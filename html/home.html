@@ -12,6 +12,23 @@
         .navbar-brand, .navbar-nav .nav-link { font-size: 1rem; font-weight: bold; padding: 0.5rem; }
         .navbar { padding: 0.25rem; }
         .container-fluid { padding: 0.5rem; }
+        #ticTacToeBoard .row {
+    margin-bottom: 0.5rem; /* Adjust margin between rows */
+    border-bottom: 1px solid #000; /* Add border between rows */
+}
+
+#ticTacToeBoard .col {
+    padding: 0; /* Remove padding from columns */
+}
+
+#ticTacToeBoard .btn {
+    width: 100px; /* Adjust button width */
+    height: 100px; /* Adjust button height */
+    font-size: 1.5rem; /* Adjust font size */
+}
+        .winning-cell {
+    color: red; /* Change text color for winning cells */
+}
     </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -72,7 +89,7 @@
     <p>Wins: <span id="rpsWins">0</span></p>
     <p>Losses: <span id="rpsLosses">0</span></p>
     <p>Ties: <span id="rpsTies">0</span></p>
-    <p>Mean: <span id="rpsMean">0</span></p>
+    <p>Mean Performance: <span id="rpsMean">0</span></p>
     <p>Standard Deviation: <span id="rpsSD">0</span></p>
     <div class="mt-3">
         <canvas id="rpsChart"></canvas>
@@ -140,8 +157,16 @@
             </div>
         </div>
     </div>
-    <div id="ticTacToeResult" class="mt-3"></div>
-</section>
+     <p id="ticTacToeResult" class="mt-3"></p>
+        <div id="ticTacToeScoreboard">
+            <p>Player Wins: <span id="playerWins">0</span></p>
+            <p>Computer Wins: <span id="computerWins">0</span></p>
+            <p>Ties: <span id="ties">0</span></p>
+        </div>
+            <div class="mt-3">
+        <canvas id="ticTacToeChart"></canvas>
+    </div>
+    </section>
 </main>
     <footer class="bg-dark text-light text-center py-3 fade-in visible">
         <p>&copy; 2024 Blake Vieyra. All Rights Reserved.</p>
@@ -242,7 +267,10 @@ const words = [
     { word: "elephant", hint: "A large mammal with a long trunk" },
     { word: "computer", hint: "A device for processing data" },
     { word: "airplane", hint: "Flies in the sky" },
-    { word: "javascript", hint: "Programming language" }
+    { word: "javascript", hint: "Programming language" },
+    { word: "banana", hint: "Yellow fruit with a peel" },
+    { word: "mountain", hint: "Large landform that rises above the surrounding land" },
+    // Add more words as needed
 ];
 let selectedWord = {};
 let guessesLeft = 6;
@@ -408,41 +436,143 @@ window.onload = () => {
     updateRPSChart();
     updateHangmanChart();
 }
-    let currentPlayer = 'X';
-    let moves = 0;
-    let gameBoard = ['', '', '', '', '', '', '', '', ''];
+       let playerWins = 0;
+        let computerWins = 0;
+        let ties = 0;
+        let currentPlayer = 'X'; // Player X starts the game
+        let gameBoard = ['', '', '', '', '', '', '', '', '']; // Represents the Tic Tac Toe board
 
-    function placeMark(cellNumber) {
-        const cell = document.getElementById('cell' + cellNumber);
-        if (cell.textContent === '' && !checkWinner()) {
-            cell.textContent = currentPlayer;
-            gameBoard[cellNumber - 1] = currentPlayer;
-            moves++;
-            if (checkWinner()) {
+        // Function to handle player's move
+        function playerMove(index) {
+            if (gameBoard[index] === '') {
+                gameBoard[index] = currentPlayer;
+                document.getElementById('ticTacToeBoard').getElementsByTagName('td')[index].textContent = currentPlayer;
+                if (checkWinner(currentPlayer)) {
+                    document.getElementById('ticTacToeResult').textContent = `${currentPlayer} wins!`;
+                    updateScoreboard();
+                    resetGame();
+                    return;
+                }
+                if (!gameBoard.includes('')) {
+                    document.getElementById('ticTacToeResult').textContent = "It's a tie!";
+                    ties++;
+                    updateScoreboard();
+                    resetGame();
+                    return;
+                }
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch turns
+                computerMove();
+            }
+        }
+
+        // Function to handle computer's move
+        function computerMove() {
+            let availableMoves = gameBoard.reduce((acc, cell, index) => {
+                if (cell === '') {
+                    acc.push(index);
+                }
+                return acc;
+            }, []);
+
+            let randomIndex = Math.floor(Math.random() * availableMoves.length);
+            let computerIndex = availableMoves[randomIndex];
+
+            gameBoard[computerIndex] = currentPlayer;
+            document.getElementById('ticTacToeBoard').getElementsByTagName('td')[computerIndex].textContent = currentPlayer;
+
+            if (checkWinner(currentPlayer)) {
                 document.getElementById('ticTacToeResult').textContent = `${currentPlayer} wins!`;
-            } else if (moves === 9) {
-                document.getElementById('ticTacToeResult').textContent = "It's a draw!";
-            } else {
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                updateScoreboard();
+                resetGame();
+                return;
+            }
+            if (!gameBoard.includes('')) {
+                document.getElementById('ticTacToeResult').textContent = "It's a tie!";
+                ties++;
+                updateScoreboard();
+                resetGame();
+                return;
+            }
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch turns
+        }
+
+        // Function to check for a winner
+        function checkWinner(player) {
+            const winningCombos = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6] // Diagonals
+            ];
+
+            return winningCombos.some(combo => {
+                const [a, b, c] = combo;
+                return gameBoard[a] === player && gameBoard[b] === player && gameBoard[c] === player;
+            });
+        }
+
+        // Function to update scoreboard
+        function updateScoreboard() {
+            document.getElementById('playerWins').textContent = playerWins;
+            document.getElementById('computerWins').textContent = computerWins;
+            document.getElementById('ties').textContent = ties;
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            currentPlayer = 'X';
+            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            document.getElementById('ticTacToeBoard').getElementsByTagName('td').forEach(cell => cell.textContent = '');
+            setTimeout(() => {
+                document.getElementById('ticTacToeResult').textContent = '';
+            }, 2000);
+        }
+
+        // Function to initialize the game
+        function initGame() {
+            resetGame();
+        }
+
+        // Call initGame function to start the game
+        initGame();
+    let ticTacToeChartInstance; // Variable to hold the Chart.js instance
+
+function updateTicTacToeChart() {
+    if (ticTacToeChartInstance) {
+        ticTacToeChartInstance.destroy(); // Destroy existing chart instance if it exists
+    }
+    const ctx = document.getElementById('ticTacToeChart').getContext('2d');
+    ticTacToeChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Player Wins', 'Computer Wins', 'Ties'],
+            datasets: [{
+                label: 'Tic Tac Toe Game Results',
+                data: [playerWins, computerWins, ties],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 205, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 205, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
+    });
+}
 
-    function checkWinner() {
-        const winningCombos = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-            [0, 4, 8], [2, 4, 6] // Diagonals
-        ];
-
-        for (const combo of winningCombos) {
-            const [a, b, c] = combo;
-            if (gameBoard[a] !== '' && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
-                return true;
-            }
-        }
-        return false;
-    }
+// Call this function whenever you update the scoreboard
+updateTicTacToeChart();
 </script>
 
 </body>
