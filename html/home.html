@@ -29,6 +29,33 @@
         .winning-cell {
     color: red; /* Change text color for winning cells */
 }
+        .win {
+    background-color: green;
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+.lose {
+    background-color: red;
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+.tie {
+    background-color: yellow;
+    color: black;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+        .btn:hover {
+    transform: scale(1.05); /* Slightly enlarge buttons on hover */
+    transition: transform 0.3s;
+}
     </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -68,10 +95,10 @@
         </section>
     <main class="container my-4">
        <h2>Rock, Paper, Scissors Game</h2>
-<div>
-    <button class="btn btn-primary" onclick="playerChoice('rock')">Rock</button>
-    <button class="btn btn-primary" onclick="playerChoice('paper')">Paper</button>
-    <button class="btn btn-primary" onclick="playerChoice('scissors')">Scissors</button>
+<div id="rpsButtons">
+    <button class="btn btn-primary" data-choice="rock">Rock</button>
+    <button class="btn btn-primary" data-choice="paper">Paper</button>
+    <button class="btn btn-primary" data-choice="scissors">Scissors</button>
 </div>
 <div id="choices" class="mt-3">
     <div>
@@ -102,7 +129,7 @@
             <p id="wordDisplay">_ _ _ _ _</p>
              <div>
     <input type="text" id="letterInput" maxlength="1">
-    <button class="btn btn-primary" onclick="guessLetter()">Guess</button>
+  <button class="btn btn-primary" id="guessButton">Guess</button>
 </div>
             <p>Guesses left: <span id="guessesLeft">6</span></p>
             <p>Letters guessed: <span id="lettersGuessed"></span></p>
@@ -120,53 +147,53 @@
             </div>
         </div>
     </section>
-        <section class="text-center my-5 fade-in visible">
+ <section class="text-center my-5 fade-in visible">
     <h1>Tic Tac Toe Game</h1>
     <div id="ticTacToeBoard" class="mt-3">
         <div class="row">
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell1" onclick="placeMark(1)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 1" data-index="0">Cell 1</button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell2" onclick="placeMark(2)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 2" data-index="1">Cell 2</button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell3" onclick="placeMark(3)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 3" data-index="2">Cell 3</button>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell4" onclick="placeMark(4)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 4" data-index="3">Cell 4</button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell5" onclick="placeMark(5)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 5" data-index="4">Cell 5</button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell6" onclick="placeMark(6)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 6" data-index="5">Cell 6</button>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell7" onclick="placeMark(7)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 7" data-index="6">Cell 7</button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell8" onclick="placeMark(8)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 8" data-index="7">Cell 8</button>
             </div>
             <div class="col">
-                <button class="btn btn-outline-dark btn-lg" id="cell9" onclick="placeMark(9)"></button>
+                <button class="btn btn-outline-dark btn-lg" aria-label="Play Tic Tac Toe in Cell 9" data-index="8">Cell 9</button>
             </div>
         </div>
     </div>
-     <p id="ticTacToeResult" class="mt-3"></p>
-        <div id="ticTacToeScoreboard">
-            <p>Player Wins: <span id="playerWins">0</span></p>
-            <p>Computer Wins: <span id="computerWins">0</span></p>
-            <p>Ties: <span id="ties">0</span></p>
-        </div>
-            <div class="mt-3">
-        <canvas id="ticTacToeChart"></canvas>
+    <p id="ticTacToeResult" class="mt-3" aria-live="polite"></p>
+    <div id="ticTacToeScoreboard" aria-live="polite">
+        <p>Player Wins: <span id="playerWins">0</span></p>
+        <p>Computer Wins: <span id="computerWins">0</span></p>
+        <p>Ties: <span id="ties">0</span></p>
     </div>
-    </section>
+    <div class="mt-3">
+        <canvas id="ticTacToeChart" aria-label="Tic Tac Toe Game Results Chart"></canvas>
+    </div>
+</section>
 </main>
     <footer class="bg-dark text-light text-center py-3 fade-in visible">
         <p>&copy; 2024 Blake Vieyra. All Rights Reserved.</p>
@@ -176,233 +203,268 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 <script>
-  let rpsWins = 0;
-let rpsLosses = 0;
-let rpsTies = 0;
+   document.addEventListener('DOMContentLoaded', function() {
+    const rockPaperScissors = new RockPaperScissors();
+    rockPaperScissors.init();
 
-let hangmanWins = 0;
-let hangmanLosses = 0;
+    const hangman = new Hangman();
+    hangman.init();
 
-let rpsChartInstance; // Variable to hold Chart.js instance for RPS chart
-let hangmanChartInstance; // Variable to hold Chart.js instance for Hangman chart
-
-// Function for Rock, Paper, Scissors game
-function playerChoice(choice) {
-    const choices = ['rock', 'paper', 'scissors'];
-    const computerChoice = choices[Math.floor(Math.random() * choices.length)];
-    const result = determineWinner(choice, computerChoice);
-    updateRPSStats(result);
-    displayRPSResult(result, choice, computerChoice);
-}
-
-// Determine the winner of Rock, Paper, Scissors game
-function determineWinner(player, computer) {
-    if (player === computer) {
-        return 'tie';
-    } else if ((player === 'rock' && computer === 'scissors') ||
-               (player === 'paper' && computer === 'rock') ||
-               (player === 'scissors' && computer === 'paper')) {
-        return 'win';
-    } else {
-        return 'lose';
+    const ticTacToe = new TicTacToe();
+    ticTacToe.init();
+});
+class RockPaperScissors {
+    constructor() {
+        this.buttons = document.querySelectorAll("#rpsButtons button");
+          this.wins = 0;
+        this.losses = 0;
+        this.ties = 0;
+        this.chart = null;
     }
-}
 
-// Calculate mean and standard deviation for Rock, Paper, Scissors game statistics
-function calculateStats() {
-    const totalGames = rpsWins + rpsLosses + rpsTies;
-    const mean = totalGames > 0 ? (rpsWins + rpsLosses + rpsTies) / totalGames : 0;
-
-    const squaredDifferences = Math.pow(rpsWins - mean, 2) + Math.pow(rpsLosses - mean, 2) + Math.pow(rpsTies - mean, 2);
-    const variance = squaredDifferences / totalGames;
-    const standardDeviation = Math.sqrt(variance);
-
-    return { mean, standardDeviation };
-}
-
-// Update Rock Paper Scissors scoreboard with mean and standard deviation
-function updateRPSScoreboard() {
-    const stats = calculateStats();
-
-    document.getElementById('rpsWins').textContent = rpsWins;
-    document.getElementById('rpsLosses').textContent = rpsLosses;
-    document.getElementById('rpsTies').textContent = rpsTies;
-    document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
-    document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
-}
-
-// Update Rock Paper Scissors game statistics
-function updateRPSStats(result) {
-    if (result === 'win') {
-        rpsWins++;
-    } else if (result === 'lose') {
-        rpsLosses++;
-    } else {
-        rpsTies++;
+    init() {
+        this.setupEventListeners();
+        this.setupChart();
     }
-    updateRPSScoreboard();
-    updateRPSChart();
-}
 
-// Display the result of Rock Paper Scissors game
-function displayRPSResult(result, playerChoice, computerChoice) {
-    const userChoiceImg = document.getElementById('userChoiceImg');
-    const computerChoiceImg = document.getElementById('computerChoiceImg');
+    setupEventListeners() {
+        this.buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const choice = button.getAttribute('data-choice');
+                this.playerChoice(choice);
+            });
+        });
+    }
 
-    // Set the source of the images based on the choices
-    userChoiceImg.src = `images/${playerChoice}.png`; // Assuming images are named 'rock.png', 'paper.png', 'scissors.png'
-    computerChoiceImg.src = `images/${computerChoice}.png`;
+    playerChoice(choice) {
+        const choices = ['rock', 'paper', 'scissors'];
+        const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+        const result = this.determineWinner(choice, computerChoice);
+        this.updateStats(result);
+        this.displayResult(result, choice, computerChoice);
+    }
 
-    // Show the images
-    userChoiceImg.style.display = 'inline-block';
-    computerChoiceImg.style.display = 'inline-block';
-
-    // Display the result
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `${capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
-}
-
-// Function for generating Hangman game
-const words = [
-    { word: "elephant", hint: "A large mammal with a long trunk" },
-    { word: "computer", hint: "A device for processing data" },
-    { word: "airplane", hint: "Flies in the sky" },
-    { word: "javascript", hint: "Programming language" },
-    { word: "banana", hint: "Yellow fruit with a peel" },
-    { word: "mountain", hint: "Large landform that rises above the surrounding land" },
-    // Add more words as needed
-];
-let selectedWord = {};
-let guessesLeft = 6;
-let lettersGuessed = [];
-let correctGuesses = [];
-
-// Set up Hangman game
-function setupHangmanGame() {
-    selectedWord = words[Math.floor(Math.random() * words.length)];
-    let displayWord = selectedWord.word.split("").map(letter => correctGuesses.includes(letter) ? letter : "_").join(" ");
-    document.getElementById("wordDisplay").textContent = displayWord;
-    document.getElementById("guessesLeft").textContent = guessesLeft;
-    document.getElementById("lettersGuessed").textContent = lettersGuessed.join(", ");
-    document.getElementById("hintText").textContent = selectedWord.hint;
-
-    setTimeout(() => {
-        document.getElementById("hint").classList.add("visible");
-    }, 2000);
-}
-
-// Guess a letter in Hangman game
-function guessLetter() {
-    const letter = document.getElementById('letterInput').value.toLowerCase();
-    if (!lettersGuessed.includes(letter)) {
-        lettersGuessed.push(letter);
-        if (selectedWord.word.includes(letter)) {
-            correctGuesses.push(letter);
+    determineWinner(player, computer) {
+        if (player === computer) {
+            return 'tie';
+        } else if ((player === 'rock' && computer === 'scissors') ||
+                   (player === 'paper' && computer === 'rock') ||
+                   (player === 'scissors' && computer === 'paper')) {
+            return 'win';
         } else {
-            guessesLeft--;
-        }
-
-        if (guessesLeft <= 0) {
-            hangmanLosses++;
-            updateHangmanScoreboard();
-            startNewHangmanGame();
+            return 'lose';
         }
     }
-}
 
-// Update Hangman scoreboard
-function updateHangmanScoreboard() {
-    document.getElementById("hangmanWins").textContent = hangmanWins;
-    document.getElementById("hangmanLosses").textContent = hangmanLosses;
-}
-
-// Start a new Hangman game
-function startNewHangmanGame() {
-    guessesLeft = 6;
-    lettersGuessed = [];
-    correctGuesses = [];
-    updateHangmanScoreboard();
-}
-
-// Capitalize the first letter of a string
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-// Update Rock Paper Scissors chart
-function updateRPSChart() {
-    // Destroy the existing chart instance if it exists
-    if (rpsChartInstance) {
-        rpsChartInstance.destroy();
+    updateStats(result) {
+        if (result === 'win') {
+            this.wins++;
+        } else if (result === 'lose') {
+            this.losses++;
+        } else {
+            this.ties++;
+        }
+        this.updateScoreboard();
+        this.updateChart();
     }
 
-    const ctx = document.getElementById('rpsChart').getContext('2d');
-    rpsChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Wins', 'Losses', 'Ties'],
-            datasets: [{
-                label: 'Rock, Paper, Scissors Statistics',
-                data: [rpsWins, rpsLosses, rpsTies],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    updateScoreboard() {
+        const stats = this.calculateStats();
+        document.getElementById('rpsWins').textContent = this.wins;
+        document.getElementById('rpsLosses').textContent = this.losses;
+        document.getElementById('rpsTies').textContent = this.ties;
+        document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
+        document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
+    }
+
+    calculateStats() {
+        const totalGames = this.wins + this.losses + this.ties;
+        const mean = totalGames > 0 ? totalGames / 3 : 0;
+        const variance = ((Math.pow(this.wins - mean, 2) + Math.pow(this.losses - mean, 2) + Math.pow(this.ties - mean, 2)) / totalGames);
+        return {
+            mean: mean,
+            standardDeviation: Math.sqrt(variance)
+        };
+    }
+
+    displayResult(result, playerChoice, computerChoice) {
+        const userChoiceImg = document.getElementById('userChoiceImg');
+        const computerChoiceImg = document.getElementById('computerChoiceImg');
+        userChoiceImg.src = `images/${playerChoice}.png`;
+        computerChoiceImg.src = `images/${computerChoice}.png`;
+        userChoiceImg.style.display = 'inline-block';
+        computerChoiceImg.style.display = 'inline-block';
+        document.getElementById('result').innerHTML = `${this.capitalizeFirstLetter(result)}!<br>You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+    }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    setupChart() {
+        const ctx = document.getElementById('rpsChart').getContext('2d');
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Wins', 'Losses', 'Ties'],
+                datasets: [{
+                    label: 'Rock, Paper, Scissors Statistics',
+                    data: [this.wins, this.losses, this.ties],
+                    backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
-}
-
-// Update Hangman chart
-function updateHangmanChart() {
-    // Destroy the existing chart instance if it exists
-    if (hangmanChartInstance) {
-        hangmanChartInstance.destroy();
+        });
     }
 
-    const ctx = document.getElementById('hangmanChart').getContext('2d');
-    hangmanChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Wins', 'Losses'],
-            datasets: [{
-                label: 'Hangman Statistics',
-                data: [hangmanWins, hangmanLosses],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+    updateChart() {
+        if (this.chart) {
+            this.chart.data.datasets.forEach((dataset) => {
+                dataset.data = [this.wins, this.losses, this.ties];
+            });
+            this.chart.update();
         }
-    });
+    }
+}
+    
+class Hangman {
+    constructor() {
+        this.wins = 0;
+        this.losses = 0;
+        this.guessesLeft = 6;
+        this.lettersGuessed = [];
+        this.correctGuesses = [];
+        this.words = [
+            { word: "elephant", hint: "A large mammal with a long trunk" },
+            { word: "computer", hint: "A device for processing data" },
+            { word: "airplane", hint: "Flies in the sky" },
+            { word: "javascript", hint: "Programming language" },
+            { word: "banana", hint: "Yellow fruit with a peel" },
+            { word: "mountain", hint: "Large landform that rises above the surrounding land" }
+        ];
+        this.selectedWord = null;
+        this.chart = null;
+   this.letterInput = document.getElementById('letterInput');
+        this.guessButton = document.getElementById('guessButton'); // Ensure this ID is in your HTML
+    }
+    init() {
+        this.resetGame();
+        this.setupChart();
+        this.attachEventListeners();
+    }
+    attachEventListeners() {
+        this.guessButton.addEventListener('click', () => {
+            const letter = this.letterInput.value.toLowerCase();
+            this.letterInput.value = ''; // Clear input after guess
+            this.guessLetter(letter);
+        });
+    }
+
+    setupGame() {
+        this.selectedWord = this.words[Math.floor(Math.random() * this.words.length)];
+        this.displayWord();
+    }
+
+    resetGame() {
+        this.guessesLeft = 6;
+        this.lettersGuessed = [];
+        this.correctGuesses = [];
+        this.setupGame();
+        this.updateScoreboard();
+    }
+
+    guessLetter(letter) {
+    if (letter.length === 1 && /[a-z]/i.test(letter) && !this.lettersGuessed.includes(letter)) {
+        this.lettersGuessed.push(letter);
+        if (this.selectedWord.word.includes(letter)) {
+            this.correctGuesses.push(letter);
+            this.updateWordDisplay();
+        } else {
+            this.guessesLeft--;
+        }
+        this.checkGameEnd();
+    } else {
+        alert("Please enter a valid letter that you haven't guessed yet.");
+    }
+    this.letterInput.value = ''; // Clear input after processing
+    this.letterInput.focus(); // Refocus input for next guess
 }
 
+    checkGameEnd() {
+        if (this.guessesLeft <= 0) {
+            this.losses++;
+            this.resetGame();
+        } else if (this.selectedWord.word.split('').every(letter => this.correctGuesses.includes(letter))) {
+            this.wins++;
+            this.resetGame();
+        }
+        this.updateScoreboard();
+    }
+
+    displayWord() {
+        let display = this.selectedWord.word.split('').map(letter => this.correctGuesses.includes(letter) ? letter : "_").join(' ');
+        document.getElementById("wordDisplay").textContent = display;
+        document.getElementById("guessesLeft").textContent = this.guessesLeft;
+        document.getElementById("lettersGuessed").textContent = this.lettersGuessed.join(", ");
+        document.getElementById("hintText").textContent = this.selectedWord.hint;
+    }
+
+    updateWordDisplay() {
+        this.displayWord();
+    }
+
+    updateScoreboard() {
+        document.getElementById("hangmanWins").textContent = this.wins;
+        document.getElementById("hangmanLosses").textContent = this.losses;
+    }
+
+    setupChart() {
+        const ctx = document.getElementById('hangmanChart').getContext('2d');
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Wins', 'Losses'],
+                datasets: [{
+                    label: 'Hangman Statistics',
+                    data: [this.wins, this.losses],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    updateChart() {
+        if (this.chart) {
+            this.chart.data.datasets.forEach((dataset) => {
+                dataset.data = [this.wins, this.losses];
+            });
+            this.chart.update();
+        }
+    }
+}
 // Check if an element is in the viewport
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
@@ -429,150 +491,147 @@ window.addEventListener('scroll', handleScroll);
 // Initial check on page load
 handleScroll();
 
-// Set up the Hangman game when the window loads
-window.onload = () => {
-    // Only call startNewHangmanGame() once here
-    setupHangmanGame();
-    updateRPSChart();
-    updateHangmanChart();
-}
-       let playerWins = 0;
-        let computerWins = 0;
-        let ties = 0;
-        let currentPlayer = 'X'; // Player X starts the game
-        let gameBoard = ['', '', '', '', '', '', '', '', '']; // Represents the Tic Tac Toe board
+class TicTacToe {
+    constructor() {
+        this.cells = document.querySelectorAll("#ticTacToeBoard button");
+        this.playerWins = 0;
+        this.computerWins = 0;
+        this.ties = 0;
+        this.currentPlayer = 'X';
+        this.gameBoard = Array(9).fill('');
+        this.chart = null;
+    }
 
-        // Function to handle player's move
-        function playerMove(index) {
-            if (gameBoard[index] === '') {
-                gameBoard[index] = currentPlayer;
-                document.getElementById('ticTacToeBoard').getElementsByTagName('td')[index].textContent = currentPlayer;
-                if (checkWinner(currentPlayer)) {
-                    document.getElementById('ticTacToeResult').textContent = `${currentPlayer} wins!`;
-                    updateScoreboard();
-                    resetGame();
-                    return;
-                }
-                if (!gameBoard.includes('')) {
-                    document.getElementById('ticTacToeResult').textContent = "It's a tie!";
-                    ties++;
-                    updateScoreboard();
-                    resetGame();
-                    return;
-                }
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch turns
-                computerMove();
+    init() {
+        this.setupBoard();
+        this.setupChart();
+        this.updateScoreboard(); // Ensure the scoreboard is initialized correctly
+    }
+
+    setupBoard() {
+          this.cells.forEach((cell) => {
+            cell.addEventListener('click', () => this.playerMove(cell.dataset.index));
+        });
+    }
+   playerMove(index) {
+        if (this.gameBoard[index] === '') {
+            this.gameBoard[index] = this.currentPlayer;
+            this.cells[index].textContent = this.currentPlayer;
+
+            if (this.checkWinner(this.currentPlayer)) {
+                const resultText = `${this.currentPlayer} wins!`;
+                document.getElementById('ticTacToeResult').textContent = resultText;
+                document.getElementById('ticTacToeResult').className = 'win';
+                this.updateScoreboard();
+                this.resetGame();
+            } else if (!this.gameBoard.includes('')) {
+                document.getElementById('ticTacToeResult').textContent = "It's a tie!";
+                document.getElementById('ticTacToeResult').className = 'tie';
+                this.ties++;
+                this.updateScoreboard();
+                this.resetGame();
+            } else {
+                this.switchPlayer();
             }
         }
+    }
 
-        // Function to handle computer's move
-        function computerMove() {
-            let availableMoves = gameBoard.reduce((acc, cell, index) => {
-                if (cell === '') {
-                    acc.push(index);
-                }
-                return acc;
-            }, []);
+    switchPlayer() {
+        this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+    }
 
+    computerMove() {
+        let availableMoves = this.gameBoard.reduce((acc, cell, index) => {
+            if (cell === '') acc.push(index);
+            return acc;
+        }, []);
+        if (availableMoves.length > 0) {
             let randomIndex = Math.floor(Math.random() * availableMoves.length);
             let computerIndex = availableMoves[randomIndex];
-
-            gameBoard[computerIndex] = currentPlayer;
-            document.getElementById('ticTacToeBoard').getElementsByTagName('td')[computerIndex].textContent = currentPlayer;
-
-            if (checkWinner(currentPlayer)) {
-                document.getElementById('ticTacToeResult').textContent = `${currentPlayer} wins!`;
-                updateScoreboard();
-                resetGame();
+            this.gameBoard[computerIndex] = this.currentPlayer;
+            document.getElementById('ticTacToeBoard').getElementsByTagName('td')[computerIndex].textContent = this.currentPlayer;
+            if (this.checkWinner(this.currentPlayer)) {
+                document.getElementById('ticTacToeResult').textContent = `${this.currentPlayer} wins!`;
+                this.updateScoreboard();
+                this.resetGame();
                 return;
             }
-            if (!gameBoard.includes('')) {
+            if (!this.gameBoard.includes('')) {
                 document.getElementById('ticTacToeResult').textContent = "It's a tie!";
-                ties++;
-                updateScoreboard();
-                resetGame();
+                this.ties++;
+                this.updateScoreboard();
+                this.resetGame();
                 return;
             }
-            currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch turns
+            this.switchPlayer();
         }
-
-        // Function to check for a winner
-        function checkWinner(player) {
-            const winningCombos = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6] // Diagonals
-            ];
-
-            return winningCombos.some(combo => {
-                const [a, b, c] = combo;
-                return gameBoard[a] === player && gameBoard[b] === player && gameBoard[c] === player;
-            });
-        }
-
-        // Function to update scoreboard
-        function updateScoreboard() {
-            document.getElementById('playerWins').textContent = playerWins;
-            document.getElementById('computerWins').textContent = computerWins;
-            document.getElementById('ties').textContent = ties;
-        }
-
-        // Function to reset the game
-        function resetGame() {
-            currentPlayer = 'X';
-            gameBoard = ['', '', '', '', '', '', '', '', ''];
-            document.getElementById('ticTacToeBoard').getElementsByTagName('td').forEach(cell => cell.textContent = '');
-            setTimeout(() => {
-                document.getElementById('ticTacToeResult').textContent = '';
-            }, 2000);
-        }
-
-        // Function to initialize the game
-        function initGame() {
-            resetGame();
-        }
-
-        // Call initGame function to start the game
-        initGame();
-    let ticTacToeChartInstance; // Variable to hold the Chart.js instance
-
-function updateTicTacToeChart() {
-    if (ticTacToeChartInstance) {
-        ticTacToeChartInstance.destroy(); // Destroy existing chart instance if it exists
     }
-    const ctx = document.getElementById('ticTacToeChart').getContext('2d');
-    ticTacToeChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Player Wins', 'Computer Wins', 'Ties'],
-            datasets: [{
-                label: 'Tic Tac Toe Game Results',
-                data: [playerWins, computerWins, ties],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 205, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 205, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+
+    checkWinner(player) {
+        const winningCombos = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6] // Diagonals
+        ];
+        return winningCombos.some(combo => combo.every(index => this.gameBoard[index] === player));
+    }
+
+    updateScoreboard() {
+        document.getElementById('playerWins').textContent = this.playerWins;
+        document.getElementById('computerWins').textContent = this.computerWins;
+        document.getElementById('ties').textContent = this.ties;
+    }
+
+    resetGame() {
+        this.currentPlayer = 'X';
+        this.gameBoard = Array(9).fill('');
+        document.querySelectorAll('#ticTacToeBoard td').forEach(cell => cell.textContent = '');
+        setTimeout(() => {
+            document.getElementById('ticTacToeResult').textContent = '';
+        }, 2000);
+    }
+
+    setupChart() {
+        const ctx = document.getElementById('ticTacToeChart').getContext('2d');
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Player Wins', 'Computer Wins', 'Ties'],
+                datasets: [{
+                    label: 'Tic Tac Toe Game Results',
+                    data: [this.playerWins, this.computerWins, this.ties],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 205, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 205, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
-// Call this function whenever you update the scoreboard
-updateTicTacToeChart();
+    updateChart() {
+        if (this.chart) {
+            this.chart.data.datasets.forEach((dataset) => {
+                dataset.data = [this.playerWins, this.computerWins, this.ties];
+            });
+            this.chart.update();
+        }
+    }
+}
 </script>
 
 </body>
