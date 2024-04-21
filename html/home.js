@@ -101,7 +101,7 @@ function updateScore(name, wins, losses, ties) {
 }
 
 class RockPaperScissors {
-    constructor() {
+    constructor(player) {
          this.player = player;
         this.buttons = document.querySelectorAll("#rpsButtons button");
           this.wins = 0;
