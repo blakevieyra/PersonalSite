@@ -186,14 +186,29 @@ a:focus, button:focus {
 
                     
 <section class="text-center my-5 fade-in">
-    <h1>Register for the Game</h1>
+    <h1>Register for the Games</h1>
     <form id="playerForm">
         <div class="form-group">
             <label for="playerName">Enter your name:</label>
-            <input type="text" id="playerName" class="form-control" placeholder="Your name" required maxlength="20" aria-describedby="nameHelp">
+            <input type="text" id="playerName" class="form-control" placeholder="Your name" required maxlength="20"
+                aria-describedby="nameHelp">
             <small id="nameHelp" class="form-text text-muted">Name must be less than 20 characters.</small>
         </div>
         <button type="submit" class="btn btn-primary">Start Games</button>
+    </form>
+
+    <!-- New registration form -->
+    <form id="registerForm">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Your username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Your password"
+                required>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
     </form>
 
     <h2>Game Leaderboard</h2>
@@ -210,7 +225,8 @@ a:focus, button:focus {
             <!-- Player scores will be inserted here by JavaScript -->
         </tbody>
     </table>
-    <button id="clearLeaderboard" class="btn btn-danger" onclick="return confirm('Are you sure you want to clear the leaderboard?')">Clear Leaderboard</button>
+    <button id="clearLeaderboard" class="btn btn-danger"
+        onclick="return confirm('Are you sure you want to clear the leaderboard?')">Clear Leaderboard</button>
 </section>
 
 <section class="text-center my-5 fade-in">
