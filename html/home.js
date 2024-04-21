@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('playerForm');
     if (form) {
@@ -23,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('clearLeaderboard').addEventListener('click', clearLeaderboard);
 });
+
 // Function to handle scrolling event
 function handleScroll() {
     const fadeIns = document.querySelectorAll('.fade-in');
@@ -32,6 +32,7 @@ function handleScroll() {
         }
     });
 }
+
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -41,6 +42,7 @@ function isInViewport(element) {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
 }
+
 // Attach the handleScroll function to the scroll event listener
 window.addEventListener('scroll', handleScroll);
 
@@ -71,8 +73,8 @@ function initGames(currentPlayer) {
 
         const hangman = new Hangman(currentPlayer);
         hangman.init();
-
-        const ticTacToe = new TicTacToe(currentPlayer);
+        
+        const ticTacToe = new TicTacToe();
         ticTacToe.init();
     } catch (error) {
         console.error('Failed to initialize games:', error);
@@ -126,6 +128,7 @@ function updateScore(name, wins, losses, ties) {
     })
     .catch(error => console.error('Error:', error));
 }
+
 function updateGlobalLeaderboard(data) {
     const leaderboard = document.getElementById('globalLeaderboard');
     if (!leaderboard) {
@@ -152,7 +155,16 @@ function updateGlobalLeaderboard(data) {
     leaderboard.appendChild(headerRow);
 
     // Add players to leaderboard
-    data.forEach(player => {
+   data.forEach(player => {
+    // Check if player object has all required properties
+    if (
+        player &&
+        typeof player === 'object' &&
+        'name' in player &&
+        'wins' in player &&
+        'losses' in player &&
+        'ties' in player
+    ) {
         const row = document.createElement('tr');
         const playerName = document.createElement('td');
         playerName.textContent = player.name;
@@ -167,9 +179,11 @@ function updateGlobalLeaderboard(data) {
         row.appendChild(playerLosses);
         row.appendChild(playerTies);
         leaderboard.appendChild(row);
-    });
+    } else {
+        console.error('Invalid player data:', player);
+    }
+});
 }
-
 class RockPaperScissors {
     constructor(player, updateGlobalLeaderboard) {
          this.player = player;
@@ -306,9 +320,6 @@ const ctx = document.getElementById(this.chartId).getContext('2d');
 
 
 
-
-
-
 class Hangman {
     constructor() {
         this.wins = 0;
@@ -328,7 +339,6 @@ class Hangman {
                 { word: "cup", hint: "A small bowl-shaped container for drinking from, typically having a handle" },
                 { word: "cake", hint: "An item of soft, sweet food made from a mixture of flour, fat, eggs, sugar, and other ingredients, baked and sometimes iced or decorated" },
                 { word: "bird", hint: "A warm-blooded egg-laying vertebrate distinguished by the possession of feathers, wings, and a beak" }
-                // Add more easy words here
             ],
             medium: [
                 { word: "computer", hint: "An electronic device for processing data" },
@@ -341,7 +351,6 @@ class Hangman {
                 { word: "river", hint: "A large natural stream of water flowing in a channel to the sea, a lake, or another such stream" },
                 { word: "camera", hint: "An optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both" },
                 { word: "movie", hint: "A story or event recorded by a camera as a set of moving images and shown in a theater or on television; a motion picture" }
-                // Add more medium words here
             ],
             hard: [
                 { word: "perplexity", hint: "State of being bewildered or puzzled" },
@@ -354,7 +363,6 @@ class Hangman {
                 { word: "capricious", hint: "Given to sudden and unaccountable changes of mood or behavior" },
                 { word: "ubiquitous", hint: "Present, appearing, or found everywhere" },
                 { word: "indefatigable", hint: "Persisting tirelessly" }
-                // Add more hard words here
             ]
         };
         this.selectedWord = null;
@@ -369,41 +377,43 @@ class Hangman {
         this.init();
     }
 
-    selectRandomWord() {
-        return this.words[Math.floor(Math.random() * this.words.length)];
+    selectRandomWord(difficulty) {
+        const wordOptions = this.words[difficulty];
+        return wordOptions[Math.floor(Math.random() * wordOptions.length)];
     }
 
-   setDifficulty(level) {
-    switch (level) {
-        case 'easy':
-            this.wordsList = this.words.easy;
-            this.guessesLeft = 10;
-            break;
-        case 'medium':
-            this.wordsList = this.words.medium;
-            this.guessesLeft = 7;
-            break;
-        case 'hard':
-            this.wordsList = this.words.hard;
-            this.guessesLeft = 5;
-            break;
-        default:
-            this.wordsList = this.words.medium; // Default to medium difficulty
-            this.guessesLeft = 7;
-            break;
+    setDifficulty(level) {
+        switch (level) {
+            case 'easy':
+                this.wordsList = this.words.easy;
+                this.guessesLeft = 10;
+                break;
+            case 'medium':
+                this.wordsList = this.words.medium;
+                this.guessesLeft = 7;
+                break;
+            case 'hard':
+                this.wordsList = this.words.hard;
+                this.guessesLeft = 5;
+                break;
+            default:
+                this.wordsList = this.words.medium; // Default to medium difficulty
+                this.guessesLeft = 7;
+                break;
+        }
     }
-}
 
     generateRandomLetter() {
         // Generate a random letter from available letters not yet guessed to improve efficiency
-        const unguessedLetters = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(l => !this.lettersGuessed.includes(l));
+        const unguessedLetters = this.availableLetters.filter(l => !this.lettersGuessed.includes(l));
         if (unguessedLetters.length > 0) {
             const randomIndex = Math.floor(Math.random() * unguessedLetters.length);
             return unguessedLetters[randomIndex];
         }
         return null; // Return null if no letters are left to guess
     }
-     checkIfAllLettersGuessed() {
+
+    checkIfAllLettersGuessed() {
         return this.selectedWord.word.split('').every(letter => this.lettersGuessed.includes(letter));
     }
 
@@ -414,7 +424,7 @@ class Hangman {
         this.attachEventListeners();
     }
 
-   attachEventListeners() {
+    attachEventListeners() {
         this.guessButton.addEventListener('click', () => {
             const letter = this.letterInput.value.toLowerCase();
             this.letterInput.value = ''; // Clear input after guess
@@ -439,14 +449,7 @@ class Hangman {
     }
 
     setupGame() {
-        let wordOptions = this.words.filter(word => !this.previousWords.includes(word.word));
-        if (wordOptions.length === 0) {
-            alert('No more words left to guess! Resetting previously guessed words.');
-            this.previousWords = [];
-            wordOptions = this.words;
-        }
-        this.selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
-        this.previousWords.push(this.selectedWord.word);
+        this.selectedWord = this.selectRandomWord(this.wordsList);
         this.displayWord();
     }
 
@@ -491,7 +494,7 @@ class Hangman {
                     clearInterval(intervalId);
                     this.handleGameEnd('Computer');
                 }
-            }, 5000); // Adjust the interval time as needed
+            }, 1000); // Adjust the interval time as needed
         }
     }
 
@@ -573,9 +576,6 @@ class Hangman {
 
 
 
-
-
-
 class TicTacToe {
     constructor() {
         this.cells = document.querySelectorAll("#ticTacToeBoard button");
@@ -601,24 +601,11 @@ class TicTacToe {
             this.cells[index].textContent = this.currentPlayer;
 
             if (this.checkWinner(this.currentPlayer)) {
-                const resultText = `${this.currentPlayer} wins!`;
-                document.getElementById('ticTacToeResult').textContent = resultText;
-                document.getElementById('ticTacToeResult').className = 'win';
-                if (this.currentPlayer === 'X') {
-                    this.playerWins++;
-                } else {
-                    this.computerWins++;
-                }
-                this.updateScoreboard();
-                this.gameOver = true;
+                this.handleGameEnd(this.currentPlayer);
             } else if (!this.gameBoard.includes('')) {
-                document.getElementById('ticTacToeResult').textContent = "It's a tie!";
-                document.getElementById('ticTacToeResult').className = 'tie';
-                this.ties++;
-                this.updateScoreboard();
-                this.gameOver = true;
+                this.handleGameEnd('tie');
             } else {
-                this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+                this.switchPlayer();
                 if (this.currentPlayer === 'O') {
                     setTimeout(() => {
                         this.computerMove();
@@ -640,18 +627,18 @@ class TicTacToe {
                 this.gameBoard[computerIndex] = this.currentPlayer;
                 this.cells[computerIndex].textContent = this.currentPlayer;
                 if (this.checkWinner(this.currentPlayer)) {
-                    this.computerWins++;
-                    document.getElementById('ticTacToeResult').textContent = `${this.currentPlayer} wins!`;
-                    this.gameOver = true;
+                    this.handleGameEnd(this.currentPlayer);
                 } else if (!this.gameBoard.includes('')) {
-                    this.ties++;
-                    document.getElementById('ticTacToeResult').textContent = "It's a tie!";
-                    this.gameOver = true;
+                    this.handleGameEnd('tie');
+                } else {
+                    this.switchPlayer();
                 }
-                this.updateScoreboard();
-                this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
             }
         }
+    }
+
+    switchPlayer() {
+        this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
     }
 
     checkWinner(player) {
@@ -663,10 +650,22 @@ class TicTacToe {
         return winningCombos.some(combo => combo.every(index => this.gameBoard[index] === player));
     }
 
+    handleGameEnd(winner) {
+        if (winner === 'X') {
+            this.playerWins++;
+        } else if (winner === 'O') {
+            this.computerWins++;
+        } else {
+            this.ties++;
+        }
+        this.updateScoreboard();
+        this.gameOver = true;
+    }
+
     resetGame() {
         this.currentPlayer = 'X';
         this.gameBoard = Array(9).fill('');
-        document.querySelectorAll('#ticTacToeBoard td').forEach(cell => cell.textContent = '');
+        this.cells.forEach(cell => cell.textContent = '');
         setTimeout(() => {
             document.getElementById('ticTacToeResult').textContent = '';
             this.gameOver = false;
@@ -728,8 +727,6 @@ class TicTacToe {
     setupBoard() {
         this.cells.forEach((cell, index) => {
             cell.addEventListener('click', () => this.playerMove(index));
-            cell.textContent = '';
         });
     }
 }
-
