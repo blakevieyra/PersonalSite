@@ -32,7 +32,15 @@ function handleScroll() {
         }
     });
 }
-
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
 // Attach the handleScroll function to the scroll event listener
 window.addEventListener('scroll', handleScroll);
 
@@ -303,6 +311,10 @@ class Hangman {
         this.chart = null; // Initialize the chart variable
         this.letterInput = document.getElementById('letterInput');
         this.guessButton = document.getElementById('guessButton'); // Ensure this ID is in your HTML
+         this.computerWord = this.words[Math.floor(Math.random() * this.words.length)].word.toLowerCase();
+        this.computerCorrectGuesses = [];
+        this.computerGuessesLeft = 6;
+    }
     }
 
     init() {
@@ -348,6 +360,26 @@ class Hangman {
     this.letterInput.value = ''; // Clear input after processing
     this.letterInput.focus(); // Refocus input for next guess
 }
+computerGuess() {
+        // Function to generate a random letter
+        const generateRandomLetter = () => {
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+        };
+
+        // Interval function to make the computer guess a letter every 4 seconds
+        const intervalId = setInterval(() => {
+            const letter = generateRandomLetter();
+            if (!this.lettersGuessed.includes(letter)) {
+                this.computerCorrectGuesses.push(letter);
+                this.computerGuessesLeft--;
+                if (this.computerCorrectGuesses.length === this.computerWord.length) {
+                    clearInterval(intervalId); // Stop the interval if computer guessed the word
+                    this.handleGameEnd('Computer');
+                }
+            }
+        }, 4000);
+    }
 
     checkGameEnd() {
         if (this.guessesLeft <= 0) {
@@ -417,15 +449,7 @@ class Hangman {
     }
 }
 // Check if an element is in the viewport
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
+
 
 
 class TicTacToe {
