@@ -135,6 +135,7 @@ function updateGlobalLeaderboard(data) {
         console.error('Global leaderboard element not found');
         return;
     }
+    
     // Clear existing leaderboard
     leaderboard.innerHTML = '';
 
@@ -154,36 +155,41 @@ function updateGlobalLeaderboard(data) {
     headerRow.appendChild(headerTies);
     leaderboard.appendChild(headerRow);
 
-    // Add players to leaderboard
-   data.forEach(player => {
-    // Check if player object has all required properties
-    if (
-        player &&
-        typeof player === 'object' &&
-        'name' in player &&
-        'wins' in player &&
-        'losses' in player &&
-        'ties' in player
-    ) {
-        const row = document.createElement('tr');
-        const playerName = document.createElement('td');
-        playerName.textContent = player.name;
-        const playerWins = document.createElement('td');
-        playerWins.textContent = player.wins;
-        const playerLosses = document.createElement('td');
-        playerLosses.textContent = player.losses;
-        const playerTies = document.createElement('td');
-        playerTies.textContent = player.ties;
-        row.appendChild(playerName);
-        row.appendChild(playerWins);
-        row.appendChild(playerLosses);
-        row.appendChild(playerTies);
-        leaderboard.appendChild(row);
+    // Add players to leaderboard if data is provided and is an array
+    if (Array.isArray(data) && data.length > 0) {
+        data.forEach(player => {
+            // Check if player object has all required properties
+            if (
+                player &&
+                typeof player === 'object' &&
+                'name' in player &&
+                'wins' in player &&
+                'losses' in player &&
+                'ties' in player
+            ) {
+                const row = document.createElement('tr');
+                const playerName = document.createElement('td');
+                playerName.textContent = player.name;
+                const playerWins = document.createElement('td');
+                playerWins.textContent = player.wins;
+                const playerLosses = document.createElement('td');
+                playerLosses.textContent = player.losses;
+                const playerTies = document.createElement('td');
+                playerTies.textContent = player.ties;
+                row.appendChild(playerName);
+                row.appendChild(playerWins);
+                row.appendChild(playerLosses);
+                row.appendChild(playerTies);
+                leaderboard.appendChild(row);
+            } else {
+                console.error('Invalid player data:', player);
+            }
+        });
     } else {
-        console.error('Invalid player data:', player);
+        console.error('No data provided or data is not an array:', data);
     }
-});
 }
+
 class RockPaperScissors {
     constructor(player, updateGlobalLeaderboard) {
          this.player = player;
@@ -377,10 +383,15 @@ class Hangman {
         this.init();
     }
 
-    selectRandomWord(difficulty) {
-        const wordOptions = this.words[difficulty];
+   selectRandomWord(difficulty) {
+    const wordOptions = this.words[difficulty];
+    if (wordOptions && wordOptions.length > 0) {
         return wordOptions[Math.floor(Math.random() * wordOptions.length)];
+    } else {
+        console.error(`No word options found for difficulty "${difficulty}"`);
+        return { word: "", hint: "" }; // Return a default object or handle the situation accordingly
     }
+}
 
     setDifficulty(level) {
         switch (level) {
