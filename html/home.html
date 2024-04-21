@@ -56,6 +56,25 @@
     transform: scale(1.05); /* Slightly enlarge buttons on hover */
     transition: transform 0.3s;
 }
+        .game-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+    gap: 20px; /* Space between columns */
+}
+
+.choices, .scoreboard {
+    display: grid;
+    gap: 10px;
+}
+
+.choices {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for choices */
+}
+
+.scoreboard {
+    grid-template-rows: auto auto; /* Rows to accommodate content */
+    align-content: start;
+}
     </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -124,34 +143,36 @@
 
             
        <section class="text-center my-5 fade-in visible">
-       <h2>Rock, Paper, Scissors Game</h2>
-<div id="rpsButtons">
-    <button class="btn btn-primary" data-choice="rock">Rock</button>
-    <button class="btn btn-primary" data-choice="paper">Paper</button>
-    <button class="btn btn-primary" data-choice="scissors">Scissors</button>
-</div>
-<div id="choices" class="mt-3">
-    <div>
-        <img id="userChoiceImg" src="" alt="Your Choice" style="height: 150px; display: none;">
-        <span>User Choice</span>
+    <h2>Rock, Paper, Scissors Game</h2>
+    <div id="gameContainer" class="game-container">  <!-- Flex container -->
+        <div id="gameControls">
+            <div id="rpsButtons">
+                <button class="btn btn-primary" data-choice="rock">Rock</button>
+                <button class="btn btn-primary" data-choice="paper">Paper</button>
+                <button class="btn btn-primary" data-choice="scissors">Scissors</button>
+            </div>
+            <div id="choices" class="choices">
+                <div>
+                    <img id="userChoiceImg" src="" alt="Your Choice" style="height: 150px; display: none;">
+                    <span>User Choice</span>
+                </div>
+                <div>
+                    <img id="computerChoiceImg" src="" alt="Computer's Choice" style="height: 150px; display: none;">
+                    <span>Computer's Choice</span>
+                </div>
+            </div>
+            <div id="result" class="mt-3"></div>
+        </div>
+        <div id="rpsScoreboard" class="scoreboard">
+            <h4>Scoreboard</h4>
+            <p>Wins: <span id="rpsWins">0</span></p>
+            <p>Losses: <span id="rpsLosses">0</span></p>
+            <p>Ties: <span id="rpsTies">0</span></p>
+            <p>Mean Performance: <span id="rpsMean">0</span></p>
+            <p>Standard Deviation: <span id="rpsSD">0</span></p>
+            <canvas id="rpsChart" class="chart"></canvas>
+        </div>
     </div>
-    <div>
-        <img id="computerChoiceImg" src="" alt="Computer's Choice" style="height: 150px; display: none;">
-        <span>Computer's Choice</span>
-    </div>
-</div>
-<div id="result" class="mt-3"></div>
-<div id="rpsScoreboard" class="mt-3">
-    <h4>Scoreboard</h4>
-    <p>Wins: <span id="rpsWins">0</span></p>
-    <p>Losses: <span id="rpsLosses">0</span></p>
-    <p>Ties: <span id="rpsTies">0</span></p>
-    <p>Mean Performance: <span id="rpsMean">0</span></p>
-    <p>Standard Deviation: <span id="rpsSD">0</span></p>
-    <div class="mt-3">
-        <canvas id="rpsChart"></canvas>
-    </div>
-</div>
 </section>
        <section class="text-center my-5 fade-in visible">
          <div class="container">
