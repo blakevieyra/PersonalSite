@@ -72,14 +72,21 @@ function initGames(currentPlayer) {
 
         const hangman = new Hangman(currentPlayer);
         hangman.init();
-        
+
         const ticTacToe = new TicTacToe();
         ticTacToe.init();
     } catch (error) {
         console.error('Failed to initialize games:', error);
-        // Handle initialization errors, maybe disable game functionality or alert the user
+        displayError('Failed to start some games, please try again.'); // Show user-friendly error
     }
 }
+
+function displayError(message) {
+    const errorContainer = document.getElementById('errorContainer');
+    errorContainer.textContent = message;
+    errorContainer.style.display = 'block';
+}
+
 
 function populateLeaderboard() {
     const players = loadPlayers() || [];
@@ -128,73 +135,59 @@ function updateScore(name, wins, losses, ties) {
     .catch(error => console.error('Error:', error));
 }
 
+let lastLeaderboardData = [];
+
 function updateGlobalLeaderboard(data) {
     const leaderboard = document.getElementById('globalLeaderboard');
     if (!leaderboard) {
         console.error('Global leaderboard element not found');
         return;
     }
-    
-    // Clear existing leaderboard
-    leaderboard.innerHTML = '';
 
-    // Create table header
-    const headerRow = document.createElement('tr');
-    const headerName = document.createElement('th');
-    headerName.textContent = 'Player';
-    const headerWins = document.createElement('th');
-    headerWins.textContent = 'Wins';
-    const headerLosses = document.createElement('th');
-    headerLosses.textContent = 'Losses';
-    const headerTies = document.createElement('th');
-    headerTies.textContent = 'Ties';
-    headerRow.appendChild(headerName);
-    headerRow.appendChild(headerWins);
-    headerRow.appendChild(headerLosses);
-    headerRow.appendChild(headerTies);
-    leaderboard.appendChild(headerRow);
-
-    // Add players to leaderboard if data is provided and is an array
-    if (Array.isArray(data) && data.length > 0) {
-        data.forEach(player => {
-            // Check if player object has all required properties
-            if (
-                player &&
-                typeof player === 'object' &&
-                'name' in player &&
-                'wins' in player &&
-                'losses' in player &&
-                'ties' in player
-            ) {
-                const row = document.createElement('tr');
-                const playerName = document.createElement('td');
-                playerName.textContent = player.name;
-                const playerWins = document.createElement('td');
-                playerWins.textContent = player.wins;
-                const playerLosses = document.createElement('td');
-                playerLosses.textContent = player.losses;
-                const playerTies = document.createElement('td');
-                playerTies.textContent = player.ties;
-                row.appendChild(playerName);
-                row.appendChild(playerWins);
-                row.appendChild(playerLosses);
-                row.appendChild(playerTies);
-                leaderboard.appendChild(row);
-            } else {
-                console.error('Invalid player data:', player);
-            }
-        });
-    } else {
-        console.error('No data provided or data is not an array:', data);
+    // Compare new data with last known data
+    if (JSON.stringify(lastLeaderboardData) === JSON.stringify(data)) {
+        console.log('No leaderboard changes detected, update skipped');
+        return; // Skip update if data has not changed
     }
+
+    // Update last known data
+    lastLeaderboardData = data;
+
+    // Efficiently update the DOM
+    updateLeaderboardDOM(leaderboard, data);
+}
+
+function updateLeaderboardDOM(leaderboard, data) {
+    // Assuming the leaderboard structure is known and consistent
+    const existingRows = leaderboard.querySelectorAll('tr').slice(1); // skip header row
+    data.forEach((player, index) => {
+        if (existingRows[index] && isValidPlayerData(player)) {
+            updateLeaderboardRow(existingRows[index], player);
+        } else {
+            const row = createLeaderboardRow(player);
+            leaderboard.appendChild(row);
+        }
+    });
+    // Remove any extra rows
+    while (leaderboard.children.length > data.length + 1) { // +1 for the header
+        leaderboard.removeChild(leaderboard.lastChild);
+    }
+}
+
+function updateLeaderboardRow(row, player) {
+    const cells = row.querySelectorAll('td');
+    cells[0].textContent = player.name;  // Name
+    cells[1].textContent = player.wins;  // Wins
+    cells[2].textContent = player.losses; // Losses
+    cells[3].textContent = player.ties;  // Ties
 }
 
 class RockPaperScissors {
     constructor(player, updateGlobalLeaderboard) {
-         this.player = player;
+        this.player = player;
         this.updateGlobalLeaderboard = updateGlobalLeaderboard;
         this.buttons = document.querySelectorAll("#rpsButtons button");
-          this.wins = 0;
+        this.wins = 0;
         this.losses = 0;
         this.ties = 0;
         this.chart = null;
@@ -236,17 +229,21 @@ class RockPaperScissors {
     }
 
    updateStats(result) {
-   if (result === 'win') {
-    this.player.wins++;
-} else if (result === 'lose') {
-    this.player.losses++;
-} else {
-    this.player.ties++;
-}
-    this.updateScoreboard();
-    this.updateChart();
-    this.updateGlobalLeaderboard();
-}
+       if (result === 'win') {
+           this.wins++;
+       } else if (result === 'lose') {
+           this.losses++;
+       } else {
+           this.ties++;
+       }
+       this.updateScoreboard();
+       this.updateChart();
+       this.updateGlobalLeaderboard({
+           wins: this.wins,
+           losses: this.losses,
+           ties: this.ties
+       });
+   }
 
     updateScoreboard() {
         const stats = this.calculateStats();
@@ -282,7 +279,7 @@ class RockPaperScissors {
     }
 
     setupChart() {
-const ctx = document.getElementById(this.chartId).getContext('2d');
+        const ctx = document.getElementById(this.chartId).getContext('2d');
         this.chart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -314,7 +311,6 @@ const ctx = document.getElementById(this.chartId).getContext('2d');
         }
     }
 }
-
 class Hangman {
     constructor() {
         this.wins = 0;
@@ -369,6 +365,7 @@ class Hangman {
         this.availableLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
         this.computerGuessesLeft = 6; // Initialize computer guesses left
         this.computerLettersGuessed = []; // Initialize computer letters guessed
+        this.setDifficulty('easy'); // Set default difficulty to easy
         this.init();
     }
 
@@ -417,12 +414,6 @@ class Hangman {
         return this.selectedWord.word.split('').every(letter => this.lettersGuessed.includes(letter));
     }
 
-    init(difficulty = 'easy') {
-        this.setDifficulty(difficulty);
-        this.resetGame();
-        this.setupChart();
-        this.attachEventListeners();
-    }
 
     attachEventListeners() {
         this.guessButton.addEventListener('click', () => {
@@ -448,9 +439,16 @@ class Hangman {
         this.updateScoreboard();
     }
 
-    setupGame() {
-    this.selectedWord = this.selectRandomWord(this.difficulty); // Adjusted here
+    setupGame(difficulty) {
+    this.selectedWord = this.selectRandomWord(difficulty);
     this.displayWord();
+}
+
+init(difficulty = 'easy') {
+    this.setDifficulty(difficulty);
+    this.resetGame();
+    this.setupChart();
+    this.attachEventListeners();
 }
      guessLetter(letter) {
         if (!/[a-z]/i.test(letter)) {
@@ -573,8 +571,6 @@ class Hangman {
 }
 
 
-
-
 class TicTacToe {
     constructor() {
         this.cells = document.querySelectorAll("#ticTacToeBoard button");
@@ -589,10 +585,28 @@ class TicTacToe {
     }
 
     init() {
-        this.setupBoard();
-        this.setupChart();
-        this.updateScoreboard();
+    this.setupBoard();
+    this.setupChart();
+    this.updateScoreboard();
+    if (this.currentPlayer === 'O') {
+        setTimeout(() => {
+            this.computerMove();
+        }, 1000);
     }
+}
+
+resetGame() {
+    this.currentPlayer = 'X';
+    this.gameBoard = Array(9).fill('');
+    this.cells.forEach(cell => cell.textContent = '');
+    this.gameOver = false;
+    setTimeout(() => {
+        document.getElementById('ticTacToeResult').textContent = '';
+        if (this.currentPlayer === 'O') {
+            this.computerMove();
+        }
+    }, 2000);
+}
 
     playerMove(index) {
         if (!this.gameOver && this.gameBoard[index] === '') {
@@ -650,30 +664,21 @@ class TicTacToe {
     }
 
     handleGameEnd(winner) {
-        if (winner === 'X') {
-            this.playerWins++;
-        } else if (winner === 'O') {
-            this.computerWins++;
-        } else {
-            this.ties++;
-        }
-        this.updateScoreboard();
-        this.gameOver = true;
+    let resultMessage;
+    if (winner === 'X') {
+        this.playerWins++;
+        resultMessage = "You win!";
+    } else if (winner === 'O') {
+        this.computerWins++;
+        resultMessage = "Computer wins!";
+    } else {
+        this.ties++;
+        resultMessage = "It's a tie!";
     }
-
-    resetGame() {
-        this.currentPlayer = 'X';
-        this.gameBoard = Array(9).fill('');
-        this.cells.forEach(cell => cell.textContent = '');
-        setTimeout(() => {
-            document.getElementById('ticTacToeResult').textContent = '';
-            this.gameOver = false;
-            if (this.currentPlayer === 'O') {
-                this.computerMove();
-            }
-        }, 2000);
-    }
-
+    document.getElementById('ticTacToeResult').textContent = resultMessage;
+    this.updateScoreboard();
+    this.gameOver = true;
+}
     setupChart() {
         const ctx = document.getElementById(this.chartId).getContext('2d');
         if (this.chart) {
@@ -722,10 +727,13 @@ class TicTacToe {
             this.chart.update();
         }
     }
-
-    setupBoard() {
-        this.cells.forEach((cell, index) => {
-            cell.addEventListener('click', () => this.playerMove(index));
-        });
-    }
+setupBoard() {
+    const board = document.getElementById('ticTacToeBoard'); // Assuming your buttons are within this container
+    board.addEventListener('click', (event) => {
+        const index = Array.from(this.cells).indexOf(event.target);
+        if (index !== -1) {
+            this.playerMove(index);
+        }
+    });
+}
 }
