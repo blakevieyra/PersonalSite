@@ -184,6 +184,15 @@
     <div id="hangmanGameContainer" class="game-container">
         <div id="gameControls">
             <div>
+    <label for="difficulty">Choose difficulty:</label>
+    <select id="difficulty" class="form-control">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+    </select>
+    <button onclick="game.init(document.getElementById('difficulty').value)" class="btn btn-secondary">Set Difficulty</button>
+</div>
+            <div>
                 <p id="wordDisplay">_ _ _ _ _</p>
                 <div class="input-group mb-3">
                     <input type="text" id="letterInput" maxlength="1" class="form-control" autocomplete="off" aria-label="Enter a letter">
