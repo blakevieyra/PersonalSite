@@ -290,7 +290,20 @@ const ctx = document.getElementById(this.chartId).getContext('2d');
         }
     }
 }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Hangman {
     constructor() {
         this.wins = 0;
@@ -298,14 +311,18 @@ class Hangman {
         this.guessesLeft = 6;
         this.lettersGuessed = [];
         this.correctGuesses = [];
-        this.words = [
-            { word: "elephant", hint: "A large mammal with a long trunk" },
-            { word: "computer", hint: "A device for processing data" },
-            { word: "airplane", hint: "Flies in the sky" },
-            { word: "javascript", hint: "Programming language" },
-            { word: "banana", hint: "Yellow fruit with a peel" },
-            { word: "mountain", hint: "Large landform that rises above the surrounding land" }
-        ];
+      this.words = [
+    { word: "elephant", hint: "A large mammal with a long trunk" },
+    { word: "computer", hint: "A device for processing data" },
+    { word: "airplane", hint: "Flies in the sky" },
+    { word: "javascript", hint: "Programming language" },
+    { word: "banana", hint: "Yellow fruit with a peel" },
+    { word: "mountain", hint: "Large landform that rises above the surrounding land" },
+    { word: "telescope", hint: "A tool for distant viewing" },
+    { word: "galaxy", hint: "A massive system of stars" },
+    { word: "pyramid", hint: "Historical monument in Egypt" },
+    { word: "dinosaur", hint: "An extinct giant reptile" }
+];
         this.selectedWord = null;
         this.chartId = 'hangmanChart';
         this.chart = null;
@@ -316,22 +333,45 @@ class Hangman {
         this.computerWord = this.words[Math.floor(Math.random() * this.words.length)].word.toLowerCase(); // Computer's word to guess
         this.init();
     }
-
-    init() {
-        this.resetGame();
-        this.setupChart();
-        this.attachEventListeners();
+    setDifficulty(level) {
+    switch (level) {
+        case 'easy':
+            this.guessesLeft = 10;
+            break;
+        case 'medium':
+            this.guessesLeft = 7;
+            break;
+        case 'hard':
+            this.guessesLeft = 5;
+            break;
+        default:
+            this.guessesLeft = 6; // Default
+    }
+}
+     generateRandomLetter() {
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+        return alphabet[Math.floor(Math.random() * alphabet.length)];
     }
 
- attachEventListeners() {
-    this.guessButton.removeEventListener('click', this.handleGuessButtonClick);
-    this.handleGuessButtonClick = () => {
+   init(difficulty = 'easy') {
+    this.setDifficulty(difficulty);
+    this.resetGame();
+    this.setupChart();
+    this.attachEventListeners();
+}
+attachEventListeners() {
+    this.guessButton.addEventListener('click', () => {
         const letter = this.letterInput.value.toLowerCase();
         this.letterInput.value = ''; // Clear input after guess
         this.guessLetter(letter);
-    };
-    this.guessButton.addEventListener('click', this.handleGuessButtonClick);
+    });
+
+    document.getElementById('difficulty').addEventListener('change', (e) => {
+        this.setDifficulty(e.target.value);
+        this.resetGame();
+    });
 }
+
 
     resetGame() {
         this.guessesLeft = 6;
@@ -343,11 +383,19 @@ class Hangman {
         this.updateScoreboard();
         this.computerGuess(); // Start computer guessing
     }
+this.previousWords = [];
 
-    setupGame() {
-        this.selectedWord = this.words[Math.floor(Math.random() * this.words.length)];
-        this.displayWord();
+setupGame() {
+    let wordOptions = this.words.filter(word => !this.previousWords.includes(word.word));
+    if (wordOptions.length === 0) {
+        alert('No more words left to guess! Resetting previously guessed words.');
+        this.previousWords = [];
+        wordOptions = this.words;
     }
+    this.selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+    this.previousWords.push(this.selectedWord.word);
+    this.displayWord();
+}
 
    guessLetter(letter) {
     if (!/[a-z]/i.test(letter)) {
@@ -370,20 +418,20 @@ class Hangman {
 
   computerGuess() {
     const intervalId = setInterval(() => {
-        if (this.computerGuessesLeft <= 0 || this.guessesLeft <= 0) {
-            clearInterval(intervalId);
-            return;
-        }
-        const letter = this.generateRandomLetter();
-        if (!this.lettersGuessed.includes(letter)) {
-            this.lettersGuessed.push(letter);
-            this.computerLettersGuessed.push(letter);
-            this.computerGuessesLeft--;
-            if (!this.computerWord.includes(letter)) {
-                clearInterval(intervalId); // Stop guessing if computer runs out of guesses
-                this.handleGameEnd('Computer');
+        if (this.computerGuessesLeft > 0) {
+            const letter = this.generateRandomLetter();
+            if (!this.lettersGuessed.includes(letter)) {
+                this.lettersGuessed.push(letter);
+                this.computerLettersGuessed.push(letter);
+                this.computerGuessesLeft--;
+                if (!this.computerWord.includes(letter)) {
+                    clearInterval(intervalId); // Stop guessing if computer runs out of guesses
+                    this.handleGameEnd('Computer');
+                }
+                this.updateComputerDisplay();
             }
-            this.updateComputerDisplay();
+        } else {
+            clearInterval(intervalId);
         }
     }, 4000);
 }
@@ -426,39 +474,44 @@ class Hangman {
     }
 
     updateScoreboard() {
-        document.getElementById("hangmanWins").textContent = this.wins;
-        document.getElementById("hangmanLosses").textContent = this.losses;
-    }
+    document.getElementById("hangmanWins").textContent = this.wins;
+    document.getElementById("hangmanLosses").textContent = this.losses;
+    // Update the chart after updating the scoreboard
+    this.setupChart();
+}
 
-    setupChart() {
-        const ctx = document.getElementById(this.chartId).getContext('2d');
-        this.chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Wins', 'Losses'],
-                datasets: [{
-                    label: 'Hangman Statistics',
-                    data: [this.wins, this.losses],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+  setupChart() {
+    const ctx = document.getElementById(this.chartId).getContext('2d');
+    // Check if the chart instance already exists
+    if (this.chart) {
+        this.chart.destroy(); // Destroy the existing chart
+    }
+    this.chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Wins', 'Losses'],
+            datasets: [{
+                label: 'Hangman Statistics',
+                data: [this.wins, this.losses],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    }
+        }
+    });
 }
 
 
@@ -571,37 +624,38 @@ class TicTacToe {
     }
 
     setupChart() {
-        const ctx = document.getElementById('ticTacToeChart').getContext('2d');
-        this.chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Player Wins', 'Computer Wins', 'Ties'],
-                datasets: [{
-                    label: 'Tic Tac Toe Game Results',
-                    data: [this.playerWins, this.computerWins, this.ties],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 205, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 205, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    const ctx = document.getElementById(this.chartId).getContext('2d');
+    // Check if the chart instance already exists
+    if (this.chart) {
+        this.chart.destroy(); // Destroy the existing chart
+    }
+    this.chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Wins', 'Losses'],
+            datasets: [{
+                label: 'Hangman Statistics',
+                data: [this.wins, this.losses],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    }
-
+        }
+    });
+}
     updateChart() {
         if (this.chart) {
             this.chart.data.datasets.forEach((dataset) => {
