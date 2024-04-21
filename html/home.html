@@ -307,20 +307,48 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateGlobalLeaderboard(player) {
-        const players = loadPlayers(); 
-        let existingPlayer = players.find(p => p.name === player.name);
+    const players = loadPlayers();
+    let existingPlayer = players.find(p => p.name === player.name);
 
-        if (existingPlayer) {
-            existingPlayer.wins = player.wins;
-            existingPlayer.losses = player.losses;
-            existingPlayer.ties = player.ties;
-        } else {
-            players.push(player);
-        }
-
-        savePlayers(players);
-        populateLeaderboard();
+    if (existingPlayer) {
+        existingPlayer.wins += player.wins; // Assuming you want to add to existing wins
+        existingPlayer.losses += player.losses;
+        existingPlayer.ties += player.ties;
+    } else {
+        players.push({
+            name: player.name,
+            wins: player.wins,
+            losses: player.losses,
+            ties: player.ties
+        });
     }
+
+    savePlayers(players);
+    populateLeaderboard();
+}
+    function registerPlayer(name) {
+    fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name })
+    }).then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+}
+
+function updateScore(name, wins, losses, ties) {
+    fetch('http://localhost:3000/update', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, wins, losses, ties })
+    }).then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+}
 });
 class RockPaperScissors {
     constructor() {
