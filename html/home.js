@@ -772,8 +772,8 @@ setupBoard() {
 }
 
 handleBoardClick(event) {
-    // Check if the clicked element is a button (use a more specific selector if necessary)
-    if (event.target.tagName === 'btn') {
+    // Ensure the clicked element is a button
+    if (event.target.tagName === 'BUTTON') {
         const index = Array.from(this.cells).indexOf(event.target);
         if (index !== -1) {
             this.playerMove(index);
