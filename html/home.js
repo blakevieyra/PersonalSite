@@ -23,6 +23,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('clearLeaderboard').addEventListener('click', clearLeaderboard);
 });
+// Function to handle scrolling event
+function handleScroll() {
+    const fadeIns = document.querySelectorAll('.fade-in');
+    fadeIns.forEach(element => {
+        if (isInViewport(element)) {
+            element.classList.add('visible');
+        }
+    });
+}
+
+// Attach the handleScroll function to the scroll event listener
+window.addEventListener('scroll', handleScroll);
+
+// Initial check on page load
+handleScroll();
 
 function clearLeaderboard() {
     localStorage.removeItem('players');
@@ -283,15 +298,18 @@ class Hangman {
             { word: "mountain", hint: "Large landform that rises above the surrounding land" }
         ];
         this.selectedWord = null;
-        this.chart = null;
-   this.letterInput = document.getElementById('letterInput');
+        this.chartId = 'hangmanChart'; // Unique ID for this game's chart
+        this.chart = null; // Initialize the chart variable
+        this.letterInput = document.getElementById('letterInput');
         this.guessButton = document.getElementById('guessButton'); // Ensure this ID is in your HTML
     }
+
     init() {
         this.resetGame();
         this.setupChart();
         this.attachEventListeners();
     }
+
     attachEventListeners() {
         this.guessButton.addEventListener('click', () => {
             const letter = this.letterInput.value.toLowerCase();
@@ -359,7 +377,7 @@ class Hangman {
     }
 
     setupChart() {
-        const ctx = document.getElementById('hangmanChart').getContext('2d');
+        const ctx = document.getElementById(this.chartId).getContext('2d');
         this.chart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -408,20 +426,6 @@ function isInViewport(element) {
     );
 }
 
-// Function to handle scrolling event
-function handleScroll() {
-    const fadeIns = document.querySelectorAll('.fade-in');
-    fadeIns.forEach(element => {
-        if (isInViewport(element)) {
-            element.classList.add('visible');
-        }
-    });
-}
-
-window.addEventListener('scroll', handleScroll);
-
-// Initial check on page load
-handleScroll();
 
 class TicTacToe {
     constructor() {
