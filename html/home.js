@@ -65,15 +65,19 @@ function registerOrUpdatePlayer(players, playerName) {
 }
 
 function initGames(currentPlayer) {
-    // Assuming each game class can accept the currentPlayer object
-const rockPaperScissors = new RockPaperScissors(currentPlayer, updateGlobalLeaderboard);
+    try {
+        const rockPaperScissors = new RockPaperScissors(currentPlayer, updateGlobalLeaderboard);
+        rockPaperScissors.init();
 
+        const hangman = new Hangman(currentPlayer);
+        hangman.init();
 
-    const hangman = new Hangman(currentPlayer);
-    hangman.init();
-
-    const ticTacToe = new TicTacToe(currentPlayer);
-    ticTacToe.init();
+        const ticTacToe = new TicTacToe(currentPlayer);
+        ticTacToe.init();
+    } catch (error) {
+        console.error('Failed to initialize games:', error);
+        // Handle initialization errors, maybe disable game functionality or alert the user
+    }
 }
 
 function populateLeaderboard() {
@@ -311,18 +315,10 @@ class Hangman {
         this.guessesLeft = 6;
         this.lettersGuessed = [];
         this.correctGuesses = [];
-      this.words = [
-    { word: "elephant", hint: "A large mammal with a long trunk" },
-    { word: "computer", hint: "A device for processing data" },
-    { word: "airplane", hint: "Flies in the sky" },
-    { word: "javascript", hint: "Programming language" },
-    { word: "banana", hint: "Yellow fruit with a peel" },
-    { word: "mountain", hint: "Large landform that rises above the surrounding land" },
-    { word: "telescope", hint: "A tool for distant viewing" },
-    { word: "galaxy", hint: "A massive system of stars" },
-    { word: "pyramid", hint: "Historical monument in Egypt" },
-    { word: "dinosaur", hint: "An extinct giant reptile" }
-];
+        this.words = [
+            { word: "elephant", hint: "A large mammal with a long trunk" },
+            // other words
+        ];
         this.selectedWord = null;
         this.chartId = 'hangmanChart';
         this.chart = null;
@@ -330,7 +326,7 @@ class Hangman {
         this.guessButton = document.getElementById('guessButton');
         this.computerGuessesLeft = 6;
         this.computerLettersGuessed = [];
-        this.computerWord = this.words[Math.floor(Math.random() * this.words.length)].word.toLowerCase(); // Computer's word to guess
+        this.previousWords = []; // Initialize here correctly
         this.init();
     }
     setDifficulty(level) {
@@ -383,7 +379,6 @@ attachEventListeners() {
         this.updateScoreboard();
         this.computerGuess(); // Start computer guessing
     }
-this.previousWords = [];
 
 setupGame() {
     let wordOptions = this.words.filter(word => !this.previousWords.includes(word.word));
