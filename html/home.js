@@ -359,10 +359,15 @@ class Hangman {
         this.selectedWord = null;
         this.chartId = 'hangmanChart';
         this.chart = null;
-        this.letterInput = document.getElementById('letterInput');
-        this.guessButton = document.getElementById('guessButton');
+         this.letterInput = document.getElementById('letterInput');
+    this.guessButton = document.getElementById('guessButton');
+    if (!this.letterInput || !this.guessButton) {
+        console.error("Essential HTML elements are missing!");
+        return;  // Exit constructor to prevent further execution
+    }
         this.previousWords = []; // Initialize here correctly
         this.availableLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    this.unusedLetters = [...this.availableLetters]; // Copy for manipulation
         this.computerGuessesLeft = 6; // Initialize computer guesses left
         this.computerLettersGuessed = []; // Initialize computer letters guessed
         this.setDifficulty('easy'); // Set default difficulty to easy
@@ -409,16 +414,13 @@ class Hangman {
     return settings[level] || settings.medium; // default to medium if undefined
 }
 
-    generateRandomLetter() {
-        // Generate a random letter from available letters not yet guessed to improve efficiency
-        const unguessedLetters = this.availableLetters.filter(l => !this.lettersGuessed.includes(l));
-        if (unguessedLetters.length > 0) {
-            const randomIndex = Math.floor(Math.random() * unguessedLetters.length);
-            return unguessedLetters[randomIndex];
-        }
-        return null; // Return null if no letters are left to guess
+  generateRandomLetter() {
+    if (this.unusedLetters.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.unusedLetters.length);
+        return this.unusedLetters.splice(randomIndex, 1)[0];  // Remove the letter from the array
     }
-
+    return null; // Return null if no letters are left to guess
+}
     checkIfAllLettersGuessed() {
         return this.selectedWord.word.split('').every(letter => this.lettersGuessed.includes(letter));
     }
@@ -492,32 +494,31 @@ init(difficulty = 'easy') {
     this.checkGameEnd();
 }
 
-    computerGuess() {
-        if (this.guessesLeft > 0 && !this.checkIfAllLettersGuessed()) {
-            const intervalId = setInterval(() => {
-                if (this.computerGuessesLeft > 0 && this.availableLetters.length > 0) {
-                    const letter = this.generateRandomLetter();
-                    if (letter && !this.lettersGuessed.includes(letter)) {
-                        this.lettersGuessed.push(letter);
-                        this.computerLettersGuessed.push(letter);
-                        this.computerGuessesLeft--;
-                        this.updateComputerDisplay();
-                        if (!this.selectedWord.word.includes(letter)) {
-                            // Check if any letters are left to guess before deciding to end the game
-                            if (this.computerGuessesLeft === 0 || this.checkIfAllLettersGuessed()) {
-                                clearInterval(intervalId);
-                                this.handleGameEnd('Computer');
-                            }
+  computerGuess() {
+    if (this.guessesLeft > 0 && !this.checkIfAllLettersGuessed()) {
+        const makeGuess = () => {
+            if (this.computerGuessesLeft > 0 && this.availableLetters.length > 0) {
+                const letter = this.generateRandomLetter();
+                if (letter && !this.lettersGuessed.includes(letter)) {
+                    this.lettersGuessed.push(letter);
+                    this.computerLettersGuessed.push(letter);
+                    this.computerGuessesLeft--;
+                    this.updateComputerDisplay();
+                    if (!this.selectedWord.word.includes(letter)) {
+                        if (this.computerGuessesLeft === 0 || this.checkIfAllLettersGuessed()) {
+                            this.handleGameEnd('Computer');
+                        } else {
+                            setTimeout(makeGuess, 1000);
                         }
                     }
-                } else {
-                    clearInterval(intervalId);
-                    this.handleGameEnd('Computer');
                 }
-            }, 1000); // Adjust the interval time as needed
-        }
+            } else {
+                this.handleGameEnd('Computer');
+            }
+        };
+        setTimeout(makeGuess, 1000);
     }
-
+}
     handleGameEnd(winner) {
         if (winner === 'Computer') {
             alert('Computer has guessed the word!');
