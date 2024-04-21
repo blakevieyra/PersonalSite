@@ -1,30 +1,39 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    let players = loadPlayers();
+    const players = loadPlayers() || [];  // Ensure it defaults to an empty array
 
     const form = document.getElementById('playerForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const playerName = document.getElementById('playerName').value.trim();
-        if (playerName) {
-            const currentPlayer = registerOrUpdatePlayer(players, playerName);
-            initGames(currentPlayer);
-            populateLeaderboard(players);
-            form.reset(); // Reset form after submission
-        } else {
-            alert("Please enter a valid name.");
-        }
-    });
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const playerNameInput = document.getElementById('playerName');
+            if (playerNameInput) {
+                const playerName = playerNameInput.value.trim();
+                if (playerName) {
+                    const currentPlayer = registerOrUpdatePlayer(players, playerName);
+                    initGames(currentPlayer);
+                    populateLeaderboard(players);
+                    form.reset(); // Reset form after submission
+                } else {
+                    alert("Please enter a valid name.");
+                }
+            }
+        });
+    } else {
+        console.error('Form element not found');
+    }
+});
 
     document.getElementById('clearLeaderboard').addEventListener('click', () => {
         clearLeaderboard();
     });
 
     function clearLeaderboard() {
-        localStorage.removeItem('players');
-        populateLeaderboard(); // Re-populate to show empty state
-    }
-
+    localStorage.removeItem('players');
+    const tbody = document.querySelector('#leaderboard tbody');
+    tbody.innerHTML = ''; // Clear the content of the table body
+    populateLeaderboard(); // Re-populate to show empty state or updated data
+}
 
     function registerOrUpdatePlayer(players, playerName) {
         let currentPlayer = players.find(p => p.name === playerName);
