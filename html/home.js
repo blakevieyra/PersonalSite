@@ -455,7 +455,6 @@ handleGuess() {
     this.guessLetter(letter);
     this.computerGuess(); // Trigger computer's turn after user's guess
 }
-
 changeDifficulty() {
     const difficulty = document.getElementById('difficulty').value;
     this.init(difficulty);
