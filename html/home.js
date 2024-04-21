@@ -1,153 +1,84 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    const players = loadPlayers() || [];  // Ensure it defaults to an empty array
-
     const form = document.getElementById('playerForm');
     if (form) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             const playerNameInput = document.getElementById('playerName');
-            if (playerNameInput) {
-                const playerName = playerNameInput.value.trim();
-                if (playerName) {
-                    const currentPlayer = registerOrUpdatePlayer(players, playerName);
-                    initGames(currentPlayer);
-                    populateLeaderboard(players);
-                    form.reset(); // Reset form after submission
-                } else {
-                    alert("Please enter a valid name.");
-                }
+            const playerName = playerNameInput.value.trim();
+            if (!playerName) {
+                alert("Please enter a valid name.");
+                return;
             }
+
+            const players = loadPlayers() || [];
+            const currentPlayer = registerOrUpdatePlayer(players, playerName);
+            initGames(currentPlayer);
+            populateLeaderboard();
+            form.reset(); // Reset form after submission
         });
     } else {
         console.error('Form element not found');
     }
+
+    document.getElementById('clearLeaderboard').addEventListener('click', clearLeaderboard);
 });
 
-    document.getElementById('clearLeaderboard').addEventListener('click', () => {
-        clearLeaderboard();
-    });
-
-    function clearLeaderboard() {
+function clearLeaderboard() {
     localStorage.removeItem('players');
     const tbody = document.querySelector('#leaderboard tbody');
-    tbody.innerHTML = ''; // Clear the content of the table body
+    tbody.innerHTML = '';
     populateLeaderboard(); // Re-populate to show empty state or updated data
 }
 
-    function registerOrUpdatePlayer(players, playerName) {
-        let currentPlayer = players.find(p => p.name === playerName);
-        if (!currentPlayer) {
-            currentPlayer = { name: playerName, wins: 0, losses: 0, ties: 0 };
-            players.push(currentPlayer);
-            savePlayers(players);
-        }
-        return currentPlayer;
+function registerOrUpdatePlayer(players, playerName) {
+    let currentPlayer = players.find(p => p.name === playerName);
+    if (!currentPlayer) {
+        currentPlayer = { name: playerName, wins: 0, losses: 0, ties: 0 };
+        players.push(currentPlayer);
+        savePlayers(players);
     }
-
-    function initGames(currentPlayer) {
-        // Assuming each game class can accept the currentPlayer object
-        const rockPaperScissors = new RockPaperScissors(currentPlayer);
-        rockPaperScissors.init();
-
-        const hangman = new Hangman(currentPlayer);
-        hangman.init();
-
-        const ticTacToe = new TicTacToe(currentPlayer);
-        ticTacToe.init();
-    }
-
-    function populateLeaderboard() {
-        const players = loadPlayers(); 
-        const tbody = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
-        tbody.innerHTML = ""; 
-
-        players.sort((a, b) => b.wins - a.wins); 
-
-        players.forEach(player => {
-            const row = tbody.insertRow();
-            row.insertCell(0).textContent = player.name;
-            row.insertCell(1).textContent = player.wins;
-            row.insertCell(2).textContent = player.losses;
-            row.insertCell(3).textContent = player.ties;
-        });
-    }
-
-    function savePlayers(players) {
-        localStorage.setItem('players', JSON.stringify(players));
-    }
-
-    function updateGlobalLeaderboard(player) {
-    const players = loadPlayers();
-    let existingPlayer = players.find(p => p.name === player.name);
-
-    if (existingPlayer) {
-        existingPlayer.wins += player.wins; // Assuming you want to add to existing wins
-        existingPlayer.losses += player.losses;
-        existingPlayer.ties += player.ties;
-    } else {
-        players.push({
-            name: player.name,
-            wins: player.wins,
-            losses: player.losses,
-            ties: player.ties
-        });
-    }
-
-    savePlayers(players);
-    populateLeaderboard();
+    return currentPlayer;
 }
-  function registerPlayer(name) {
-    fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name })
-    })
-    .then(response => response.json())
-    .then(player => {
-        // Check if the player was successfully registered or already exists
-        if (player && player.name) {
-            console.log('Registration successful:', player);
-            const players = loadPlayers();
-            const currentPlayer = registerOrUpdatePlayer(players, player.name);
-            savePlayers(players);
-            initGames(currentPlayer);
-            populateLeaderboard(players);
-        } else {
-            throw new Error('Failed to register');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Registration failed, please try again.');
+
+function initGames(currentPlayer) {
+    // Assuming each game class can accept the currentPlayer object
+    const rockPaperScissors = new RockPaperScissors(currentPlayer);
+    rockPaperScissors.init();
+
+    const hangman = new Hangman(currentPlayer);
+    hangman.init();
+
+    const ticTacToe = new TicTacToe(currentPlayer);
+    ticTacToe.init();
+}
+
+function populateLeaderboard() {
+    const players = loadPlayers() || [];
+    const tbody = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+    tbody.innerHTML = "";
+
+    players.sort((a, b) => b.wins - a.wins);
+
+    players.forEach(player => {
+        const row = tbody.insertRow();
+        row.insertCell(0).textContent = player.name;
+        row.insertCell(1).textContent = player.wins;
+        row.insertCell(2).textContent = player.losses;
+        row.insertCell(3).textContent = player.ties;
     });
 }
 
-// Enhanced load from local storage or fetch from server
+function savePlayers(players) {
+    localStorage.setItem('players', JSON.stringify(players));
+}
+
 function loadPlayers() {
     const savedData = localStorage.getItem('players');
     if (savedData) {
         return JSON.parse(savedData);
     } else {
-        // Fetch from server if local data is not available
-        return fetch('http://localhost:3000/leaderboard')
-            .then(response => {
-                if (response.ok) {
-                    return response.json();  // Return the parsed JSON response
-                } else {
-                    throw new Error('Failed to fetch players');
-                }
-            })
-            .then(data => {
-                savePlayers(data);  // Save fetched data locally
-                return data;  // Return the fetched data to the calling function
-            })
-            .catch(error => {
-                console.error('Failed to fetch players:', error);
-                return [];  // Return an empty array if fetching fails
-            });
+        return [];
     }
 }
 
