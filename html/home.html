@@ -130,7 +130,7 @@
     </form>
 
     <h2>Game Leaderboard</h2>
-    <table id="leaderboard" class="table table-responsive">
+    <table id="globalLeaderboard" class="table table-responsive">
         <thead>
             <tr>
                 <th>Player</th>
@@ -242,17 +242,20 @@
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 8" data-index="7"></button>
                 <button class="btn btn-outline-dark btn-lg" aria-label="Play in Cell 9" data-index="8"></button>
             </div>
-        </div>
+  
         <div id="ticTacToeScoreboard" class="scoreboard" aria-live="polite">
             <h4>Scoreboard</h4>
             <p>Player Wins: <span id="playerWins">0</span></p>
             <p>Computer Wins: <span id="computerWins">0</span></p>
             <p>Ties: <span id="ties">0</span></p>
-        </div>
+
         <canvas id="ticTacToeChart" class="chart" aria-label="Game Results Chart"></canvas>
-    </div>
-    <p id="ticTacToeResult" class="mt-3 result-text" aria-live="polite"></p>
+            <p id="ticTacToeResult" class="mt-3 result-text" aria-live="polite"></p>
 </section>
+        </div>
+            </div>
+    </div>
+    
   <footer class="bg-dark text-light text-center py-3 fade-in visible">
         <p>&copy; 2024 Blake Vieyra. All Rights Reserved.</p>
     </footer>
