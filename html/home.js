@@ -82,7 +82,7 @@ function initGames(currentPlayer) {
 
 function populateLeaderboard() {
     const players = loadPlayers() || [];
-    const tbody = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+    const tbody = document.getElementById('globalLeaderboard').getElementsByTagName('tbody')[0];
     tbody.innerHTML = "";
 
     players.sort((a, b) => b.wins - a.wins);
@@ -320,114 +320,112 @@ class Hangman {
             { word: "elephant", hint: "A large mammal with a long trunk" },
             // other words
         ];
-       this.selectedWord = null;
+        this.selectedWord = null;
         this.chartId = 'hangmanChart';
         this.chart = null;
         this.letterInput = document.getElementById('letterInput');
         this.guessButton = document.getElementById('guessButton');
-        this.computerGuessesLeft = 6;
-        this.computerLettersGuessed = [];
         this.previousWords = []; // Initialize here correctly
         this.availableLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-        this.computerWord = this.selectRandomWord().word; // Ensure you have a method to select a random word
         this.init();
     }
+
     selectRandomWord() {
         return this.words[Math.floor(Math.random() * this.words.length)];
     }
+
     setDifficulty(level) {
-    switch (level) {
-        case 'easy':
-            this.guessesLeft = 10;
-            break;
-        case 'medium':
-            this.guessesLeft = 7;
-            break;
-        case 'hard':
-            this.guessesLeft = 5;
-            break;
-        default:
-            this.guessesLeft = 6; // Default
+        switch (level) {
+            case 'easy':
+                this.guessesLeft = 10;
+                break;
+            case 'medium':
+                this.guessesLeft = 7;
+                break;
+            case 'hard':
+                this.guessesLeft = 5;
+                break;
+            default:
+                this.guessesLeft = 6; // Default
+        }
     }
-}
-     generateRandomLetter() {
-    // Generate a random letter from available letters not yet guessed to improve efficiency
-    const unguessedLetters = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(l => !this.lettersGuessed.includes(l));
-    if (unguessedLetters.length > 0) {
-        const randomIndex = Math.floor(Math.random() * unguessedLetters.length);
-        return unguessedLetters[randomIndex];
+
+    generateRandomLetter() {
+        // Generate a random letter from available letters not yet guessed to improve efficiency
+        const unguessedLetters = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(l => !this.lettersGuessed.includes(l));
+        if (unguessedLetters.length > 0) {
+            const randomIndex = Math.floor(Math.random() * unguessedLetters.length);
+            return unguessedLetters[randomIndex];
+        }
+        return null; // Return null if no letters are left to guess
     }
-    return null; // Return null if no letters are left to guess
-}
 
-checkIfAllLettersGuessed() {
-    return this.computerWord.split('').every(letter => this.lettersGuessed.includes(letter));
-}
+    checkIfAllLettersGuessed() {
+        return this.selectedWord.word.split('').every(letter => this.lettersGuessed.includes(letter));
+    }
 
-   init(difficulty = 'easy') {
-    this.setDifficulty(difficulty);
-    this.resetGame();
-    this.setupChart();
-    this.attachEventListeners();
-}
-attachEventListeners() {
-    this.guessButton.addEventListener('click', () => {
-        const letter = this.letterInput.value.toLowerCase();
-        this.letterInput.value = ''; // Clear input after guess
-        this.guessLetter(letter);
-    });
+    init(difficulty = 'easy') {
+        this.setDifficulty(difficulty);
+        this.resetGame();
+        this.setupChart();
+        this.attachEventListeners();
+    }
 
-  document.getElementById('setDifficultyButton').addEventListener('click', function() {
-    var difficulty = document.getElementById('difficulty').value;
-    game.init(difficulty);
-});
+    attachEventListeners() {
+        this.guessButton.addEventListener('click', () => {
+            const letter = this.letterInput.value.toLowerCase();
+            this.letterInput.value = ''; // Clear input after guess
+            this.guessLetter(letter);
+            this.computerGuess(); // Trigger computer's turn after user's guess
+        });
 
-}
-
+        document.getElementById('setDifficultyButton').addEventListener('click', () => {
+            const difficulty = document.getElementById('difficulty').value;
+            this.init(difficulty);
+        });
+    }
 
     resetGame() {
         this.guessesLeft = 6;
         this.lettersGuessed = [];
         this.correctGuesses = [];
-        this.computerGuessesLeft = 6;
-        this.computerLettersGuessed = [];
         this.setupGame();
         this.updateScoreboard();
-        this.computerGuess(); // Start computer guessing
     }
 
-setupGame() {
-    let wordOptions = this.words.filter(word => !this.previousWords.includes(word.word));
-    if (wordOptions.length === 0) {
-        alert('No more words left to guess! Resetting previously guessed words.');
-        this.previousWords = [];
-        wordOptions = this.words;
+    setupGame() {
+        let wordOptions = this.words.filter(word => !this.previousWords.includes(word.word));
+        if (wordOptions.length === 0) {
+            alert('No more words left to guess! Resetting previously guessed words.');
+            this.previousWords = [];
+            wordOptions = this.words;
+        }
+        this.selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+        this.previousWords.push(this.selectedWord.word);
+        this.displayWord();
     }
-    this.selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
-    this.previousWords.push(this.selectedWord.word);
-    this.displayWord();
-}
 
-   guessLetter(letter) {
-    if (!/[a-z]/i.test(letter)) {
-        alert("Please enter a valid letter.");
-        return;
-    }
-    if (this.lettersGuessed.includes(letter)) {
-        alert("You have already guessed that letter.");
-        return;
-    }
-    this.lettersGuessed.push(letter);
-    if (this.selectedWord.word.includes(letter)) {
-        this.correctGuesses.push(letter);
+    guessLetter(letter) {
+        if (!/[a-z]/i.test(letter)) {
+            alert("Please enter a valid letter.");
+            return;
+        }
+        if (this.lettersGuessed.includes(letter)) {
+            alert("You have already guessed that letter.");
+            return;
+        }
+        this.lettersGuessed.push(letter);
+        if (this.selectedWord.word.includes(letter)) {
+            this.correctGuesses.push(letter);
+        } else {
+            this.guessesLeft--;
+        }
         this.updateWordDisplay();
-    } else {
-        this.guessesLeft--;
+        this.checkGameEnd();
     }
-    this.checkGameEnd();
-}
 
-    computerGuess() {
+   computerGuess() {
+    if (this.guessesLeft > 0 && !this.checkIfAllLettersGuessed()) {
         const intervalId = setInterval(() => {
             if (this.computerGuessesLeft > 0 && this.availableLetters.length > 0) {
                 const letter = this.generateRandomLetter();
@@ -436,7 +434,7 @@ setupGame() {
                     this.computerLettersGuessed.push(letter);
                     this.computerGuessesLeft--;
                     this.updateComputerDisplay();
-                    if (!this.computerWord.includes(letter)) {
+                    if (!this.selectedWord.word.includes(letter)) {
                         // Check if any letters are left to guess before deciding to end the game
                         if (this.computerGuessesLeft === 0 || this.checkIfAllLettersGuessed()) {
                             clearInterval(intervalId);
@@ -448,8 +446,10 @@ setupGame() {
                 clearInterval(intervalId);
                 this.handleGameEnd('Computer');
             }
-        }, 4000);
+        }, 5000); // Adjust the interval time as needed
     }
+}
+
     handleGameEnd(winner) {
         if (winner === 'Computer') {
             alert('Computer has guessed the word!');
@@ -483,51 +483,46 @@ setupGame() {
         this.displayWord();
     }
 
-    updateComputerDisplay() {
-        document.getElementById("computerGuessesLeft").textContent = this.computerGuessesLeft;
-        document.getElementById("computerLettersGuessed").textContent = this.computerLettersGuessed.join(", ");
-    }
-
     updateScoreboard() {
-    document.getElementById("hangmanWins").textContent = this.wins;
-    document.getElementById("hangmanLosses").textContent = this.losses;
-    // Update the chart after updating the scoreboard
-    this.setupChart();
-}
-
-  setupChart() {
-    const ctx = document.getElementById(this.chartId).getContext('2d');
-    // Check if the chart instance already exists
-    if (this.chart) {
-        this.chart.destroy(); // Destroy the existing chart
+        document.getElementById("hangmanWins").textContent = this.wins;
+        document.getElementById("hangmanLosses").textContent = this.losses;
+        // Update the chart after updating the scoreboard
+        this.setupChart();
     }
-    this.chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Wins', 'Losses'],
-            datasets: [{
-                label: 'Hangman Statistics',
-                data: [this.wins, this.losses],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+
+    setupChart() {
+        const ctx = document.getElementById(this.chartId).getContext('2d');
+        // Check if the chart instance already exists
+        if (this.chart) {
+            this.chart.destroy(); // Destroy the existing chart
+        }
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Wins', 'Losses'],
+                datasets: [{
+                    label: 'Hangman Statistics',
+                    data: [this.wins, this.losses],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 }
 
 
