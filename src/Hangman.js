@@ -1,4 +1,4 @@
-class Hangman {
+export default class Hangman {
     constructor(player) {
         this.player = player;
         this.wins = 0;
