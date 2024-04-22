@@ -1,4 +1,4 @@
-class Player {
+export default class Player {
     constructor(username, { wins = 0, losses = 0, performance = 0 }) {
         this.username = username;
         this.wins = wins;

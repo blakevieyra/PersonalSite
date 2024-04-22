@@ -1,12 +1,11 @@
-import Hangman from './Hangman.js';
-import RockPaperScissors from './RockPaperScissors.js';
-import TicTacToe from './TicTacToe.js';
-
-
+import './Player.js';
+import './Hangman.js';
+import './TicTacToe.js';
+import './RockPaperScissors.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     setupEventHandlers();
-    handleScroll();  // Initial check on page load
+    handleScroll();  
     window.addEventListener('scroll', handleScroll);
 });
 
@@ -180,15 +179,4 @@ function hideRegisterForm() {
 }
 
 
-function initGames(currentPlayer) {
-    try {
-        const hangman = new Hangman(currentPlayer);
-        hangman.init('easy');
-        const rockPaperScissors = new RockPaperScissors(currentPlayer);
-        rockPaperScissors.init();
-        const ticTacToe = new TicTacToe(currentPlayer);
-        ticTacToe.init();
-    } catch (error) {
-        console.error('Failed to initialize games:', error);
-    }
-}
+
