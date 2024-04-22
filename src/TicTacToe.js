@@ -1,5 +1,6 @@
 export default class TicTacToe {
-    constructor() {
+    constructor(player) {
+        this.player = player;
         this.cells = document.querySelectorAll("#ticTacToeBoard button");
         this.playerWins = 0;
         this.computerWins = 0;
@@ -91,6 +92,15 @@ export default class TicTacToe {
             [0, 4, 8], [2, 4, 6] // Diagonals
         ];
         return winningCombos.some(combo => combo.every(index => this.gameBoard[index] === player));
+    }
+    calculateStats() {
+        const totalGames = this.wins + this.losses + this.ties;
+        const mean = totalGames > 0 ? totalGames / 3 : 0;
+        const variance = ((Math.pow(this.wins - mean, 2) + Math.pow(this.losses - mean, 2) + Math.pow(this.ties - mean, 2)) / totalGames);
+        return {
+            mean: mean,
+            standardDeviation: Math.sqrt(variance)
+        };
     }
 
     handleGameEnd(winner) {

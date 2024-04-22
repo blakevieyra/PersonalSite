@@ -1,3 +1,9 @@
+import Hangman from './Hangman.js';
+import RockPaperScissors from './RockPaperScissors.js';
+import TicTacToe from './TicTacToe.js';
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     setupEventHandlers();
     handleScroll();  // Initial check on page load
@@ -36,9 +42,16 @@ async function handleLoginSubmit(event) {
         });
 
         if (response.ok) {
+            const playerData = await response.json(); // Assume playerData includes wins, losses, and performance
+            const player = new Player(username, playerData); // Create a new Player object with the fetched data
+
+            console.log(`Login successful for ${player.username}`); // Example usage of player object
+            sessionStorage.setItem('currentPlayer', JSON.stringify(player)); // Optionally store player data
+
             alert("Login successful!");
             event.target.reset(); // Reset the form
             populateLeaderboard();
+            initGames(player);
             hideLoginForm(); // Hide login form after successful login
             hideRegisterForm(); // Hide register form after successful login
         } else {
@@ -72,9 +85,17 @@ async function handleRegisterSubmit(event) {
         });
 
         if (response.ok) {
+            // Assume response might include initial user settings or confirmation
+            const initialData = await response.json(); // This might be empty or minimal for a registration endpoint
+            const player = new Player(username, initialData); // Create a new Player object with initial data
+
+            console.log(`Registration successful for ${player.username}`);
+            sessionStorage.setItem('currentPlayer', JSON.stringify(player)); // Optionally store player data
+
             alert("Registration successful!");
             event.target.reset(); // Reset the form
             populateLeaderboard();
+            initGames(player);
             hideLoginForm(); // Hide login form after successful registration
             hideRegisterForm(); // Hide register form after successful registration
         } else {
@@ -85,6 +106,14 @@ async function handleRegisterSubmit(event) {
         console.error('Error registering user:', error);
         alert("An error occurred while registering. Please try again.");
     }
+}
+
+function getCurrentPlayer() {
+    const storedPlayer = sessionStorage.getItem('currentPlayer');
+    if (storedPlayer) {
+        return new Player(JSON.parse(storedPlayer).username, JSON.parse(storedPlayer));
+    }
+    return null;  // Handle the case where there is no player logged in or session data is missing
 }
 
 async function populateLeaderboard() {
@@ -150,9 +179,6 @@ function hideRegisterForm() {
     registerForm.style.display = 'none';
 }
 
-import Hangman from './Hangman.js';
-import RockPaperScissors from './RockPaperScissors.js';
-import TicTacToe from './TicTacToe.js';
 
 function initGames(currentPlayer) {
     try {

@@ -1,5 +1,6 @@
 export default class Hangman {
-    constructor() {
+    constructor(player) {
+        this.player = player;
         this.wins = 0;
         this.losses = 0;
         this.guessesLeft = 6;
