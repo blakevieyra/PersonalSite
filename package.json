@@ -2,9 +2,9 @@
   "name": "personalsite",
   "version": "1.0.0",
   "description": "http://portfolio-site.blake-vieyra.com/",
-  "main": "index.js",
+  "main": "home.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node home.js",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
