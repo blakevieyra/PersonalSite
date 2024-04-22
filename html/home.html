@@ -186,36 +186,39 @@ a:focus, button:focus {
 
                     
 <section class="text-center my-5 fade-in">
-    <h1>Register for the Games</h1>
+    <h1>Prepare for the Games</h1>
     <form id="playerForm">
         <div class="form-group">
-            <label for="playerName">Enter your name:</label>
-            <input type="text" id="playerName" class="form-control" placeholder="Your name" required maxlength="20"
-                aria-describedby="nameHelp">
-            <small id="nameHelp" class="form-text text-muted">Name must be less than 20 characters.</small>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Login username" required>
         </div>
-        <button type="submit" class="btn btn-primary">Start Games</button>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Login password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
     <!-- New registration form -->
     <form id="registerForm">
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Your username" required>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Register username" required>
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Your password"
+            <input type="password" id="password" name="password" class="form-control" placeholder="Register password"
                 required>
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
 
     <h2>Game Leaderboard</h2>
-    <table id="globalLeaderboard" class="table table-responsive">
+    <table id="leaderboard" class="table table-responsive">
         <thead>
             <tr>
                 <th>Player</th>
+                <th>Ranked Performance</th>
                 <th>Wins</th>
                 <th>Losses</th>
                 <th>Ties</th>
@@ -348,7 +351,7 @@ a:focus, button:focus {
    <footer class="bg-dark text-light text-center py-3 fade-in visible">
         <p>&copy; 2024 Blake Vieyra. All Rights Reserved.</p>
     </footer>
-    <script type="module" src="http://18.189.252.60:8080/html/bundle.js "></script>
+    <script src="/html/dist/bundle.js"></script>
     <script type="module" src="home.js" defer></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
