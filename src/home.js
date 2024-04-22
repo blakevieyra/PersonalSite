@@ -150,6 +150,10 @@ function hideRegisterForm() {
     registerForm.style.display = 'none';
 }
 
+import Hangman from './Hangman.js';
+import RockPaperScissors from './RockPaperScissors.js';
+import TicTacToe from './TicTacToe.js';
+
 function initGames(currentPlayer) {
     try {
         const hangman = new Hangman(currentPlayer);
