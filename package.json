@@ -6,9 +6,23 @@
   "scripts": {
     "start": "node home.js",
     "build": "webpack --mode production",
+    "watch": "webpack --watch",
+    "dev": "webpack --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blake Vieyra <blake.vieyra@gmail.com>",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.x",
+    "webpack-cli": "^4.x",
+    "babel-loader": "^8.x",
+    "@babel/core": "^7.x",
+    "@babel/preset-env": "^7.x"
+  }
 }
