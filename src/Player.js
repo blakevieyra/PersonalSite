@@ -1,14 +1,21 @@
 export default class Player {
-    constructor(username, { wins = 0, losses = 0, performance = 0 }) {
+    constructor(username, { wins = 0, losses = 0, ties = 0, performance = 0 }) {
         this.username = username;
         this.wins = wins;
         this.losses = losses;
-        this.performance = performance;
+        this.ties = ties;
+        this.performance = performance;  // This can be computed or updated based on specific logic.
     }
 
-    updateStats({ wins, losses, performance }) {
-        if (wins !== undefined) this.wins = wins;
-        if (losses !== undefined) this.losses = losses;
-        if (performance !== undefined) this.performance = performance;
+    incrementWins() {
+        this.wins++;
+    }
+
+    incrementLosses() {
+        this.losses++;
+    }
+
+    incrementTies() {
+        this.ties++;
     }
 }

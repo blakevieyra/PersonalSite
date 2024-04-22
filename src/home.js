@@ -1,7 +1,7 @@
-import './Player.js';
-import './Hangman.js';
-import './TicTacToe.js';
-import './RockPaperScissors.js';
+import Player from './Player.js';
+import Hangman from './Hangman.js';
+import TicTacToe from './TicTacToe.js';
+import RockPaperScissors from './RockPaperScissors.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     setupEventHandlers();
@@ -13,18 +13,19 @@ function setupEventHandlers() {
     const registerForm = document.getElementById('registerForm');
     registerForm?.addEventListener('submit', handleRegisterSubmit);
 
-    const playerForm = document.getElementById('playerForm');
+    const playerForm = document.getElementById('loginForm');
     playerForm?.addEventListener('submit', handlePlayerSubmit);
 }
 
-document.getElementById('playerForm').addEventListener('submit', handleLoginSubmit);
+document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
 document.getElementById('registerForm').addEventListener('submit', handleRegisterSubmit);
 
 // Function to handle login form submission
 async function handleLoginSubmit(event) {
     event.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
 
     if (!username || !password) {
         alert("Please enter both a username and a password.");
@@ -66,8 +67,8 @@ async function handleLoginSubmit(event) {
 // Function to handle registration form submission
 async function handleRegisterSubmit(event) {
     event.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
+    const username = document.getElementById('registerUsername').value.trim();
+    const password = document.getElementById('registerPassword').value.trim();
 
     if (!username || !password) {
         alert("Please enter both a username and a password.");
@@ -178,5 +179,16 @@ function hideRegisterForm() {
     registerForm.style.display = 'none';
 }
 
+function initGames(player) {
+    // Assuming each game takes the player as an argument to track scores or settings
+    const hangmanGame = new Hangman(player);
+    hangmanGame.init('easy');
+
+    const ticTacToeGame = new TicTacToe(player);
+    ticTacToeGame.init();
+
+    const rockPaperScissorsGame = new RockPaperScissors(player);
+    rockPaperScissorsGame.init();
+}
 
 

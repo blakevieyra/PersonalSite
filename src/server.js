@@ -11,9 +11,7 @@ const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: corsOrigin
-}));
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 app.use(morgan('tiny'));
 
@@ -29,8 +27,13 @@ app.use('/api/v1/leaderboard', require('./routes/leaderboard'));
 app.use('/api/v1/update', require('./routes/update'));
 app.use('/api/v1/login', require('./routes/login'));
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err); // Log the error
+    res.status(500).json({ error: 'Internal Server Error' });
+});
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });

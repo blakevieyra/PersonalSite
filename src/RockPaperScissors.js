@@ -1,12 +1,7 @@
-
 export default class RockPaperScissors {
-    constructor(player, updateGlobalLeaderboard) {
+    constructor(player) {
         this.player = player;
-        this.updateGlobalLeaderboard = updateGlobalLeaderboard;
         this.buttons = document.querySelectorAll("#rpsButtons button");
-        this.wins = 0;
-        this.losses = 0;
-        this.ties = 0;
         this.chart = null;
         this.chartId = 'rpsChart';
     }
@@ -29,7 +24,7 @@ export default class RockPaperScissors {
         const choices = ['rock', 'paper', 'scissors'];
         const computerChoice = choices[Math.floor(Math.random() * choices.length)];
         const result = this.determineWinner(choice, computerChoice);
-        this.updateStats(result);
+        this.updatePlayerStats(result);
         this.displayResult(result, choice, computerChoice);
     }
 
@@ -45,49 +40,27 @@ export default class RockPaperScissors {
         }
     }
 
-    updateStats(result) {
+    updatePlayerStats(result) {
         if (result === 'win') {
-            this.wins++;
+            this.player.incrementWins();
         } else if (result === 'lose') {
-            this.losses++;
+            this.player.incrementLosses();
         } else {
-            this.ties++;
+            this.player.incrementTies();
         }
         this.updateScoreboard();
         this.updateChart();
-        this.updateGlobalLeaderboard({
-            wins: this.wins,
-            losses: this.losses,
-            ties: this.ties
-        });
     }
 
     updateScoreboard() {
-        const stats = this.calculateStats();
-        document.getElementById('rpsWins').textContent = this.wins;
-        document.getElementById('rpsLosses').textContent = this.losses;
-        document.getElementById('rpsTies').textContent = this.ties;
-        document.getElementById('rpsMean').textContent = stats.mean.toFixed(2);
-        document.getElementById('rpsSD').textContent = stats.standardDeviation.toFixed(2);
-    }
-
-    calculateStats() {
-        const totalGames = this.wins + this.losses + this.ties;
-        const mean = totalGames > 0 ? totalGames / 3 : 0;
-        const variance = ((Math.pow(this.wins - mean, 2) + Math.pow(this.losses - mean, 2) + Math.pow(this.ties - mean, 2)) / totalGames);
-        return {
-            mean: mean,
-            standardDeviation: Math.sqrt(variance)
-        };
+        document.getElementById('rpsWins').textContent = this.player.wins;
+        document.getElementById('rpsLosses').textContent = this.player.losses;
+        document.getElementById('rpsTies').textContent = this.player.ties;
     }
 
     displayResult(result, playerChoice, computerChoice) {
         const userChoiceImg = document.getElementById('userChoiceImg');
         const computerChoiceImg = document.getElementById('computerChoiceImg');
-        if (!userChoiceImg || !computerChoiceImg) {
-            console.error("Critical elements are missing for displaying results.");
-            return;
-        }
         userChoiceImg.src = `images/${playerChoice}.png`;
         computerChoiceImg.src = `images/${computerChoice}.png`;
         userChoiceImg.style.display = 'inline-block';
@@ -107,7 +80,7 @@ export default class RockPaperScissors {
                 labels: ['Wins', 'Losses', 'Ties'],
                 datasets: [{
                     label: 'Rock, Paper, Scissors Statistics',
-                    data: [this.wins, this.losses, this.ties],
+                    data: [this.player.wins, this.player.losses, this.player.ties],
                     backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
                     borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
                     borderWidth: 1
@@ -126,9 +99,9 @@ export default class RockPaperScissors {
     updateChart() {
         if (this.chart) {
             this.chart.data.datasets.forEach((dataset) => {
-                dataset.data = [this.wins, this.losses, this.ties];
+                dataset.data = [this.player.wins, this.player.losses, this.player.ties];
             });
             this.chart.update();
         }
     }
-}
+};

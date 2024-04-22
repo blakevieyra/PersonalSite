@@ -1,23 +1,27 @@
 const express = require('express');
 const router = express.Router();
 
-// Assuming you have implemented user authentication and retrieved the authenticated player's ID
-const authenticatedPlayerId = req.user.id; // Example: Retrieve the authenticated player's ID from the request
+// Middleware to ensure the user is authenticated and to attach the user to the request
+router.use((req, res, next) => {
+    // Simulating an authentication middleware that sets req.user
+    // You would typically integrate actual authentication here
+    req.user = { id: 'authenticatedPlayerId' }; // Placeholder for actual authenticated user ID
+    next();
+});
 
-// Register route
+// Update route for player scores
 router.put('/', (req, res) => {
     try {
-        // Assuming req.body contains updated player scores
-        const { playerId, wins, loss, ties, performance } = req.body;
+        const { playerId, wins, losses, ties, performance } = req.body;
+        const authenticatedPlayerId = req.user.id; // Retrieve the authenticated player's ID from the request
 
         // Check if the authenticated player ID matches the player ID in the request
         if (authenticatedPlayerId !== playerId) {
             return res.status(403).json({ error: 'Forbidden', message: 'You are not authorized to update this player\'s scores' });
         }
 
-        const updatePlayerScoreQuery = `UPDATE players SET wins = ?, loss = ?, ties = ?, performance = ? WHERE id = ?`;
-
-        db.run(updatePlayerScoreQuery, [wins, loss, ties, performance, playerId], function (err) {
+        const updatePlayerScoreQuery = `UPDATE players SET wins = ?, losses = ?, ties = ?, performance = ? WHERE id = ?`;
+        db.run(updatePlayerScoreQuery, [wins, losses, ties, performance, playerId], function (err) {
             if (err) {
                 console.error('Error updating player scores:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -26,7 +30,7 @@ router.put('/', (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error updating player scores:', error);
+        console.error('Error handling request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
