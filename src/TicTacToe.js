@@ -179,4 +179,3 @@ export default class TicTacToe {
         }
     }
 }
-module.exports = TicTacToe;

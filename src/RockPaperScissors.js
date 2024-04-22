@@ -132,4 +132,3 @@ export default class RockPaperScissors {
         }
     }
 }
-module.exports = RockPaperScissors;

@@ -270,4 +270,4 @@ export default class Hangman {
         });
     }
 }
-module.exports = Hangman;
+
