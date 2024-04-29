@@ -1,9 +1,3 @@
 .env
-# Node modules
-node_modules/
+node_modules
 
-# Music directory
-html/music/
-
-# Image directory
-html/images/

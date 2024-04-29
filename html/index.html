@@ -4,8 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Blake Vieyra - Aspiring Full-Stack Developer with a B.S. in Computer Science, ready to tackle challenging software development projects.">
-    <meta name="keywords" content="Blake Vieyra, Full-Stack Developer, Software Engineer, Programmer, Computer Science Graduate">
+    <meta name="description"
+        content="Blake Vieyra - Aspiring Full-Stack Developer with a B.S. in Computer Science, ready to tackle challenging software development projects.">
+    <meta name="keywords"
+        content="Blake Vieyra, Full-Stack Developer, Software Engineer, Programmer, Computer Science Graduate">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
 
@@ -13,32 +15,48 @@
         html {
             scroll-behavior: smooth;
         }
+
         .fade-in {
             opacity: 0;
             transition: opacity 0.5s ease;
         }
+
         .visible {
             opacity: 1;
         }
+
         .navbar-brand {
-            font-size: 1rem; /* Smaller font size for the brand */
+            font-size: 1rem;
+            /* Smaller font size for the brand */
             font-weight: bold;
         }
-        .navbar-brand, .navbar-nav .nav-link { font-size: 1rem; font-weight: bold; padding: 0.5rem; }
-        .navbar { padding: 0.25rem; }
+
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5rem;
+        }
+
+        .navbar {
+            padding: 0.25rem;
+        }
+
         .container-fluid {
             padding-left: 0.5rem;
-            padding-right: 0.5rem; /* Reduced container padding */
+            padding-right: 0.5rem;
+            /* Reduced container padding */
         }
-	    footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
     </style>
     <title>Blake Vieyra</title>
 </head>
@@ -62,230 +80,470 @@
             </div>
         </div>
     </nav>
-	   
+
 
     <main class="container my-4">
         <div class="text-center mb-5 fade-in">
-            <img src="images/image.png" class="img-fluid rounded-circle mb-3" alt="Blake Vieyra" style="max-width: 200px;">
+            <img src="images/image.png" class="img-fluid rounded-circle mb-3" alt="Blake Vieyra"
+                style="max-width: 200px;">
             <h1 class="mb-3">Blake A. Vieyra</h1>
             <h2>My Professional Objective</h2>
-            <p class="lead">My objective is to obtain employment in the tech industry as a graduate of a Full-Stack Developer BootCamp and with a B.S. in Computer Science (DEC 2024), eager to take on challenging programming positions.</p>
+            <p class="lead">To obtain full time employment as a software developer, data analyst or related positions.
+            </p>
             <a href="#contactForm" class="btn btn-primary mb-3">Contact Me</a>
         </div>
 
         <section class="mb-5 fade-in">
-    <h2 class="mb-3">Education</h2>
-    <div class="accordion" id="educationAccordion">
-        
-        <!-- Western Governors University -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                        aria-expanded="false" aria-controls="collapseOne">
-                    Western Governors University - Bachelor of Science: Computer Science
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                 data-bs-parent="#educationAccordion">
-                <div class="accordion-body">
-                    <strong>Apr 2024 - Dec 2024:</strong> This rigorous program is crafted to instill a robust foundation in computer science with emphasis on software development, data management, and systems architecture. Key coursework includes Software Engineering, Data Structures and Algorithms, Machine Learning and AI, Network and Security, and Operating Systems. The curriculum culminates in a capstone project aimed at solving real-world problems, alongside electives like Advanced Algorithms, Mobile App Development, and Cloud Computing.
-                </div>
-            </div>
-        </div>
-        
-        <!-- Skill Distillery -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                        aria-expanded="false" aria-controls="collapseTwo">
-                    Java Full-Stack Developer Boot Camp - Skill Distillery
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                 data-bs-parent="#educationAccordion">
-                <div class="accordion-body">
-                    <strong>Nov 2023 - Mar 2024:</strong> This comprehensive boot camp provides hands-on training in full-stack development, spanning both front-end and back-end technologies. Topics covered include HTML/CSS, JavaScript, Java, Spring Framework, and SQL. Projects focus on building complete web applications and integrating APIs, with an emphasis on Agile methodologies and teamwork.
-                </div>
-            </div>
-        </div>
-        
-        <!-- University of Texas San Antonio -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                        aria-expanded="false" aria-controls="collapseThree">
-                    University of Texas San Antonio - Dual Degree: Bachelor of Science in Biology and Bachelor of Arts in Psychology
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                 data-bs-parent="#educationAccordion">
-                <div class="accordion-body">
-                    <strong>Jun 2019 - May 2022:</strong> Dual degree program blending intensive scientific research with comprehensive psychological studies. Coursework includes Cellular Biology, Organic Chemistry, Cognitive Psychology, and Behavioral Neuroscience. Projects involve collaborative research initiatives, clinical studies, and a dual thesis requirement focusing on the intersection of biological sciences and psychological processes.
-                </div>
-            </div>
-        </div>
-        
-        <!-- Purdue University Global -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                        aria-expanded="false" aria-controls="collapseFour">
-                    Purdue University Global - Associate of Science
-                </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                 data-bs-parent="#educationAccordion">
-                <div class="accordion-body">
-                    <strong>Completed May 2016:</strong> Associate of Science program focused on providing foundational academic knowledge and technical skills essential for advancing in various scientific fields. Courses covered General Chemistry, Physics, Statistics, and an introduction to Professional Writing, complemented by practical lab experiences and a community-based project.
-                </div>
-            </div>
-        </div>
-        
-        <!-- US Army Courses -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFive">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                        aria-expanded="false" aria-controls="collapseFive">
-                    US Army Basic Leadership Course and Emergency Combat Medic Course
-                </button>
-            </h2>
-            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
-                 data-bs-parent="#educationAccordion">
-                <div class="accordion-body">
-                    <strong>June 2011 - Jan 2012 and Jan 2015:</strong> Intensive military training programs focusing on leadership skills and emergency medical response under combat conditions. The curriculum includes tactical leadership development, advanced first aid, trauma management, and strategic field medicine, with both courses involving field exercises and situational training simulations.
-                </div>
-            </div>
-        </div>
+            <h2 class="mb-3">Education</h2>
+            <div class="accordion" id="mainAccordion">
 
-    </div>
-</section>
+                <!-- Education Section -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="educationSection">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#educationDetails" aria-expanded="false" aria-controls="educationDetails">
+                            Education
+                        </button>
+                    </h2>
+                    <div id="educationDetails" class="accordion-collapse collapse" aria-labelledby="educationSection"
+                        data-bs-parent="#mainAccordion">
+                        <div class="accordion-body">
+                            <!-- Nested accordion for education details -->
+                            <div class="accordion" id="educationAccordion">
 
-<section class="mb-5 fade-in">
-    <h2 class="mb-3">Work/Research Experience</h2>
-    <div class="accordion" id="workExperienceAccordion">
-        
-        <!-- Suicide Prevention Research Team -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="workHeadingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#workCollapseOne" aria-expanded="false" aria-controls="workCollapseOne">
-                    Suicide Prevention Research Team, UTSA
-                </button>
-            </h2>
-            <div id="workCollapseOne" class="accordion-collapse collapse" aria-labelledby="workHeadingOne" data-bs-parent="#workExperienceAccordion">
-                <div class="accordion-body">
-                    <strong>June 2021 - May 2022:</strong> Actively engaged in a multidisciplinary research team at UTSA focused on developing innovative strategies for suicide prevention. Responsibilities included the systematic collection and analysis of data, formulation of evidence-based interventions, and co-authoring several impactful publications that contribute to ongoing academic and clinical discussions on mental health.
+                                <!-- Western Governors University -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                            aria-expanded="false" aria-controls="collapseOne">
+                                            Western Governors University - Bachelor of Science: Computer Science
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse"
+                                        aria-labelledby="headingOne" data-bs-parent="#educationAccordion">
+                                        <div class="accordion-body">
+                                            <img src="images/wgu.png" class="img-fluid" alt="Educational Environment">
+                                            <strong>Apr 2024 - Dec 2024:</strong> This rigorous program is crafted to
+                                            instill a
+                                            robust foundation in computer science with emphasis on software development,
+                                            data
+                                            management, and systems architecture. Key coursework includes Software
+                                            Engineering, Data
+                                            Structures and Algorithms, Machine Learning and AI, Network and Security,
+                                            and Operating
+                                            Systems. The curriculum culminates in a capstone project aimed at solving
+                                            real-world
+                                            problems, alongside electives like Advanced Algorithms, Mobile App
+                                            Development, and
+                                            Cloud Computing.
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Google Data Analytics Certificate -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingAnalytics">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseAnalytics"
+                                            aria-expanded="false" aria-controls="collapseAnalytics">
+                                            Certificate in Google Data Analytics
+                                        </button>
+                                    </h2>
+                                    <div id="collapseAnalytics" class="accordion-collapse collapse"
+                                        aria-labelledby="headingAnalytics" data-bs-parent="#educationAccordion">
+                                        <div class="accordion-body">
+                                            <img src="images/google.png" class="img-fluid"
+                                                alt="Educational Environment">
+                                            <strong>Completed April 2024:</strong> A certificate program offered by
+                                            Google that
+                                            trains participants in the fundamentals of data analytics, including data
+                                            cleaning,
+                                            analysis, and visualization. The coursework covers the use of tools and
+                                            platforms such
+                                            as SQL for database management, R for statistical analysis, and Tableau for
+                                            data
+                                            visualization. The program emphasizes practical, real-world applications of
+                                            data
+                                            analytics through project-based learning and case studies.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill Distillery -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                            Java Full-Stack Developer Boot Camp - Skill Distillery
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo" data-bs-parent="#educationAccordion">
+                                        <div class="accordion-body">
+                                            <img src="images/sd.png" class="img-fluid" alt="Educational Environment">
+                                            <strong>Nov 2023 - Mar 2024:</strong> This comprehensive boot camp provides
+                                            hands-on
+                                            training in full-stack development, spanning both front-end and back-end
+                                            technologies.
+                                            Topics covered include HTML/CSS, JavaScript, Java, Spring Framework, and
+                                            SQL. Projects
+                                            focus on building complete web applications and integrating APIs, with an
+                                            emphasis on
+                                            Agile methodologies and teamwork.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- University of Texas San Antonio -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                            University of Texas San Antonio - Dual Degree: Bachelor of Science in
+                                            Biology and
+                                            Bachelor of Arts in Psychology
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="headingThree" data-bs-parent="#educationAccordion">
+                                        <div class="accordion-body">
+                                            <img src="images/utsa.png" class="img-fluid" alt="Educational Environment">
+                                            <strong>Jun 2019 - May 2022:</strong> Dual degree program blending intensive
+                                            scientific
+                                            research with comprehensive psychological studies. Coursework includes
+                                            Calculus,
+                                            Physics,
+                                            Neuroscience, Cellular Biology, Genetics, Organic Chemistry, Cognitive
+                                            Psychology, and
+                                            Behavioral Sciences. Projects involve
+                                            collaborative research initiatives, clinical studies, and a dual thesis
+                                            focusing on the intersection of biological sciences and psychological
+                                            processes.
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Purdue University Global -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                            aria-expanded="false" aria-controls="collapseFive">
+                                            Purdue University Global - Associate of Science
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFive" class="accordion-collapse collapse"
+                                        aria-labelledby="headingFive" data-bs-parent="#educationAccordion">
+                                        <div class="accordion-body">
+                                            <img src="images/purdue.png" class="img-fluid"
+                                                alt="Educational Environment">
+                                            <strong>Completed May 2016:</strong> Associate of Science program focused on
+                                            providing
+                                            foundational academic knowledge and technical skills essential for advancing
+                                            in various
+                                            scientific fields. Courses covered General Chemistry, Physics, Statistics,
+                                            and an
+                                            introduction to Professional Writing, complemented by practical lab
+                                            experiences and a
+                                            community-based project.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- US Army Courses -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingSix">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseSix"
+                                            aria-expanded="false" aria-controls="collapseSix">
+                                            US Army Basic Leadership Course and Emergency Combat Medic Course
+                                        </button>
+                                    </h2>
+                                    <div id="collapseSix" class="accordion-collapse collapse"
+                                        aria-labelledby="headingSix" data-bs-parent="#educationAccordion">
+                                        <div class="accordion-body">
+                                            <img src="images/army.png" class="img-fluid" alt="Educational Environment">
+                                            <strong>June 2011 - Jan 2012 and Jan 2015:</strong> Intensive military
+                                            training programs
+                                            focusing on leadership skills and emergency medical response under combat
+                                            conditions.
+                                            The curriculum includes tactical leadership development, advanced first aid,
+                                            trauma
+                                            management, and strategic field medicine, with both courses involving field
+                                            exercises
+                                            and situational training simulations.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Work/Research Experience Section -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="workSection">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#workDetails" aria-expanded="false" aria-controls="workDetails">
+                            Work/Research Experience
+                        </button>
+                    </h2>
+                    <div id="workDetails" class="accordion-collapse collapse" aria-labelledby="workSection"
+                        data-bs-parent="#mainAccordion">
+                        <div class="accordion-body">
+                            <!-- Nested accordion for work details -->
+                            <div class="accordion" id="workExperienceDetailsAccordion">
+                                <!-- Suicide Prevention Research Team -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="workHeadingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#workCollapseOne"
+                                            aria-expanded="false" aria-controls="workCollapseOne">
+                                            Suicide Prevention Research Team, UTSA
+                                        </button>
+                                    </h2>
+                                    <div id="workCollapseOne" class="accordion-collapse collapse"
+                                        aria-labelledby="workHeadingOne" data-bs-parent="#workExperienceAccordion">
+                                        <div class="accordion-body">
+                                            <strong>June 2021 - May 2022:</strong> Actively engaged in a
+                                            multidisciplinary research team
+                                            at UTSA focused on developing innovative strategies for suicide prevention.
+                                            Responsibilities
+                                            included the systematic collection and analysis of data, formulation of
+                                            evidence-based
+                                            interventions, and co-authoring several impactful publications that
+                                            contribute to ongoing
+                                            academic and clinical discussions on mental health.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- STEM Tutor, UTSA -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="workHeadingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#workCollapseTwo"
+                                            aria-expanded="false" aria-controls="workCollapseTwo">
+                                            STEM Tutor, UTSA
+                                        </button>
+                                    </h2>
+                                    <div id="workCollapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="workHeadingTwo" data-bs-parent="#workExperienceAccordion">
+                                        <div class="accordion-body">
+                                            <strong>Nov 2020 - June 2021:</strong> Provided peer tutoring services to
+                                            undergraduate
+                                            students in subjects including mathematics, physics, and computer science.
+                                            Played a key role
+                                            in enhancing student comprehension, encouraging analytical thinking, and
+                                            improving overall
+                                            academic performance through personalized and group sessions.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Campus Security Officer, Shasta College -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="workHeadingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#workCollapseThree"
+                                            aria-expanded="false" aria-controls="workCollapseThree">
+                                            Campus Security Officer, Shasta College
+                                        </button>
+                                    </h2>
+                                    <div id="workCollapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="workHeadingThree" data-bs-parent="#workExperienceAccordion">
+                                        <div class="accordion-body">
+                                            <strong>Jan 2018 - Jun 2018:</strong> Tasked with ensuring the safety and
+                                            security of the
+                                            college campus. Duties included patrolling the campus, monitoring security
+                                            systems,
+                                            responding to incidents, and providing first aid in emergencies. Recognized
+                                            for outstanding
+                                            vigilance and the ability to manage crises effectively, contributing to a
+                                            safe educational
+                                            environment.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- US Army Medical Supervisor -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="workHeadingFour">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#workCollapseFour"
+                                            aria-expanded="false" aria-controls="workCollapseFour">
+                                            US Army Medical Supervisor
+                                        </button>
+                                    </h2>
+                                    <div id="workCollapseFour" class="accordion-collapse collapse"
+                                        aria-labelledby="workHeadingFour" data-bs-parent="#workExperienceAccordion">
+                                        <div class="accordion-body">
+                                            <strong>June 2014 - Nov 2017:</strong> Oversaw medical operations within a
+                                            battalion,
+                                            managing a team of combat medics under high-pressure conditions. Responsible
+                                            for the
+                                            strategic planning and execution of health services, maintaining high
+                                            readiness levels, and
+                                            ensuring the well-being of all personnel. Recognized for exemplary
+                                            leadership and
+                                            operational excellence in challenging environments.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- US Army Combat Medic -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="workHeadingFive">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#workCollapseFive"
+                                            aria-expanded="false" aria-controls="workCollapseFive">
+                                            US Army Combat Medic
+                                        </button>
+                                    </h2>
+                                    <div id="workCollapseFive" class="accordion-collapse collapse"
+                                        aria-labelledby="workHeadingFive" data-bs-parent="#workExperienceAccordion">
+                                        <div class="accordion-body">
+                                            <strong>June 2011 - Nov 2017:</strong> Provided frontline medical support in
+                                            various
+                                            military operations, delivering emergency medical care under combat
+                                            conditions. Skilled in
+                                            trauma management, life-saving interventions, and rapid medical assessment.
+                                            Praised for
+                                            quick decision-making and resilience, significantly enhancing troop survival
+                                            and recovery
+                                            rates.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Significant Accomplishments Section -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accomplishmentsSection">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#accomplishmentsDetails" aria-expanded="false"
+                            aria-controls="accomplishmentsDetails">
+                            Significant Accomplishments
+                        </button>
+                    </h2>
+                    <div id="accomplishmentsDetails" class="accordion-collapse collapse"
+                        aria-labelledby="accomplishmentsSection" data-bs-parent="#mainAccordion">
+                        <div class="accordion-body">
+                            <!-- Nested accordion for accomplishments details -->
+                            <div class="accordion" id="accomplishmentsAccordion">
+                                <!-- Co-author in Suicide Prevention -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="accHeadingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#accCollapseOne"
+                                            aria-expanded="false" aria-controls="accCollapseOne">
+                                            Co-author in Suicide Prevention
+                                        </button>
+                                    </h2>
+                                    <div id="accCollapseOne" class="accordion-collapse collapse"
+                                        aria-labelledby="accHeadingOne" data-bs-parent="#accomplishmentsAccordion">
+                                        <div class="accordion-body">
+                                            Contributed as a co-author on multiple peer-reviewed scientific publications
+                                            focused on
+                                            innovative approaches to suicide prevention. These works, developed in
+                                            collaboration with
+                                            the psychology department at UTSA, have been instrumental in providing new
+                                            insights into the
+                                            psychological triggers of suicidal behavior and proposing effective
+                                            intervention strategies.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 1st Place Poster Presentation -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="accHeadingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#accCollapseTwo"
+                                            aria-expanded="false" aria-controls="accCollapseTwo">
+                                            1st Place Poster Presentation
+                                        </button>
+                                    </h2>
+                                    <div id="accCollapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="accHeadingTwo" data-bs-parent="#accomplishmentsAccordion">
+                                        <div class="accordion-body">
+                                            Awarded 1st Place at the annual Summer Psychology Symposium at UTSA for a
+                                            poster
+                                            presentation detailing innovative research methods in cognitive psychology.
+                                            This
+                                            presentation highlighted new techniques for measuring cognitive dissonance
+                                            and its effects
+                                            on decision-making, contributing to the field's understanding and attracting
+                                            significant
+                                            interest from peers and senior researchers.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Top Soldier of the Quarter -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="accHeadingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#accCollapseThree"
+                                            aria-expanded="false" aria-controls="accCollapseThree">
+                                            Top Soldier of the Quarter
+                                        </button>
+                                    </h2>
+                                    <div id="accCollapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="accHeadingThree" data-bs-parent="#accomplishmentsAccordion">
+                                        <div class="accordion-body">
+                                            Recognized as Top Soldier of the Quarter by the US Army for outstanding
+                                            performance and
+                                            leadership. This prestigious accolade reflects exemplary dedication and
+                                            effectiveness in
+                                            duty performance, leadership qualities, and commitment to the core values of
+                                            the Army,
+                                            distinguishing my service among peers during the period.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Several Full-Stack Coding Projects -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="accHeadingFour">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#accCollapseFour"
+                                            aria-expanded="false" aria-controls="accCollapseFour">
+                                            Several Full-Stack Coding Projects
+                                        </button>
+                                    </h2>
+                                    <div id="accCollapseFour" class="accordion-collapse collapse"
+                                        aria-labelledby="accHeadingFour" data-bs-parent="#accomplishmentsAccordion">
+                                        <div class="accordion-body">
+                                            Successfully conceptualized, developed, and deployed several full-stack web
+                                            applications.
+                                            These projects involved designing and implementing robust backend systems,
+                                            creating
+                                            intuitive user interfaces, and deploying scalable solutions to production
+                                            environments.
+                                            Notable achievements include streamlining business processes, enhancing user
+                                            experiences,
+                                            and receiving positive feedback from users and stakeholders.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- STEM Tutor, UTSA -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="workHeadingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#workCollapseTwo" aria-expanded="false" aria-controls="workCollapseTwo">
-                    STEM Tutor, UTSA
-                </button>
-            </h2>
-            <div id="workCollapseTwo" class="accordion-collapse collapse" aria-labelledby="workHeadingTwo" data-bs-parent="#workExperienceAccordion">
-                <div class="accordion-body">
-                    <strong>Nov 2020 - June 2021:</strong> Provided peer tutoring services to undergraduate students in subjects including mathematics, physics, and computer science. Played a key role in enhancing student comprehension, encouraging analytical thinking, and improving overall academic performance through personalized and group sessions.
-                </div>
-            </div>
-        </div>
+            <a href="BlakeVieyraResume.pdf" download="BlakeVieyraResume.pdf" class="btn btn-primary">Download My
+                Resume</a>
 
-        <!-- Campus Security Officer, Shasta College -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="workHeadingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#workCollapseThree" aria-expanded="false" aria-controls="workCollapseThree">
-                    Campus Security Officer, Shasta College
-                </button>
-            </h2>
-            <div id="workCollapseThree" class="accordion-collapse collapse" aria-labelledby="workHeadingThree" data-bs-parent="#workExperienceAccordion">
-                <div class="accordion-body">
-                    <strong>Jan 2018 - Jun 2018:</strong> Tasked with ensuring the safety and security of the college campus. Duties included patrolling the campus, monitoring security systems, responding to incidents, and providing first aid in emergencies. Recognized for outstanding vigilance and the ability to manage crises effectively, contributing to a safe educational environment.
-                </div>
-            </div>
-        </div>
-
-        <!-- US Army Medical Supervisor -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="workHeadingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#workCollapseFour" aria-expanded="false" aria-controls="workCollapseFour">
-                    US Army Medical Supervisor
-                </button>
-            </h2>
-            <div id="workCollapseFour" class="accordion-collapse collapse" aria-labelledby="workHeadingFour" data-bs-parent="#workExperienceAccordion">
-                <div class="accordion-body">
-                    <strong>June 2014 - Nov 2017:</strong> Oversaw medical operations within a battalion, managing a team of combat medics under high-pressure conditions. Responsible for the strategic planning and execution of health services, maintaining high readiness levels, and ensuring the well-being of all personnel. Recognized for exemplary leadership and operational excellence in challenging environments.
-                </div>
-            </div>
-        </div>
-
-        <!-- US Army Combat Medic -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="workHeadingFive">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#workCollapseFive" aria-expanded="false" aria-controls="workCollapseFive">
-                    US Army Combat Medic
-                </button>
-            </h2>
-            <div id="workCollapseFive" class="accordion-collapse collapse" aria-labelledby="workHeadingFive" data-bs-parent="#workExperienceAccordion">
-                <div class="accordion-body">
-                    <strong>June 2011 - Nov 2017:</strong> Provided frontline medical support in various military operations, delivering emergency medical care under combat conditions. Skilled in trauma management, life-saving interventions, and rapid medical assessment. Praised for quick decision-making and resilience, significantly enhancing troop survival and recovery rates.
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="mb-5 fade-in">
-    <h2 class="mb-3">Significant Accomplishments</h2>
-    <div class="accordion" id="accomplishmentsAccordion">
-        
-        <!-- Co-author in Suicide Prevention -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="accHeadingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accCollapseOne" aria-expanded="false" aria-controls="accCollapseOne">
-                    Co-author in Suicide Prevention
-                </button>
-            </h2>
-            <div id="accCollapseOne" class="accordion-collapse collapse" aria-labelledby="accHeadingOne" data-bs-parent="#accomplishmentsAccordion">
-                <div class="accordion-body">
-                    Contributed as a co-author on multiple peer-reviewed scientific publications focused on innovative approaches to suicide prevention. These works, developed in collaboration with the psychology department at UTSA, have been instrumental in providing new insights into the psychological triggers of suicidal behavior and proposing effective intervention strategies.
-                </div>
-            </div>
-        </div>
-
-        <!-- 1st Place Poster Presentation -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="accHeadingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accCollapseTwo" aria-expanded="false" aria-controls="accCollapseTwo">
-                    1st Place Poster Presentation
-                </button>
-            </h2>
-            <div id="accCollapseTwo" class="accordion-collapse collapse" aria-labelledby="accHeadingTwo" data-bs-parent="#accomplishmentsAccordion">
-                <div class="accordion-body">
-                    Awarded 1st Place at the annual Summer Psychology Symposium at UTSA for a poster presentation detailing innovative research methods in cognitive psychology. This presentation highlighted new techniques for measuring cognitive dissonance and its effects on decision-making, contributing to the field's understanding and attracting significant interest from peers and senior researchers.
-                </div>
-            </div>
-        </div>
-
-        <!-- Top Soldier of the Quarter -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="accHeadingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accCollapseThree" aria-expanded="false" aria-controls="accCollapseThree">
-                    Top Soldier of the Quarter
-                </button>
-            </h2>
-            <div id="accCollapseThree" class="accordion-collapse collapse" aria-labelledby="accHeadingThree" data-bs-parent="#accomplishmentsAccordion">
-                <div class="accordion-body">
-                    Recognized as Top Soldier of the Quarter by the US Army for outstanding performance and leadership. This prestigious accolade reflects exemplary dedication and effectiveness in duty performance, leadership qualities, and commitment to the core values of the Army, distinguishing my service among peers during the period.
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-        <a href="BlakeVieyraResume.pdf" download="BlakeVieyraResume.pdf" class="btn btn-primary">Download My Resume</a>
+        </section>
 
 
 
@@ -294,11 +552,13 @@
             <form action="https://formspree.io/f/mwkgabzw" method="POST">
                 <div class="mb-3">
                     <label for="nameInput" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name" required>
+                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter your name"
+                        required>
                 </div>
                 <div class="mb-3">
                     <label for="emailInput" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="emailInput" name="_replyto" placeholder="Enter your email" required>
+                    <input type="email" class="form-control" id="emailInput" name="_replyto"
+                        placeholder="Enter your email" required>
                 </div>
                 <div class="mb-3">
                     <label for="messageTextarea" class="form-label">Message</label>
@@ -307,12 +567,12 @@
                 <button type="submit" class="btn btn-primary">Send</button>
             </form>
         </section>
-	    
+
     </main>
-	 <div class="mt-4 text-center">
-            <a class="btn btn-secondary" href="home.html">Go to Home Page</a>
-        </div>
-	
+    <div class="mt-4 text-center">
+        <a class="btn btn-secondary" href="home.html">Go to Home Page</a>
+    </div>
+
 
     <footer class="bg-dark text-light text-center py-3 fade-in">
         <p>&copy; 2024 Blake Vieyra</p>
